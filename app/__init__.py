@@ -12,7 +12,7 @@ def create_app():
     from .db import db
     db.init_app(app)
     
-    from app.models import employees, permissions, roles, users, pivots
+    from app.models import employee, permission, role, user, pivots
     
     with app.app_context():
         # add route blueprints here

@@ -8,8 +8,8 @@ class CreateUserForm(FlaskForm):
     def __init__(self):
         super(CreateUserForm, self).__init__()
         
-        from app.models.roles import Roles
-        self.selection_field.choices = Roles.query.all()
+        from app.models.role import Role
+        self.selection_field.choices = Role.query.all()
         
     username = StringField(
         'Username',
