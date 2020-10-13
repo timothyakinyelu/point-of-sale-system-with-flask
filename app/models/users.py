@@ -1,6 +1,7 @@
 from app.db import db
 from .pivots import permission_user_table
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Users(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -12,10 +13,11 @@ class Users(db.Model, UserMixin):
     )
     username = db.Column(
         db.String(100),
+        unique = True,
         nullable = False
     )
     password = db.Column(
-        db.String(100),
+        db.String(200),
         nullable = False
     )
     role_id = db.Column(
@@ -32,5 +34,11 @@ class Users(db.Model, UserMixin):
         lazy = 'joined'
     )
     
-    def __init__(self, name):
+    def __init__(self):
         self.active = False
+        
+    def set_password(self, password):
+        self.password = generate_password_hash(password, method='sha256')
+        
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
