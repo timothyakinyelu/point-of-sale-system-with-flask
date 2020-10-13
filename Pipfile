@@ -13,6 +13,7 @@ flask-sqlalchemy = "*"
 flask-wtf = "*"
 python-dotenv = "*"
 flask-login = "*"
+python-slugify = "*"
 
 [requires]
 python_version = "3.8"
