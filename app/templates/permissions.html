@@ -2,5 +2,63 @@
 {% block content %}
     <div>
         <h3>Permissions Page</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="#" 
+            data-toggle="modal" 
+            data-target="#newPermission"
+        >
+            <span class="badge badge-warning">New Permission</span>
+        </a>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Permission Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for permission in permissions %}
+                        <td>{{ permission.name }}</td>
+                        <td>
+                            <i class="fa fa-pen"></i>
+                            <i class="fa fa-trash"></i>
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="newPermission" tabindex="1" role="dialog" aria-labelledby="userPermission" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="userPermission">{{ title }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('nonAuth.createPermission') }}">
+                            {{ form.csrf_token }}
+                
+                            <fieldset class="name">
+                                {{ form.name.label }}
+                                {{ form.name(placeholder='Access Admin Area') }}
+                            </fieldset>
+                            <div class="submit-button">
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

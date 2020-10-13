@@ -4,7 +4,8 @@ from app.forms import *
 from . import nonAuth
 from app.db import session
 
-User_Roles = roles.Roles
+User_Roles = role.Role
+Perms = permission.Permission
 
 @nonAuth.route('/login')
 def login():
@@ -35,7 +36,33 @@ def createRole():
             session.add(new_role)
             session.commit()
             return redirect(url_for('nonAuth.getRoles'))
-        print(existing_role)
+        
         flash('Role already exists')
         return redirect(url_for('nonAuth.getRoles'))
-    # return render_template('roles.html', form = form, title='Create a User Role')
+
+    
+@nonAuth.route('/system/permissions')
+def getPermissions():
+    form = PermissionForm()
+    
+    permissions = Perms.query.all()
+    return render_template('permissions.html', form=form, title='Create a Permission', permissions = permissions)
+
+@nonAuth.route('/system/permissions/create-permission', methods=['POST',])
+def createPermission():
+    form = PermissionForm()
+    if form.validate_on_submit():
+        print(form.name.data)
+        # do something here
+        existing_perm = Perms.query.filter_by(name = form.name.data).first()
+
+        if existing_perm is None:
+            new_perm = Perms(
+                name = form.name.data
+            )
+            session.add(new_perm)
+            session.commit()
+            return redirect(url_for('nonAuth.getPermissions'))
+        
+        flash('Permission already exists')
+        return redirect(url_for('nonAuth.getPermissions'))
