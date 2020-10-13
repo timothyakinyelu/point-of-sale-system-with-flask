@@ -19,3 +19,8 @@ class Roles(db.Model):
         backref = 'role', 
         lazy = 'joined'
     )
+    users = db.relationship(
+        'Users', 
+        backref = 'role', 
+        lazy = 'joined'
+    )

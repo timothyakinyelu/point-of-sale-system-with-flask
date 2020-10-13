@@ -1,7 +1,8 @@
 from app.db import db
-from .pivots import permission_user_table, role_user_table
+from .pivots import permission_user_table
+from flask_login import UserMixin
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     __tablename__ = 'users'
     
     id = db.Column(
@@ -17,16 +18,19 @@ class Users(db.Model):
         db.String(100),
         nullable = False
     )
-    active = db.Column(db.Boolean())
+    role_id = db.Column(
+        db.Integer,
+        db.ForeignKey('roles.id')
+    )
+    active = db.Column(
+        db.Boolean
+    )
     permissions = db.relationship(
         'Permissions', 
         secondary = permission_user_table, 
         backref = 'user', 
         lazy = 'joined'
     )
-    roles = db.relationship(
-        'Roles', 
-        secondary = role_user_table, 
-        backref = 'user', 
-        lazy = 'joined'
-    )
+    
+    def __init__(self, name):
+        self.active = False
