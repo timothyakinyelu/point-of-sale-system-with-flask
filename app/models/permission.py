@@ -1,6 +1,7 @@
 from app.db import db
+from slugify import slugify
 
-class Permissions(db.Model):
+class Permission(db.Model):
     __tablename__ = 'permissions'
     
     id = db.Column(
@@ -16,3 +17,10 @@ class Permissions(db.Model):
         db.String(100),
         nullable = False
     )
+    
+    
+    def __init__(self, *args, **kwargs):
+        if not 'slug' in kwargs:
+            self.slug = slugify(kwargs['name'])
+            print(self.slug)
+        super().__init__(*args, **kwargs)

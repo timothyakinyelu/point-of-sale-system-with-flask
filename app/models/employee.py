@@ -1,6 +1,6 @@
 from app.db import db
 
-class Employees(db.Model):
+class Employee(db.Model):
     __tablename__ = 'employees'
     
     id = db.Column(

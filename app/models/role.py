@@ -1,7 +1,8 @@
 from app.db import db
 from .pivots import permission_role_table
+from app.perm_helpers import HasPermissionTrait
 
-class Roles(db.Model):
+class Role(db.Model, HasPermissionTrait):
     __tablename__ = 'roles'
     
     id = db.Column(
@@ -14,13 +15,13 @@ class Roles(db.Model):
         nullable = False
     )
     permissions = db.relationship(
-        'Permissions', 
+        'Permission', 
         secondary = permission_role_table, 
-        backref = 'role', 
+        backref = 'roles', 
         lazy = 'joined'
     )
     users = db.relationship(
-        'Users', 
+        'User', 
         backref = 'role', 
         lazy = 'joined'
     )

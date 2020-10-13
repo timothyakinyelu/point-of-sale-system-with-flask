@@ -3,7 +3,7 @@ from .pivots import permission_user_table
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class Users(db.Model, UserMixin):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
     
     id = db.Column(
@@ -28,9 +28,9 @@ class Users(db.Model, UserMixin):
         db.Boolean
     )
     permissions = db.relationship(
-        'Permissions', 
+        'Permission', 
         secondary = permission_user_table, 
-        backref = 'user', 
+        backref = 'users', 
         lazy = 'joined'
     )
     
