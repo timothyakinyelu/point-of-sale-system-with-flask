@@ -25,7 +25,8 @@ class User(db.Model, UserMixin):
         db.ForeignKey('roles.id')
     )
     active = db.Column(
-        db.Boolean
+        db.String(100),
+        server_default="PENDING"
     )
     permissions = db.relationship(
         'Permission', 
@@ -33,9 +34,6 @@ class User(db.Model, UserMixin):
         backref = 'users', 
         lazy = 'joined'
     )
-    
-    def __init__(self):
-        self.active = False
         
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
