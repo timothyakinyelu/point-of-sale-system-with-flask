@@ -45,7 +45,7 @@
                         <h4 class="modal-title" id="userRole">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('nonAuth.createRole') }}">
+                        <form method="POST" action="{{ url_for('auth.createRole') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="title">

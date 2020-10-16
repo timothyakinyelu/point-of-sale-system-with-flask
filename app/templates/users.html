@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h3>Users Page</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="#" 
+            data-toggle="modal" 
+            data-target="#newUser"
+        >
+            <span class="badge badge-warning">New User</span>
+        </a>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <th scope="row">{{ user.username }}</th>
+                            <td>{{ user.role.title }}</td>
+                            <td>{{ user.active }}</td>
+                            <td>
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash"></i>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="newUser" tabindex="1" role="dialog" aria-labelledby="user" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="user">{{ title }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('auth.createUser') }}">
+                            {{ form.csrf_token }}
+                
+                            <fieldset class="username">
+                                {{ form.username.label }}
+                                {{ form.username(placeholder='John Smith') }}
+                                {% if form.username.errors %}
+                                <ul class="errors">
+                                    {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="password">
+                                {{ form.password.label }}
+                                {{ form.password }}
+                                {% if form.password.errors %}
+                                <ul class="errors">
+                                    {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="active">
+                                {{ form.active.label }}
+                                {{ form.active }}
+                            </fieldset>
+                            <fieldset class="role">
+                                {{ form.role.label }}
+                                {{ form.role }}
+                            </fieldset>
+                            <div class="submit-button">
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

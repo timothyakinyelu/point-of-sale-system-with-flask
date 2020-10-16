@@ -16,7 +16,7 @@
             <span class="badge badge-warning">New Permission</span>
         </a>
         <div class="table-container">
-            <form action="{{ url_for('nonAuth.checkPerm') }}" method="POST">
+            <form action="{{ url_for('auth.checkPerm') }}" method="POST">
                 <table class="table">
                     <thead>
                         <tr>
@@ -33,20 +33,18 @@
                                 <th name="permission" value={{permission.id}} scope="row">{{ permission.name }}</th>
                                 {% for role in roles %}
                                 <td>
-                                    <!-- <form action="{{ url_for('nonAuth.checkPerm', permID=permission.id, roleID=role.id) }}" method="post"> -->
-                                        <input 
-                                            id="task-{{permission.id}}" 
-                                            class="check-task-button" 
-                                            type="checkbox" 
-                                            name="check" 
-                                            {% for x in access %}
-                                                {% if x == (permission.id, role.id) %} 
-                                                CHECKED 
-                                                {% endif %}
-                                            {% endfor %}
-                                            value="{{ permission.id }}-{{ role.id }}"
-                                        />
-                                    <!-- </form> -->
+                                    <input 
+                                        id="task-{{permission.id}}" 
+                                        class="check-task-button" 
+                                        type="checkbox" 
+                                        name="check" 
+                                        {% for x in access %}
+                                            {% if x == (permission.id, role.id) %} 
+                                            CHECKED 
+                                            {% endif %}
+                                        {% endfor %}
+                                        value="{{ permission.id }}-{{ role.id }}"
+                                    />
                                 </td>
                                 {% endfor %}
                                 <td>
@@ -71,7 +69,7 @@
                         <h4 class="modal-title" id="userPermission">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('nonAuth.createPermission') }}">
+                        <form method="POST" action="{{ url_for('auth.createPermission') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">
