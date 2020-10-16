@@ -15,13 +15,17 @@ class Role(db.Model, HasPermissionTrait):
         nullable = False
     )
     permissions = db.relationship(
-        'Permission', 
+        "Permission", 
         secondary = permission_role_table, 
-        backref = 'roles', 
-        lazy = 'joined'
+        backref = "roles", 
+        lazy = "joined"
     )
     users = db.relationship(
-        'User', 
-        backref = 'role', 
-        lazy = 'joined'
+        "User", 
+        backref = "role", 
+        lazy = "joined"
     )
+    
+    
+    def __init__(self):
+        super(Role, self).__init__()

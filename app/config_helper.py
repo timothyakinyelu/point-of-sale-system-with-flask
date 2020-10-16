@@ -8,3 +8,4 @@ def load_config(MODE):
             return DevelopmentConfig
     except EnvironmentError:
         raise EnvironmentError('Invalid environment for app state.')
+    
