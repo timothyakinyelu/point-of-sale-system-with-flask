@@ -4,19 +4,19 @@ from app.db import session
 Permission = permission.Permission
 
 class HasPermissionTrait:
-    """ Assign permissions to a user
+    """ Assign permissions to a user or role
         @return permissions or null
     """
-    def givePermissionsTo():
-        permissions = self.getAllPermissions()
-        
-        if permissions is None:
+    
+    def givePermissionsTo(self, perms):
+        # permissions = self.getAllPermissions(perms) 
+        if perms is None:
             return self
         
-        permission = Permission(permissions)
-        session.add_all(permission)
+        self.permissions.extend(perms)
+        session.add(self)
         session.commit()
-        return permission
+        return self
         
         
     """
@@ -25,13 +25,13 @@ class HasPermissionTrait:
     roles. If the permission is out of scope, a RolePermissionScopeException
     is raised.
     """
-    def revokePermissions(*perms):
-        permissions = self.getAllPermissions()
-        
-        permission = Permission(permissions)
-        session.delete(permission)
-        session.commit()
-        return self
+    def revokePermissions(self, perms):
+        if perms is not None:
+            for perm in perms: 
+                self.permissions.remove(perm)
+                session.commit()
+                return self
+            return self
     
     
     """Check if a user has permission to perform an action."""
@@ -65,13 +65,14 @@ class HasPermissionTrait:
             return False
         
         
-    """get all permissions"""
-    def getAllPermissions():
-        return Permission.query.all()
+    # """get all permissions"""
+    # @classmethod
+    # def getAllPermissions(self,perms):
+    #     return session.query(Permission).filter_by(Permission.slug.in_(perms)).all()
     
     """check if user has direct permissions"""
     def hasPermission(perm):
-        permit = Permission.query.filter_by(slug = perm.slug).first()
+        permit = Permission.query.filter_by(slug = perm).first()
         if permit is None:
             return False
             raise('User does not have permission')
