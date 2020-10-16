@@ -1,16 +1,17 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, SelectField, PasswordField, RadioField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired, InputRequired, Length
+from app.models import *
+
+Role = role.Role
 
 """Create User Form"""
 class CreateUserForm(FlaskForm):
-    selection_field = SelectField()
     def __init__(self):
-        super(CreateUserForm, self).__init__()
-        
-        from app.models.role import Role
-        self.selection_field.choices = Role.query.all()
-        
+        super().__init__()  # calls the base initialisation and then...
+        roles = Role.query.all()
+        self.role.choices = [(role.id, role.title) for role in roles]
+    
     username = StringField(
         'Username',
         validators=[DataRequired()]
@@ -23,8 +24,8 @@ class CreateUserForm(FlaskForm):
         ]
     )
     active = RadioField(
-        'Active User',
-        validators=[DataRequired()]
+        'Status',
+        choices=[('ACTIVE', 'Active'),('PENDING', 'Pending')]
     )
     role = SelectField(
         'User Role',
@@ -53,7 +54,7 @@ class LoginForm(FlaskForm):
 class RoleForm(FlaskForm):
     title = StringField(
         'Role',
-        validators = [DataRequired()]
+        validators = [InputRequired()]
     )
     submit = SubmitField('Add Role')
     
@@ -61,7 +62,7 @@ class RoleForm(FlaskForm):
 class PermissionForm(FlaskForm):
     name = StringField(
         'Permission',
-        validators = [DataRequired()]
+        validators = [InputRequired()]
     )
     submit = SubmitField('Add Permission')
     
