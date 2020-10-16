@@ -15,25 +15,51 @@
         >
             <span class="badge badge-warning">New Permission</span>
         </a>
-        <table class="responsive-table">
-            <thead>
-                <tr>
-                    <th>Permission Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% for permission in permissions %}
-                        <td>{{ permission.name }}</td>
-                        <td>
-                            <i class="fa fa-pen"></i>
-                            <i class="fa fa-trash"></i>
-                        </td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-container">
+            <form action="{{ url_for('nonAuth.checkPerm') }}" method="POST">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Permission Name</th>
+                            {% for role in roles %}
+                                <th name="role" value={{role.id}} scope="col">{{ role.title }}</th>
+                            {% endfor%}
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for permission in permissions %}
+                            <tr>
+                                <th name="permission" value={{permission.id}} scope="row">{{ permission.name }}</th>
+                                {% for role in roles %}
+                                <td>
+                                    <!-- <form action="{{ url_for('nonAuth.checkPerm', permID=permission.id, roleID=role.id) }}" method="post"> -->
+                                        <input 
+                                            id="task-{{permission.id}}" 
+                                            class="check-task-button" 
+                                            type="checkbox" 
+                                            name="check" 
+                                            {% for x in access %}
+                                                {% if x == (permission.id, role.id) %} 
+                                                CHECKED 
+                                                {% endif %}
+                                            {% endfor %}
+                                            value="{{ permission.id }}-{{ role.id }}"
+                                        />
+                                    <!-- </form> -->
+                                </td>
+                                {% endfor %}
+                                <td>
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-trash"></i>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button class="button is-block is-info is-large is-fullwidth">Save</button>
+            </form>
+        </div>
 
         <div class="modal fade" id="newPermission" tabindex="1" role="dialog" aria-labelledby="userPermission" aria-hidden="true">
             <div class="modal-dialog" role="document">
