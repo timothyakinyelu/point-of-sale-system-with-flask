@@ -2,8 +2,10 @@ import os
 from flask import Flask, flash, redirect, url_for
 from app.config_helper import load_config
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 login_manager = LoginManager()
+csrf = CSRFProtect()
 
 def create_app():
     app = Flask(__name__, template_folder='./templates')
@@ -14,6 +16,7 @@ def create_app():
     
     from .db import db
     db.init_app(app)
+    csrf.init_app(app)
     login_manager.login_view = 'nonAuth.login'
     login_manager.init_app(app)
     
