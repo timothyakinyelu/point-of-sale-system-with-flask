@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 from . import auth
 from app.controllers import SystemController
 from app.controllers import UserController
@@ -14,7 +14,7 @@ def index():
 def getUsers(): 
     return SystemController.users()
 
-@auth.route('/system/users/create-new-user', methods=['POST',])
+@auth.route('/system/users/create-new-user', methods=['GET', 'POST'])
 @login_required
 def createUser():
     return UserController.create()
