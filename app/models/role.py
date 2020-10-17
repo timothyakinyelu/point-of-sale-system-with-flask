@@ -27,5 +27,6 @@ class Role(db.Model, HasPermissionTrait):
     )
     
     
-    def __init__(self):
+    def __init__(self, title):
         super(Role, self).__init__()
+        self.title = title
