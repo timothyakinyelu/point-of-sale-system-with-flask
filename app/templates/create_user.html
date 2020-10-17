@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
+            {{ form.csrf_token }}
+
+            <fieldset class="username">
+                {{ form.username.label }}
+                {{ form.username(placeholder='John Smith') }}
+                {% if form.username.errors %}
+                <ul class="errors">
+                    {% for error in form.username.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="password">
+                {{ form.password.label }}
+                {{ form.password }}
+                {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="active">
+                {{ form.active.label }}
+                {{ form.active }}
+            </fieldset>
+            <fieldset class="role">
+                {{ form.role.label }}
+                {{ form.role }}
+            </fieldset>
+            <div id="user_form" class="submit-button">
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

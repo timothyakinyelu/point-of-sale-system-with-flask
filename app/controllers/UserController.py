@@ -11,7 +11,6 @@ def create():
     form = CreateUserForm()
     
     if form.validate_on_submit():
-        
         existing_user = User.query.filter_by(username = form.username.data).first()
         
         if existing_user is None:
@@ -26,8 +25,9 @@ def create():
             
             return redirect(url_for('auth.getUsers'))
         flash('User already exists')
+
     return render_template(
-        'users.html', 
+        'create_user.html', 
         form = form,
         title = 'Create a New User.'
     )

@@ -2,17 +2,16 @@
 {% block content %}
     <div>
         <h3>Users Page</h3>
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="notification is-danger">
-                    {{ messages[0] }}
-                </div>
-            {% endif %}
-        {% endwith %}
-        <a href="#" 
-            data-toggle="modal" 
-            data-target="#newUser"
-        >
+        <div class="flash">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="notification is-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+        </div>
+        <a href="{{ url_for('auth.createUser') }}">
             <span class="badge badge-warning">New User</span>
         </a>
         <div class="table-container">
@@ -41,7 +40,7 @@
             </table>
         </div>
 
-        <div class="modal fade" id="newUser" tabindex="1" role="dialog" aria-labelledby="user" aria-hidden="true">
+        <!-- <div class="modal fade" id="newUser" tabindex="1" role="dialog" aria-labelledby="user" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -51,7 +50,7 @@
                         <h4 class="modal-title" id="user">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.createUser') }}">
+                        <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="username">
@@ -82,13 +81,13 @@
                                 {{ form.role.label }}
                                 {{ form.role }}
                             </fieldset>
-                            <div class="submit-button">
+                            <div id="user_form" class="submit-button">
                                 {{ form.submit }}
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 {% endblock %}
