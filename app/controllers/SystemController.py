@@ -9,6 +9,12 @@ User_Role = role.Role
 Perm = permission.Permission
 perm_role = pivots.permission_role_table
 
+def getAllRoles():
+    return User_Role.query.all()
+
+def getAllPermissions():
+    return Perms.query.all()
+
 """ Controller that handles all system settings and access controls """
 def users():
     """ Fetch all users from database."""
@@ -26,12 +32,13 @@ def roles():
     """ Fetch all system roles from database."""
     
     form = RoleForm()
-    roles = User_Role.query.all()
+    roles = getAllRoles()
     
     return render_template('roles.html', form=form, title='Create a User Role', roles = roles)
 
 def createRoles():
     """ Create new system roles."""
+    roles = getAllRoles()
     
     form = RoleForm()
     if form.validate_on_submit():
@@ -46,16 +53,15 @@ def createRoles():
             session.commit()
             return redirect(url_for('auth.getRoles'))
         
-        flash('Role already exists')
-        # return redirect(url_for('auth.getRoles'))
-    return render_template('roles.html')
+        flash('Role already exists!')
+    return redirect(url_for('auth.getRoles'))
 
 def permissions():
     """ Fetch all system permissions from database."""
     
     form = PermissionForm()
-    roles = User_Role.query.all()
-    permissions = Perm.query.all()
+    roles = getAllRoles()
+    permissions = getAllPermissions()
     
     access = []
     perms = []
@@ -79,6 +85,8 @@ def permissions():
 
 def createPermissions():
     """ Create new system permissions."""
+    roles = getAllRoles()
+    permissions = getAllPermissions()
     
     form = PermissionForm()
     if form.validate_on_submit():
@@ -93,9 +101,9 @@ def createPermissions():
             session.commit()
             return redirect(url_for('auth.getPermissions'))
         
-        flash('Permission already exists')
-        # return redirect(url_for('auth.getPermissions'))
-    return render_template('permissions.html')
+        flash('Permission already exists!')
+    return redirect(url_for('auth.getPermissions'))
+    
 
 def checkPermissions():
     """

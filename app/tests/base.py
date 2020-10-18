@@ -1,6 +1,8 @@
 from flask_testing import TestCase
 from app.db import db
 from app import create_app
+from app.models.user import User
+from app.forms import *
 from app.config_helper import load_config
 
 app = create_app()
@@ -20,3 +22,18 @@ class BaseCase(TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        
+    def createUser(self):
+        user = User(username = 'Juniper', password = 'password')
+        user.set_password('password')
+        db.session.add(user)
+        db.session.commit()
+        
+        return user
+    
+    def loginUser(self):
+        login = LoginForm(username = 'Juniper',
+            password = 'password'
+        )
+        
+        return login
