@@ -6,21 +6,9 @@ from app.db import session
 from flask_login import current_user
 
 class UserAuthTests(BaseCase):
-    def createUser(self):
-        user = User(username = 'Juniper', password = 'password')
-        user.set_password('password')
-        session.add(user)
-        session.commit()
-        
-        return user
-    
-    
     def test_users_can_login(self):
         user = self.createUser()
-        
-        login = LoginForm(username = 'Juniper',
-            password = 'password'
-        )
+        login = self.loginUser()
         
         with self.client:
             response = self.client.post(url_for(
@@ -36,8 +24,8 @@ class UserAuthTests(BaseCase):
     
     def test_user_cannot_login_with_invalid_credentials(self):
         user = self.createUser()
-        
-        login = LoginForm(username = 'Juniper',
+        login = LoginForm(
+            username = 'Juniper',
             password = 'secret'
         )
          
@@ -53,9 +41,7 @@ class UserAuthTests(BaseCase):
             
     def test_user_can_logout(self):
         user = self.createUser()
-        login = LoginForm(username = 'Juniper',
-            password = 'password'
-        )
+        login = self.loginUser()
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
@@ -66,15 +52,13 @@ class UserAuthTests(BaseCase):
         
     def test_user_can_be_created(self):
         user = self.createUser()
+        login = self.loginUser()
         
         role = Role(
-            title = 'CASHIER'
+            title = 'Cashier'
         )
         session.add(role)
         session.commit()
-        login = LoginForm(username = 'Juniper',
-            password = 'password'
-        )
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
