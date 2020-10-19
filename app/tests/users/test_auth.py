@@ -21,7 +21,18 @@ class UserAuthTests(BaseCase):
             self.assertTrue(current_user.username == 'Juniper')
             self.assertFalse(current_user.is_anonymous)
     
-    
+    def test_user_already_logged_in(self):
+        user = self.createUser()
+        login = self.loginUser()
+        
+        with self.client:
+            self.client.post(url_for('nonAuth.login'), data = login.data)
+            response = self.client.post(url_for('nonAuth.login'), data = login.data)
+            
+            if current_user.username == 'Juniper':
+                self.assertRedirects(response, url_for('auth.index'))
+
+        
     def test_user_cannot_login_with_invalid_credentials(self):
         user = self.createUser()
         login = LoginForm(
@@ -37,7 +48,7 @@ class UserAuthTests(BaseCase):
             )
             self.assertRedirects(response, url_for('nonAuth.login'))
             self.assertTrue(current_user.is_anonymous)
-            
+
             
     def test_user_can_logout(self):
         user = self.createUser()
