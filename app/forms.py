@@ -1,9 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextField, SubmitField, SelectField, PasswordField, RadioField
 from wtforms.validators import DataRequired, InputRequired, Length
-from app.models import *
+from app.models.role import Role
 
-Role = role.Role
 
 """Create User Form"""
 class CreateUserForm(FlaskForm):
