@@ -17,7 +17,7 @@ def authenticate():
         return redirect(url_for('auth.index'))
     
     form = LoginForm()
-    
+
     if form.validate_on_submit():
         user = User.query.filter_by(username = form.username.data).first()
         
@@ -25,6 +25,8 @@ def authenticate():
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page or url_for('auth.index'))
-        flash('Invalid Credentials')
+        flash('Invalid Credentials!')
         return redirect(url_for('nonAuth.login'))
+
+   
     return render_template('login.html', form = form, title = 'Log In')

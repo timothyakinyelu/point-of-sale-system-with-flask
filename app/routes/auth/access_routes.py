@@ -28,6 +28,16 @@ def getRoles():
 @login_required
 def createRole():
     return SystemController.createRoles()
+
+@auth.route('/system/roles/update-role/<int:id>', methods=['POST',])
+@login_required
+def updateRole(id):
+    return SystemController.updateRoles(id)
+
+@auth.route('/system/roles/delete-role/<int:id>', methods=['POST',])
+@login_required
+def deleteRole(id):
+    return SystemController.deleteRoles(id)
   
 @auth.route('/system/permissions')
 @login_required

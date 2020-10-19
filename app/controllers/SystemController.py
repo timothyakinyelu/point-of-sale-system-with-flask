@@ -41,19 +41,41 @@ def createRoles():
     roles = getAllRoles()
     
     form = RoleForm()
-    if form.validate_on_submit():
-        # do something here
-        existing_role = User_Role.query.filter_by(title = form.title.data).first()
 
-        if existing_role is None:
-            new_role = User_Role(
-                title = form.title.data
-            )
-            session.add(new_role)
-            session.commit()
+    if not form.title.data[0].isdigit():
+        if form.validate_on_submit():
+            # do something here
+            existing_role = User_Role.query.filter_by(title = form.title.data).first()
+
+            if existing_role is None:
+                new_role = User_Role(
+                    title = form.title.data
+                )
+                session.add(new_role)
+                session.commit()
+                return redirect(url_for('auth.getRoles'))
+            flash('Role already exists!')
+    flash('Value entered must start with an alphabet!')
+
+    return redirect(url_for('auth.getRoles'))
+
+def updateRoles(id):
+    form = RoleForm()
+    
+    if not form.title.data[0].isdigit():
+        if form.validate_on_submit():
+            session.query(User_Role).filter(User_Role.id == id).update({User_Role.title: form.title.data})
+            
             return redirect(url_for('auth.getRoles'))
-        
-        flash('Role already exists!')
+        flash('Unable to update role!')
+    flash('Value entered must start with an alphabet!')
+
+    return redirect(url_for('auth.getRoles'))
+
+def deleteRoles(id):
+    role = Role.query.filter_by(id = id).delete()
+    flash('Role deleted successfully!')
+    
     return redirect(url_for('auth.getRoles'))
 
 def permissions():
