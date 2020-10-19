@@ -13,7 +13,7 @@ def getAllRoles():
     return User_Role.query.all()
 
 def getAllPermissions():
-    return Perms.query.all()
+    return Perm.query.all()
 
 """ Controller that handles all system settings and access controls """
 def users():
@@ -107,23 +107,46 @@ def permissions():
 
 def createPermissions():
     """ Create new system permissions."""
-    roles = getAllRoles()
     permissions = getAllPermissions()
     
     form = PermissionForm()
-    if form.validate_on_submit():
-        # do something here
-        existing_perm = Perm.query.filter_by(name = form.name.data).first()
+    if not form.name.data[0].isdigit():
+        if form.validate_on_submit():
+            # do something here
+            existing_perm = Perm.query.filter_by(name = form.name.data).first()
 
-        if existing_perm is None:
-            new_perm = Perm(
-                name = form.name.data
-            )
-            session.add(new_perm)
-            session.commit()
-            return redirect(url_for('auth.getPermissions'))
+            if existing_perm is None:
+                new_perm = Perm(
+                    name = form.name.data
+                )
+                session.add(new_perm)
+                session.commit()
+                return redirect(url_for('auth.getPermissions'))
+            flash('Permission already exists!')
+    flash('Value entered must start with an alphabet!')
         
-        flash('Permission already exists!')
+    return redirect(url_for('auth.getPermissions'))
+
+
+def updatePermissions(id):
+    form = PermissionForm()
+    
+    if not form.name.data[0].isdigit():
+        if form.validate_on_submit():
+            permission = Perm.query.filter_by(id = id).update({Perm.name: form.name.data})
+            # session.query(Perm).filter(Perm.id == id).update({Perm.name: form.name.data})
+            
+            return redirect(url_for('auth.getPermissions'))
+        flash('Unable to update permission!')
+    flash('Value entered must start with an alphabet!')
+
+    return redirect(url_for('auth.Permissions'))
+
+
+def deletePermissions(id):
+    permission = Perm.query.filter_by(id = id).delete()
+    flash('Permission deleted successfully!')
+    
     return redirect(url_for('auth.getPermissions'))
     
 

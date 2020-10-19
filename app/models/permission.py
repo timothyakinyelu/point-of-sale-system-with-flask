@@ -22,5 +22,4 @@ class Permission(db.Model):
     def __init__(self, *args, **kwargs):
         if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
-            print(self.slug)
         super().__init__(*args, **kwargs)
