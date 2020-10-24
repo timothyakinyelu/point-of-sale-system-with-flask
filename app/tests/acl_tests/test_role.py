@@ -6,14 +6,6 @@ from app.forms import *
 from app.controllers import SystemController
 
 class UserRoleTests(BaseCase):
-    def createUserRole(self):
-        role = Role('Cashier')
-        session.add(role)
-        session.commit()
-        
-        return role
-
-    
     def test_role_can_be_created(self):
         user = self.createUser()
         login = self.loginUser()

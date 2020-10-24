@@ -37,3 +37,17 @@ class BaseCase(TestCase):
         )
         
         return login
+    
+    def createUserRole(self):
+        role = Role('Cashier')
+        session.add(role)
+        session.commit()
+        
+        return role
+
+    def createUserPermission(self):
+        permission = Permission(name = 'Create User')
+        session.add(permission)
+        session.commit()
+        
+        return permission

@@ -6,12 +6,6 @@ from app.forms import *
 from app.controllers import SystemController
 
 class UserPermissionTests(BaseCase):
-    def createUserPermission(self):
-        permission = Permission(name = 'Create User')
-        session.add(permission)
-        session.commit()
-        
-    
     def test_user_can_create_permission(self):
         user = self.createUser()
         login = self.loginUser()
@@ -81,3 +75,4 @@ class UserPermissionTests(BaseCase):
             
             self.assertTrue(permissions == [])
             self.assertRedirects(response, url_for('auth.getPermissions'))
+            
