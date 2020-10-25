@@ -18,11 +18,11 @@ class Product(db.Model):
     )
     brand_id = db.Column(
         db.Integer,
-        db.ForeignKey('brands.id')
+        db.ForeignKey('brands.id'),
         nullable = False
     )
     price = db.Column(
-        db.Float
+        db.Float,
         nullable = False
     )
     old_price = db.Column(
@@ -34,8 +34,8 @@ class Product(db.Model):
     discount_id = db.Column(
         db.Integer
     )
-	has_discount_applied = db.Column(
-        db.Boolean
+    has_discount_applied = db.Column(
+        db.Boolean,
         server_default="0"
     )
     stock_qty = db.Column(
@@ -55,7 +55,7 @@ class Product(db.Model):
     )
     attributes = db.relationship(
         'Attribute',
-        secondary = attribute_product_table,
+        secondary = 'attribute_product_table',
         backref = 'products',
         lazy = 'joined'
     )

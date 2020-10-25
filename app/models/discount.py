@@ -10,14 +10,14 @@ class Discount(db.Model):
         autoincrement = True
     )
     name = db.Column(
-        db.String(50)
+        db.String(50),
         nullable = False
     )
     discount_type = db.Column(
         db.String(50)
     )
     amount = db.Column(
-        db.Float
+        db.Float,
         nullable = False
     )
     requires_coupon = db.Column(

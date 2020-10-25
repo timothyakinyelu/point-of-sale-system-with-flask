@@ -20,7 +20,8 @@ def create_app():
     login_manager.login_view = 'nonAuth.login'
     login_manager.init_app(app)
     
-    from app.models import employee, permission, role, user, pivots
+    
+    from app.models import employee, permission, role, user, attribute, attributeValue, brand, shop, discount, product, category, transaction, productTransaction, pivots
     @login_manager.user_loader
     def load_user(user_id):
         """Check if user is logged-in on every page load."""
@@ -28,6 +29,7 @@ def create_app():
         if user_id is not None:
             return user.User.query.get(user_id)
         return None
+    
     
     @login_manager.unauthorized_handler
     def unauthorized():

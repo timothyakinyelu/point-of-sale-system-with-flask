@@ -2,6 +2,8 @@ from app.db import db
 
 
 class Attribute(db.Model):
+    __tablename__ = 'attributes'
+    
     id = db.Column(
         db.Integer,
         primary_key = True,
@@ -17,7 +19,7 @@ class Attribute(db.Model):
     identifier_code = db.Column(
         db.String(3)
     )
-    attribute_value = db.relationship(
+    attribute_values = db.relationship(
         'AttributeValue',
         backref = 'attribute',
         lazy = 'joined'
@@ -25,6 +27,6 @@ class Attribute(db.Model):
     
     
     def __init__(self, *args, **kwargs):
-        if not in kwargs:
+        if not 'identifier_code' in kwargs:
             self.identifier_code = kwargs['name'][0:2].lower()
         super().__init__(*args, **kwargs)

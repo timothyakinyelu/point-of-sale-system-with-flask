@@ -3,6 +3,7 @@ from slugify import slugify
 
 class Permission(db.Model):
     __tablename__ = 'permissions'
+    __table_args__ = {'extend_existing': True}
     
     id = db.Column(
         db.Integer,

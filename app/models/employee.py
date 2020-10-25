@@ -2,6 +2,7 @@ from app.db import db
 
 class Employee(db.Model):
     __tablename__ = 'employees'
+    __table_args__ = {'extend_existing': True}
     
     id = db.Column(
         db.Integer,

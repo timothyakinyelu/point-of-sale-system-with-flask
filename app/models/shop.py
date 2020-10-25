@@ -31,4 +31,4 @@ class Shop(db.Model):
     def __init__(self, *args, **kwaargs):
         if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
-        super()__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)

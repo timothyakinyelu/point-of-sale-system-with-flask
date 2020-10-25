@@ -27,20 +27,21 @@ class Category(db.Model):
     )
     children = db.relationship(
         "Category",
-        backref = backref('parent', remote_side=[id]),
+        backref = db.backref('parent', remote_side=[id]),
         lazy = 'joined',
         join_depth = 2
     )
     products = db.relationship(
         'Product',
-        secondary = category_product_table,
+        secondary = 'category_product_table',
         backref = 'categories',
         lazy = 'joined'
     )
     
     
     def __init__(self, *args, **kwargs):
-        if not in kwargs:
+        if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
+        if not 'identifier_code' in kwargs:
             self.identifier_code = kwargs['name'][0:2].lower()
         super().__init__(*args, **kwargs)

@@ -1,6 +1,6 @@
 from app.db import db
 from flask_sqlalchemy import event
-from app.models.product import Products
+from app.models.product import Product
 
 
 class ProductTransaction(db.Model):
@@ -32,8 +32,8 @@ class ProductTransaction(db.Model):
     )
     transaction = db.relationship(
         'Transaction',
-        backref = 'transaction_assoc'
-        'lazy' = 'joined'
+        backref = 'transaction_assoc',
+        lazy = 'joined'
     )
     
     

@@ -6,6 +6,7 @@ from flask import current_app
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
+    __table_args__ = {'extend_existing': True}
     
     id = db.Column(
         db.Integer,

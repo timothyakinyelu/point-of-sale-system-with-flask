@@ -4,6 +4,7 @@ from app.perm_helpers import HasPermissionTrait
 
 class Role(db.Model, HasPermissionTrait):
     __tablename__ = 'roles'
+    __table_args__ = {'extend_existing': True}
     
     id = db.Column(
         db.Integer,

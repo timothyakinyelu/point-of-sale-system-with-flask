@@ -10,24 +10,24 @@ class Transaction(db.Model):
         primary_key = True,
         autoincrement = True
     )
-    user_id = db_Column(
+    user_id = db.Column(
         db.Integer,
-        db.ForeignKey('users.id')
+        db.ForeignKey('users.id'),
         nullable = False
     )
     shop_id = db.Column(
         db.Integer,
-        db.ForeignKey('shops.id')
+        db.ForeignKey('shops.id'),
         nullable = False
     )
     payment_method = db.Column(
-        db.String(50)
+        db.String(50),
         nullable = False
     )
     pos_ref_number = db.Column(
         db.String(100)
     )
     status = db.Column(
-        db.String(50)
+        db.String(50),
         server_default="PENDING"
     )

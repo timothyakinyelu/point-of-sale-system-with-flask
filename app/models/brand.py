@@ -3,7 +3,7 @@ from slugify import slugify
 
 
 class Brand(db.Model):
-    __table__name = 'brands'
+    __tablename__ = 'brands'
     
     id = db.Column(
         db.Integer,
@@ -30,7 +30,8 @@ class Brand(db.Model):
     
     
     def __init__(self, *args, **kwargs):
-        if not in kwargs:
+        if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
+        if not 'identifier_code' in kwargs:
             self.identifier_code = kwargs['name'][0:2].lower()
         super().__init__(*args, **kwargs)
