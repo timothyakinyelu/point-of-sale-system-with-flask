@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for
 from . import auth
 from app.controllers import SystemController
 from app.controllers import UserController
+from app.controllers import ShopController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
@@ -69,3 +70,26 @@ def checkPerm():
 def logout():
     logout_user()
     return redirect(url_for('nonAuth.login'))
+
+
+# Main shop routes
+@auth.route('/system/shops')
+@login_required
+def getShops():
+    return ShopController.shops()
+
+@auth.route('/system/shops/create-shop', methods=['POST',])
+@login_required
+def createShop():
+    return ShopController.createShops()
+
+@auth.route('/system/shops/update-shop/<int:id>', methods=['POST',])
+@login_required
+def updateShop(id):
+    return ShopController.updateShops(id)
+
+
+@auth.route('/system/shops/delete-shop/<int:id>', methods=['POST',])
+@login_required
+def deleteShop(id):
+    return ShopController.deleteShops(id)
