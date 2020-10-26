@@ -3,6 +3,7 @@ from . import auth
 from app.controllers import SystemController
 from app.controllers import UserController
 from app.controllers import ShopController
+from app.controllers import BrandController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
@@ -88,8 +89,27 @@ def createShop():
 def updateShop(id):
     return ShopController.updateShops(id)
 
-
 @auth.route('/system/shops/delete-shop/<int:id>', methods=['POST',])
 @login_required
 def deleteShop(id):
     return ShopController.deleteShops(id)
+
+@auth.route('/system/brands')
+@login_required
+def getBrands():
+    return BrandController.brands()
+
+@auth.route('/system/brands/create-brand', methods=['POST',])
+@login_required
+def createBrand():
+    return BrandController.createBrands()
+
+@auth.route('/system/brands/update-brand/<int:id>', methods=['POST',])
+@login_required
+def updateBrand(id):
+    return BrandController.updateBrands(id)
+
+@auth.route('/system/brands/delete-brand/<int:id>', methods=['POST',])
+@login_required
+def deleteBrand(id):
+    return BrandController.deleteBrands(id)

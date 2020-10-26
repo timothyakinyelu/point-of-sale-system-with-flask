@@ -78,3 +78,12 @@ class ShopForm(FlaskForm):
     )
     submit = SubmitField('Add Shop')
     
+class BrandForm(FlaskForm):
+    """Brand Creation Form"""
+
+    name = StringField(
+        'Brand',
+        validators = [InputRequired()]
+    )
+    submit = SubmitField('Add Brand')
+    
