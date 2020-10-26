@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
     <div>
-        <h3>Roles Page</h3>
+        <h3>Shops Page</h3>
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="notification is-danger">
@@ -13,7 +13,7 @@
             data-toggle="modal" 
             data-target="#newShop"
         >
-            <span class="badge badge-warning">New Shop</span>
+            <span class="badge badge-warning">Add Shop</span>
         </a>
         <table class="responsive-table">
             <thead>

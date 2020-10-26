@@ -9,7 +9,7 @@ def shops():
     form = ShopForm()
     shops = Shop.query.all()
     
-    return render_template('shops.html', shops = shops, form = form, title = 'Create a Shop')
+    return render_template('shops.html', shops = shops, form = form, title = 'Add a Shop')
 
 def createShops():
     """ create a new shop"""
