@@ -2,6 +2,8 @@ from flask_testing import TestCase
 from app.db import db
 from app import create_app
 from app.models.user import User
+from app.models.permission import Permission
+from app.models.role import Role
 from app.forms import *
 from app.config_helper import load_config
 
@@ -39,15 +41,15 @@ class BaseCase(TestCase):
         return login
     
     def createUserRole(self):
-        role = Role('Cashier')
-        session.add(role)
-        session.commit()
+        role = Role(title = 'Cashier')
+        db.session.add(role)
+        db.session.commit()
         
         return role
 
     def createUserPermission(self):
         permission = Permission(name = 'Create User')
-        session.add(permission)
-        session.commit()
+        db.session.add(permission)
+        db.session.commit()
         
         return permission

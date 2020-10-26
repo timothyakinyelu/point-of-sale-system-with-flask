@@ -41,7 +41,7 @@ class ProductTransaction(db.Model):
     def reduceProductStock(*args):
         sess = args[0]
         for obj in sess.new:
-            if not isinstance(obj, ProductTransactions):
+            if not isinstance(obj, ProductTransaction):
                 continue
             
             product = Products.query.filter_by(id = obj.product_id).first()

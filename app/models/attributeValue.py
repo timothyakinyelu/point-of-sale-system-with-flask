@@ -13,6 +13,11 @@ class AttributeValue(db.Model):
         db.String(50),
         nullable = False
     )
+    attribute_id = db.Column(
+        db.Integer,
+        db.ForeignKey('attributes.id'),
+        nullable = False
+    )
     price_adjustment = db.Column(
         db.Float
     )

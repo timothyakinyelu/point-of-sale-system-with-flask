@@ -32,11 +32,12 @@ class Product(db.Model):
         db.Float
     )
     discount_id = db.Column(
-        db.Integer
+        db.Integer,
+        db.ForeignKey('discounts.id')
     )
     has_discount_applied = db.Column(
         db.Boolean,
-        server_default="0"
+        server_default = "0"
     )
     stock_qty = db.Column(
         db.Integer
@@ -46,16 +47,16 @@ class Product(db.Model):
     )
     date_created  = db.Column(
         db.DateTime,  
-        default=db.func.current_timestamp()
+        default = db.func.current_timestamp()
     )
     date_modified = db.Column(
         db.DateTime,  
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp()
+        default = db.func.current_timestamp(),
+        onupdate = db.func.current_timestamp()
     )
     attributes = db.relationship(
-        'Attribute',
-        secondary = 'attribute_product_table',
-        backref = 'products',
-        lazy = 'joined'
+        "Attribute",
+        secondary = "attribute_product",
+        backref = "products",
+        lazy = "joined"
     )

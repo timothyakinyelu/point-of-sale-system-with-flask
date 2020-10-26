@@ -23,15 +23,15 @@
                 </tr>
             </thead>
             <tbody>
+                {% for role in roles %}
                 <tr>
-                    {% for role in roles %}
                         <td>{{ role.title }}</td>
                         <td>
                             <i class="fa fa-pen"></i>
                             <i class="fa fa-trash"></i>
                         </td>
-                    {% endfor %}
-                </tr>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 

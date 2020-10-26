@@ -33,7 +33,7 @@ class Category(db.Model):
     )
     products = db.relationship(
         'Product',
-        secondary = 'category_product_table',
+        secondary = "category_product",
         backref = 'categories',
         lazy = 'joined'
     )
