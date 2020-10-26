@@ -53,7 +53,10 @@ def createRoles():
                 )
                 session.add(new_role)
                 session.commit()
+                
+                flash('Role created Successfully!')
                 return redirect(url_for('auth.getRoles'))
+            
             flash('Role already exists!')
     flash('Value entered must start with an alphabet!')
 
@@ -66,15 +69,17 @@ def updateRoles(id):
         if form.validate_on_submit():
             session.query(User_Role).filter(User_Role.id == id).update({User_Role.title: form.title.data})
             
+            flash('Role updated Successfully!')
             return redirect(url_for('auth.getRoles'))
+        
         flash('Unable to update role!')
     flash('Value entered must start with an alphabet!')
 
     return redirect(url_for('auth.getRoles'))
 
 def deleteRoles(id):
-    role = Role.query.filter_by(id = id).delete()
-    flash('Role deleted successfully!')
+    Role.query.filter_by(id = id).delete()
+    flash('Role deleted Successfully!')
     
     return redirect(url_for('auth.getRoles'))
 
@@ -121,7 +126,10 @@ def createPermissions():
                 )
                 session.add(new_perm)
                 session.commit()
+                
+                flash('Permission created Successfully!')
                 return redirect(url_for('auth.getPermissions'))
+            
             flash('Permission already exists!')
     flash('Value entered must start with an alphabet!')
         
@@ -133,10 +141,11 @@ def updatePermissions(id):
     
     if not form.name.data[0].isdigit():
         if form.validate_on_submit():
-            permission = Perm.query.filter_by(id = id).update({Perm.name: form.name.data})
-            # session.query(Perm).filter(Perm.id == id).update({Perm.name: form.name.data})
-            
+            Perm.query.filter_by(id = id).update({Perm.name: form.name.data})
+
+            flash('Permission updated Successfully!')
             return redirect(url_for('auth.getPermissions'))
+        
         flash('Unable to update permission!')
     flash('Value entered must start with an alphabet!')
 
@@ -144,8 +153,8 @@ def updatePermissions(id):
 
 
 def deletePermissions(id):
-    permission = Perm.query.filter_by(id = id).delete()
-    flash('Permission deleted successfully!')
+    Perm.query.filter_by(id = id).delete()
+    flash('Permission deleted Successfully!')
     
     return redirect(url_for('auth.getPermissions'))
     

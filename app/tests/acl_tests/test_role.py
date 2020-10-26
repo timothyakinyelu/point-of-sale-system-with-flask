@@ -14,11 +14,12 @@ class UserRoleTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createRole'), data = role_form.data)
+            response = self.client.post(url_for('auth.createRole'), data = role_form.data, follow_redirects=True)
             
             roles = Role.query.all()
             self.assertEqual(roles[0].title, 'Cashier')
-            self.assertRedirects(response, url_for('auth.getRoles'))
+            assert b'Role created Successfully!' in response.data
+
             
 
     def test_role_already_exists(self):
@@ -44,11 +45,12 @@ class UserRoleTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.updateRole', id = 1), data = role_form.data)
+            response = self.client.post(url_for('auth.updateRole', id = 1), data = role_form.data, follow_redirects=True)
             
             roles = Role.query.all()
             self.assertEqual(roles[0].title, 'Cashier 1')
-            self.assertRedirects(response, url_for('auth.getRoles'))
+            assert b'Role updated Successfully!' in response.data
+
         
         
     def test_role_can_be_deleted(self):
@@ -58,9 +60,9 @@ class UserRoleTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.deleteRole', id = 1))
+            response = self.client.post(url_for('auth.deleteRole', id = 1), follow_redirects=True)
             
             roles = Role.query.all()
             
             self.assertTrue(roles == [])
-            self.assertRedirects(response, url_for('auth.getRoles'))
+            assert b'Role deleted Successfully!' in response.data

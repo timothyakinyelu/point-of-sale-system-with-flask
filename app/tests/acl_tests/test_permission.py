@@ -14,12 +14,13 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createPermission'), data = perm_form.data)
+            response = self.client.post(url_for('auth.createPermission'), data = perm_form.data, follow_redirects=True)
             
             permissions = Permission.query.all()
             self.assertEqual(permissions[0].name, 'Create Product')
             self.assertEqual(permissions[0].slug, 'create-product')
-            self.assertRedirects(response, url_for('auth.getPermissions'))
+            assert b'Permission created Successfully!' in response.data
+
             
     def test_permission_already_exists(self):
         user = self.createUser()
@@ -43,12 +44,12 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.updatePermission', id = 1), data = perm_form.data)
+            response = self.client.post(url_for('auth.updatePermission', id = 1), data = perm_form.data, follow_redirects = True)
             
             permissions = Permission.query.all()
             
             self.assertEqual(permissions[0].name, 'Create User2')
-            self.assertRedirects(response, url_for('auth.getPermissions'))
+            assert b'Permission updated Successfully!' in response.data
             
     def test_permission_starts_with_string(self):
         user = self.createUser()
@@ -69,10 +70,10 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.deletePermission', id = 1))
+            response = self.client.post(url_for('auth.deletePermission', id = 1), follow_redirects = True)
             
             permissions = Permission.query.all()
             
             self.assertTrue(permissions == [])
-            self.assertRedirects(response, url_for('auth.getPermissions'))
+            assert b'Permission deleted Successfully!' in response.data
             
