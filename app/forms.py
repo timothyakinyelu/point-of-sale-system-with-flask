@@ -4,8 +4,9 @@ from wtforms.validators import DataRequired, InputRequired, Length
 from app.models.role import Role
 
 
-"""Create User Form"""
 class CreateUserForm(FlaskForm):
+    """Create User Form"""
+
     def __init__(self):
         super().__init__()  # calls the base initialisation and then...
         roles = Role.query.all()
@@ -33,8 +34,9 @@ class CreateUserForm(FlaskForm):
     )
     submit = SubmitField('Create User')
     
-"""Login Form"""
 class LoginForm(FlaskForm):
+    """Login Form"""
+
     username = StringField(
         'Username',
         validators = [
@@ -49,19 +51,30 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Log In')
     
     
-"""Role Creation Form"""
 class RoleForm(FlaskForm):
+    """Role Creation Form"""
+
     title = StringField(
         'Role',
         validators = [InputRequired()]
     )
     submit = SubmitField('Add Role')
     
-"""Permission Creation Form"""
 class PermissionForm(FlaskForm):
+    """Permission Creation Form"""
+
     name = StringField(
         'Permission',
         validators = [InputRequired()]
     )
     submit = SubmitField('Add Permission')
+    
+class ShopForm(FlaskForm):
+    """Shop Creation Form"""
+
+    name = StringField(
+        'Shop',
+        validators = [InputRequired()]
+    )
+    submit = SubmitField('Add Shop')
     

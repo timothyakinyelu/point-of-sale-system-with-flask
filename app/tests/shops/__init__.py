@@ -1,0 +1,1 @@
+# app/tests/shops/__init__.py

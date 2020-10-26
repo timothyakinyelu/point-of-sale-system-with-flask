@@ -18,17 +18,13 @@ class Shop(db.Model):
         db.String(100),
         nullable = False
     )
-    identifier_code = db.Column(
-        db.String(3),
-        nullable = False
-    )
     transactions = db.relationship(
         'Transaction',
         backref = 'shop',
         lazy = 'joined'
     )
     
-    def __init__(self, *args, **kwaargs):
+    def __init__(self, *args, **kwargs):
         if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
         super().__init__(*args, **kwargs)

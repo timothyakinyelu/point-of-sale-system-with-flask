@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h3>Roles Page</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="#" 
+            data-toggle="modal" 
+            data-target="#newShop"
+        >
+            <span class="badge badge-warning">New Shop</span>
+        </a>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Shop</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shop in shops %}
+                <tr>
+                        <td>{{ shop.name }}</td>
+                        <td>
+                            <i class="fa fa-pen"></i>
+                            <i class="fa fa-trash"></i>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="newShop" tabindex="1" role="dialog" aria-labelledby="shopName" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="shopName">{{ title }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('auth.createShop') }}">
+                            {{ form.csrf_token }}
+                
+                            <fieldset class="name">
+                                {{ form.name.label }}
+                                {{ form.name(placeholder='Grocery Store') }}
+                            </fieldset>
+                            <div class="submit-button">
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
