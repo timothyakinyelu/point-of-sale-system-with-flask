@@ -1,4 +1,5 @@
 from app.db import db
+from .pivots import category_product_table
 from slugify import slugify
 
 

@@ -188,6 +188,7 @@ def checkPermissions():
             access = dict(zip(heads, items))
 
             if selected:
+                # fix these codes later
                 role = User_Role.query.filter_by(id = access['role']).first()
                 perms = Perm.query.filter_by(id = access['permission']).all()
                 
