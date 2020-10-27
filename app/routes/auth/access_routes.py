@@ -5,6 +5,7 @@ from app.controllers import UserController
 from app.controllers import ShopController
 from app.controllers import BrandController
 from app.controllers import CategoryController
+from app.controllers import ProductController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
@@ -134,3 +135,24 @@ def updateCategory(id):
 @login_required
 def deleteCategory(id):
     return CategoryController.deleteCategories(id)
+
+@auth.route('/system/products')
+@login_required
+def getProducts():
+    return ProductController.products()
+
+@auth.route('/system.products/add-product', methods=['GET', 'POST'])
+@login_required
+def addProduct():
+    return ProductController.createProduct()
+
+@auth.route('/system/products/update-product/<int:id>', methods=['GET', 'POST'])
+@login_required
+def updateProduct(id):
+    return ProductController.updateProducts(id)
+
+@auth.route('/system/products/delete-product/<int:id>', methods=['POST',])
+@login_required
+def deleteProduct(id):
+    return ProductController.removeProduct(id)
+

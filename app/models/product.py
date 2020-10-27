@@ -9,6 +9,10 @@ class Product(db.Model):
         primary_key = True,
         autoincrement = True
     )
+    name = db.Column(
+        db.String(100),
+        nullable = False
+    )
     sku = db.Column(
         db.String(50),
         nullable = False
@@ -53,10 +57,4 @@ class Product(db.Model):
         db.DateTime,  
         default = db.func.current_timestamp(),
         onupdate = db.func.current_timestamp()
-    )
-    attributes = db.relationship(
-        "Attribute",
-        secondary = "attribute_product",
-        backref = "products",
-        lazy = "joined"
     )

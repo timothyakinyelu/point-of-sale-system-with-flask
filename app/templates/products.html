@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h3>Products Page</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="{{ url_for('auth.addProduct') }}">
+            <span class="badge badge-warning">Add Product</span>
+        </a>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>GTIN</th>
+                    <th>Brand</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Old Price</th>
+                    <th>Cost of Purchase</th>
+                    <th>Stock Quantity</th>
+                    <th>Minimum Stock Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.sku }}</td>
+                        <td>{{ product.gtin }}</td>
+                        <td>{{ product.brand }}</td>
+                        <td>{{ product.categories }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.old_price }}</td>
+                        <td>{{ product.cost_of_purchase }}</td>
+                        <td>{{ product.stock_qty }}</td>
+                        <td>{{ product.min_stock_qty }}</td>
+                        <td>
+                            <i class="fa fa-pen"></i>
+                            <i class="fa fa-trash"></i>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

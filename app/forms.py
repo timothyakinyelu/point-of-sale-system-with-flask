@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField, BooleanField, SelectMultipleField, IntegerField, DecimalField
 from wtforms.validators import DataRequired, InputRequired, Length
 from app.models.role import Role
 from app.models.category import Category
@@ -111,4 +111,64 @@ class CategoryForm(FlaskForm):
         coerce=int,
     )
     submit = SubmitField('Add Category')
+    
+class ProductForm(FlaskForm):
+    """ Product Creation Form"""
+    
+    def __init__(self):
+        super().__init__()
+        categories = Category.query.all()
+        self.categories.choices = [(category.id, category.name) for category in categories]
+    
+    name = StringField(
+        'Product Name',
+        validators=[InputRequired()]
+    )
+    sku = StringField(
+        'SKU',
+        validators=[InputRequired()]
+    )
+    gtin = StringField(
+        'GTIN',
+        validators=None
+    )
+    brand = StringField(
+        'Brand',
+        validators=[InputRequired()]
+    )
+    categories = SelectMultipleField(
+        'Categories',
+        validators=[DataRequired()],
+        coerce = int
+    )
+    price = DecimalField(
+        'Price',
+        validators=[InputRequired()]
+    )
+    old_price = DecimalField(
+        'Old Price',
+        validators=None
+    )
+    cost_of_purchase = DecimalField(
+        'Cost of Purchase',
+        validators=[InputRequired()]
+    )
+    discount = StringField(
+        'Discount',
+        validators=None
+    )
+    apply_discount = BooleanField(
+        'Apply Discount',
+        default='',
+        validators=None
+    )
+    stock_qty = IntegerField(
+        'Stock Quantity',
+        validators=[InputRequired()]
+    )
+    min_stock_qty = IntegerField(
+        'Minimum Stock Quantity',
+        validators=[InputRequired()]
+    )
+    submit = SubmitField('Add Product')
     

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <form id="create_user" method="POST" action="{{ url_for('auth.addProduct') }}">
+            {{ form.csrf_token }}
+
+            <fieldset class="name">
+                {{ form.name.label }}
+                {{ form.name(placeholder='Apple juice') }}
+                {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.sku.label }}
+                {{ form.sku }}
+                {% if form.sku.errors %}
+                <ul class="errors">
+                    {% for error in form.sku.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.gtin.label }}
+                {{ form.gtin }}
+            </fieldset>
+            <fieldset class="">
+                {{ form.brand.label }}
+                {{ form.brand }}
+                {% if form.brand.errors %}
+                <ul class="errors">
+                    {% for error in form.brand.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.categories.label }}
+                {{ form.categories }}
+                {% if form.categories.errors %}
+                <ul class="errors">
+                    {% for error in form.categories.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.price.label }}
+                {{ form.price }}
+                {% if form.price.errors %}
+                <ul class="errors">
+                    {% for error in form.price.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.old_price.label }}
+                {{ form.old_price }}
+            </fieldset>
+            <fieldset class="">
+                {{ form.cost_of_purchase.label }}
+                {{ form.cost_of_purchase }}
+                {% if form.cost_of_purchase.errors %}
+                <ul class="errors">
+                    {% for error in form.cost_of_purchase.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.discount.label }}
+                {{ form.discount }}
+            </fieldset>
+            <fieldset class="">
+                {{ form.apply_discount.label }}
+                {{ form.apply_discount }}
+            </fieldset>
+            <fieldset class="">
+                {{ form.stock_qty.label }}
+                {{ form.stock_qty }}
+                {% if form.stock_qty.errors %}
+                <ul class="errors">
+                    {% for error in form.stock_qty.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <fieldset class="">
+                {{ form.min_stock_qty.label }}
+                {{ form.min_stock_qty }}
+                {% if form.min_stock_qty.errors %}
+                <ul class="errors">
+                    {% for error in form.min_stock_qty.errors %}
+                    <li>{{ error }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+            </fieldset>
+            <div id="user_form" class="submit-button">
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+{% endblock %}
