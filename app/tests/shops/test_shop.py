@@ -14,7 +14,7 @@ class ShopTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createShop'), data = shopForm.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addShop'), data = shopForm.data, follow_redirects=True)
             
             shops = Shop.query.all()
 
@@ -35,7 +35,7 @@ class ShopTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createShop'), data = shopForm.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addShop'), data = shopForm.data, follow_redirects=True)
 
             assert b'Shop name already exists!' in response.data
             

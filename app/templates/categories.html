@@ -45,7 +45,7 @@
                         <h4 class="modal-title" id="catName">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.createCategory') }}">
+                        <form method="POST" action="{{ url_for('auth.addCategory') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">

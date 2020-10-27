@@ -21,7 +21,7 @@ class BrandTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createBrand'), data = brandForm.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addBrand'), data = brandForm.data, follow_redirects=True)
             
             brands = Brand.query.all()
 
@@ -40,7 +40,7 @@ class BrandTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createBrand'), data = brandForm.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addBrand'), data = brandForm.data, follow_redirects=True)
 
             assert b'Brand name already exists!' in response.data
             

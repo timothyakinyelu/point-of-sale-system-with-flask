@@ -28,40 +28,40 @@ def createUser():
 def getRoles():
     return SystemController.roles()
 
-@auth.route('/system/roles/create-role', methods=['POST',])
+@auth.route('/system/roles/add-role', methods=['POST',])
 @login_required
-def createRole():
-    return SystemController.createRoles()
+def addRole():
+    return SystemController.createRole()
 
 @auth.route('/system/roles/update-role/<int:id>', methods=['POST',])
 @login_required
 def updateRole(id):
-    return SystemController.updateRoles(id)
+    return SystemController.updateRole(id)
 
 @auth.route('/system/roles/delete-role/<int:id>', methods=['POST',])
 @login_required
 def deleteRole(id):
-    return SystemController.deleteRoles(id)
+    return SystemController.removeRole(id)
   
 @auth.route('/system/permissions')
 @login_required
 def getPermissions():
     return SystemController.permissions()
 
-@auth.route('/system/permissions/create-permission', methods=['POST',])
+@auth.route('/system/permissions/add-permission', methods=['POST',])
 @login_required
-def createPermission():
-    return SystemController.createPermissions()
+def addPermission():
+    return SystemController.createPermission()
 
 @auth.route('/system/permissions/update-permission/<int:id>', methods=['POST',])
 @login_required
 def updatePermission(id):
-    return SystemController.updatePermissions(id)
+    return SystemController.updatePermission(id)
 
 @auth.route('/system/permissions/delete-permission/<int:id>', methods=['POST',])
 @login_required
 def deletePermission(id):
-    return SystemController.deletePermissions(id)
+    return SystemController.removePermission(id)
             
 @auth.route('/system/permissions/check-permission', methods=['POST',])
 @login_required
@@ -81,60 +81,60 @@ def logout():
 def getShops():
     return ShopController.shops()
 
-@auth.route('/system/shops/create-shop', methods=['POST',])
+@auth.route('/system/shops/add-shop', methods=['POST',])
 @login_required
-def createShop():
-    return ShopController.createShops()
+def addShop():
+    return ShopController.createShop()
 
 @auth.route('/system/shops/update-shop/<int:id>', methods=['POST',])
 @login_required
 def updateShop(id):
-    return ShopController.updateShops(id)
+    return ShopController.updateShop(id)
 
 @auth.route('/system/shops/delete-shop/<int:id>', methods=['POST',])
 @login_required
 def deleteShop(id):
-    return ShopController.deleteShops(id)
+    return ShopController.removeShop(id)
 
 @auth.route('/system/brands')
 @login_required
 def getBrands():
     return BrandController.brands()
 
-@auth.route('/system/brands/create-brand', methods=['POST',])
+@auth.route('/system/brands/add-brand', methods=['POST',])
 @login_required
-def createBrand():
-    return BrandController.createBrands()
+def addBrand():
+    return BrandController.createBrand()
 
 @auth.route('/system/brands/update-brand/<int:id>', methods=['POST',])
 @login_required
 def updateBrand(id):
-    return BrandController.updateBrands(id)
+    return BrandController.updateBrand(id)
 
 @auth.route('/system/brands/delete-brand/<int:id>', methods=['POST',])
 @login_required
 def deleteBrand(id):
-    return BrandController.deleteBrands(id)
+    return BrandController.removeBrand(id)
 
 @auth.route('/system/categories')
 @login_required
 def getCategories():
     return CategoryController.categories()
 
-@auth.route('/system/categories/create-category', methods=['POST',])
+@auth.route('/system/categories/add-category', methods=['POST',])
 @login_required
-def createCategory():
-    return CategoryController.createCategories()
+def addCategory():
+    return CategoryController.createCategory()
 
 @auth.route('/system/categories/update-category/<int:id>', methods=['POST',])
 @login_required
 def updateCategory(id):
-    return CategoryController.updateCategories(id)
+    return CategoryController.updateCategory(id)
 
 @auth.route('/system/categories/delete-category/<int:id>', methods=['POST',])
 @login_required
 def deleteCategory(id):
-    return CategoryController.deleteCategories(id)
+    return CategoryController.removeCategory(id)
 
 @auth.route('/system/products')
 @login_required
@@ -149,7 +149,7 @@ def addProduct():
 @auth.route('/system/products/update-product/<int:id>', methods=['GET', 'POST'])
 @login_required
 def updateProduct(id):
-    return ProductController.updateProducts(id)
+    return ProductController.updateProduct(id)
 
 @auth.route('/system/products/delete-product/<int:id>', methods=['POST',])
 @login_required

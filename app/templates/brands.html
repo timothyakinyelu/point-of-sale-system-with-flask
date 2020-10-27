@@ -45,7 +45,7 @@
                         <h4 class="modal-title" id="brandName">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.createBrand') }}">
+                        <form method="POST" action="{{ url_for('auth.addBrand') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">

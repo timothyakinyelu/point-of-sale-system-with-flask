@@ -23,7 +23,7 @@ class CategoryTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createCategory'), 
+            response = self.client.post(url_for('auth.addCategory'), 
                 data = dict(
                     name = 'Groceries',
                     description = 'Food line',
@@ -47,7 +47,7 @@ class CategoryTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createCategory'), 
+            response = self.client.post(url_for('auth.addCategory'), 
                 data = dict(
                     name = 'Hand Soap',
                     description = 'Hand soap section',

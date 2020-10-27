@@ -42,7 +42,7 @@ def createProduct():
     flash('Unable to add product!')
     return render_template('create_product.html', form = form, title = 'Add Product')
 
-def updateProducts(id):
+def updateProduct(id):
     form = ProductForm()
     
     if form.validate_on_submit():

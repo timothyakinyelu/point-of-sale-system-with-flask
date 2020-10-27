@@ -11,7 +11,7 @@ def shops():
     
     return render_template('shops.html', shops = shops, form = form, title = 'Add a Shop')
 
-def createShops():
+def createShop():
     """ create a new shop"""
     form = ShopForm()
     
@@ -35,7 +35,7 @@ def createShops():
     return redirect(url_for('auth.getShops'))
                 
 
-def updateShops(id):
+def updateShop(id):
     """ update existing shop in db"""
     form = ShopForm()
     
@@ -52,7 +52,7 @@ def updateShops(id):
     return redirect(url_for('auth.getShops'))
 
 
-def deleteShops(id):
+def removeShop(id):
     """ delete shop from db"""
     Shop.query.filter_by(id = id).delete()
     flash('Shop deleted Successfully!')

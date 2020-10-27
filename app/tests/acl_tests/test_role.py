@@ -14,7 +14,7 @@ class UserRoleTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createRole'), data = role_form.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addRole'), data = role_form.data, follow_redirects=True)
             
             roles = Role.query.all()
             self.assertEqual(roles[0].title, 'Cashier')
@@ -31,7 +31,7 @@ class UserRoleTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createRole'), data = role_form.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addRole'), data = role_form.data, follow_redirects=True)
             
             assert b'Role already exists!' in response.data
 

@@ -36,7 +36,7 @@ def roles():
     
     return render_template('roles.html', form=form, title='Create a User Role', roles = roles)
 
-def createRoles():
+def createRole():
     """ Create new system roles."""
     roles = getAllRoles()
     
@@ -62,7 +62,7 @@ def createRoles():
 
     return redirect(url_for('auth.getRoles'))
 
-def updateRoles(id):
+def updateRole(id):
     form = RoleForm()
     
     if not form.title.data[0].isdigit():
@@ -77,7 +77,7 @@ def updateRoles(id):
 
     return redirect(url_for('auth.getRoles'))
 
-def deleteRoles(id):
+def removeRole(id):
     Role.query.filter_by(id = id).delete()
     flash('Role deleted Successfully!')
     
@@ -110,7 +110,7 @@ def permissions():
         access = rights
     ) 
 
-def createPermissions():
+def createPermission():
     """ Create new system permissions."""
     permissions = getAllPermissions()
     
@@ -136,7 +136,7 @@ def createPermissions():
     return redirect(url_for('auth.getPermissions'))
 
 
-def updatePermissions(id):
+def updatePermission(id):
     form = PermissionForm()
     
     if not form.name.data[0].isdigit():
@@ -152,7 +152,7 @@ def updatePermissions(id):
     return redirect(url_for('auth.Permissions'))
 
 
-def deletePermissions(id):
+def removePermission(id):
     Perm.query.filter_by(id = id).delete()
     flash('Permission deleted Successfully!')
     

@@ -14,7 +14,7 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createPermission'), data = perm_form.data, follow_redirects=True)
+            response = self.client.post(url_for('auth.addPermission'), data = perm_form.data, follow_redirects=True)
             
             permissions = Permission.query.all()
             self.assertEqual(permissions[0].name, 'Create Product')
@@ -31,7 +31,7 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createPermission'), data = perm_form.data, follow_redirects = True)
+            response = self.client.post(url_for('auth.addPermission'), data = perm_form.data, follow_redirects = True)
             
             assert b'Permission already exists!' in response.data
             
@@ -59,7 +59,7 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.createPermission'), data = perm_form.data, follow_redirects = True)
+            response = self.client.post(url_for('auth.addPermission'), data = perm_form.data, follow_redirects = True)
             
             assert b'Value entered must start with an alphabet!' in response.data
             

@@ -70,7 +70,7 @@
                         <h4 class="modal-title" id="userPermission">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.createPermission') }}">
+                        <form method="POST" action="{{ url_for('auth.addPermission') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">

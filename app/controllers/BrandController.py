@@ -11,7 +11,7 @@ def brands():
     
     return render_template('brands.html', brands = brands, form = form, title = 'Add a Brand')
 
-def createBrands():
+def createBrand():
     """ create a new brand"""
     form = BrandForm()
     
@@ -35,7 +35,7 @@ def createBrands():
     return redirect(url_for('auth.getBrands'))
                 
 
-def updateBrands(id):
+def updateBrand(id):
     """ update existing brand in db"""
     form = BrandForm()
     
@@ -52,7 +52,7 @@ def updateBrands(id):
     return redirect(url_for('auth.getBrands'))
 
 
-def deleteBrands(id):
+def removeBrand(id):
     """ delete brand from db"""
     Brand.query.filter_by(id = id).delete()
     flash('Brand deleted Successfully!')

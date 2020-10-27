@@ -45,7 +45,7 @@
                         <h4 class="modal-title" id="shopName">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.createShop') }}">
+                        <form method="POST" action="{{ url_for('auth.addShop') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">

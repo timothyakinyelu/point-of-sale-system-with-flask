@@ -10,7 +10,7 @@ def categories():
     
     return render_template('categories.html', form = form, categories = categories, title = 'Add a Category')
 
-def createCategories():
+def createCategory():
     form = CategoryForm()
     
     if form.validate_on_submit():
@@ -33,7 +33,7 @@ def createCategories():
     flash('Unable to create Category!')
     return redirect(url_for('auth.getCategories'))
 
-def updateCategories(id):
+def updateCategory(id):
     form = CategoryForm()
     
     if form.validate_on_submit():
@@ -49,7 +49,7 @@ def updateCategories(id):
     flash('Unable to update category!')
     return redirect(url_for('auth.getCategories'))
 
-def deleteCategories(id):
+def removeCategory(id):
     """ delete category from db"""
     
     Category.query.filter_by(id = id).delete()
