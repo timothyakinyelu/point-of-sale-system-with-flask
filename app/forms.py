@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, SelectField, PasswordField, RadioField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField
 from wtforms.validators import DataRequired, InputRequired, Length
 from app.models.role import Role
+from app.models.category import Category
 
 
 class CreateUserForm(FlaskForm):
@@ -9,6 +10,7 @@ class CreateUserForm(FlaskForm):
 
     def __init__(self):
         super().__init__()  # calls the base initialisation and then...
+        
         roles = Role.query.all()
         self.role.choices = [(role.id, role.title) for role in roles]
     
@@ -45,7 +47,7 @@ class LoginForm(FlaskForm):
         ]
     )
     password = PasswordField(
-        'password',
+        'Password',
         validators = [DataRequired()]
     )
     submit = SubmitField('Log In')
@@ -86,4 +88,27 @@ class BrandForm(FlaskForm):
         validators = [InputRequired()]
     )
     submit = SubmitField('Add Brand')
+
+class CategoryForm(FlaskForm):
+    """Category Creation Form"""
+    
+    def __init__(self):
+        super().__init__()
+        categories = Category.query.all()
+        self.parent.choices =[(category.id, category.name) for category in categories]
+    
+    name = StringField(
+        'Name',
+        validators = [DataRequired()]
+    )
+    description = TextAreaField(
+        'Description',
+        validators=None
+    )
+    parent = SelectField(
+        'Parent Category',
+        validate_choice=None,
+        coerce=int,
+    )
+    submit = SubmitField('Add Category')
     

@@ -10,12 +10,16 @@ class Category(db.Model):
         primary_key = True,
         autoincrement = True
     )
-    parent_id = db.Column(
-        db.Integer,
-        db.ForeignKey('categories.id')
+    name = db.Column(
+        db.String(100),
+        nullable = False
     )
     description = db.Column(
         db.Text
+    )
+    parent_id = db.Column(
+        db.Integer,
+        db.ForeignKey('categories.id')
     )
     slug = db.Column(
         db.String(100),
@@ -29,13 +33,16 @@ class Category(db.Model):
         "Category",
         backref = db.backref('parent', remote_side=[id]),
         lazy = 'joined',
-        join_depth = 2
+        join_depth = 2,
+        cascade = 'all, delete'
     )
     products = db.relationship(
         'Product',
         secondary = "category_product",
         backref = 'categories',
-        lazy = 'joined'
+        cascade_backrefs=False,
+        lazy = 'joined',
+        cascade = 'all, delete'
     )
     
     

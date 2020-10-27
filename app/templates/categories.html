@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h3>Brands Page</h3>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="notification is-danger">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <a href="#" 
+            data-toggle="modal" 
+            data-target="#newCategory"
+        >
+            <span class="badge badge-warning">Add Category</span>
+        </a>
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                        <td>{{ category.name }}</td>
+                        <td>
+                            <i class="fa fa-pen"></i>
+                            <i class="fa fa-trash"></i>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="newCategory" tabindex="1" role="dialog" aria-labelledby="catName" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="catName">{{ title }}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url_for('auth.createCategory') }}">
+                            {{ form.csrf_token }}
+                
+                            <fieldset class="name">
+                                {{ form.name.label }}
+                                {{ form.name(placeholder='Nike') }}
+                                {% if form.name.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.name.errors %}
+                                        <li>{{ error }}</li>{% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="description">
+                                {{ form.description.label }}
+                                {{ form.description(placeholder='Nike') }}
+                                {% if form.description.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.description.errors %}
+                                        <li>{{ error }}</li>{% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="parent">
+                                {{ form.parent.label }}
+                                {{ form.parent }}
+                            </fieldset>
+                            <div class="submit-button">
+                                {{ form.submit }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
