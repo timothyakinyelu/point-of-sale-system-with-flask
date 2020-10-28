@@ -7,11 +7,15 @@ from app.forms import ProductForm
 
 
 def products():
+    """ Fetch all products from db"""
+    
     products = Product.query.all()
     
     return render_template('products.html', products = products)
 
 def createProduct():
+    """ Add new product to the db"""
+    
     form = ProductForm()
     
     if form.validate_on_submit():
@@ -43,6 +47,8 @@ def createProduct():
     return render_template('create_product.html', form = form, title = 'Add Product')
 
 def updateProduct(id):
+    """ Update existing product in db"""
+    
     form = ProductForm()
     
     if form.validate_on_submit():
@@ -88,6 +94,7 @@ def updateProduct(id):
 
 def removeProduct(id):
     """ Delete existing product"""
+    
     Product.query.filter_by(id = id).delete()
     
     flash('Product deleted Successfully!')
