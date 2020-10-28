@@ -4,10 +4,10 @@
     <div class="container">
         <div class="form-wrapper">
             {% for message in get_flashed_messages() %}
-            <div class="alert alert-warning">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
-            </div>
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
             {% endfor %}
     
             <h1>Log In</h1>

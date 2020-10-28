@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
         <form id="create_user" method="POST" action="{{ url_for('auth.addProduct') }}">
             {{ form.csrf_token }}
 
