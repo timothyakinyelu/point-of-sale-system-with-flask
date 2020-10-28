@@ -44,7 +44,7 @@ class ProductTransaction(db.Model):
             if not isinstance(obj, ProductTransaction):
                 continue
             
-            product = Products.query.filter_by(id = obj.product_id).first()
+            product = Product.query.filter_by(id = obj.product_id).first()
             product.stock_qty = product.stock_qty - obj.product_qty
             db.session.add(product)
     

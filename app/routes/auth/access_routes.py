@@ -6,6 +6,7 @@ from app.controllers import ShopController
 from app.controllers import BrandController
 from app.controllers import CategoryController
 from app.controllers import ProductController
+from app.controllers import TransactionController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
@@ -156,3 +157,7 @@ def updateProduct(id):
 def deleteProduct(id):
     return ProductController.removeProduct(id)
 
+@auth.route('/sales/new-transaction/<int:userID>/<int:shopID>', methods=['GET', 'POST'])
+@login_required
+def addTransaction(userID, shopID):
+    return TransactionController.new_transaction(userID, shopID)
