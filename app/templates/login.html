@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
+    <!-- <div class="container"> -->
         <div class="form-wrapper">
             {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
@@ -9,15 +9,22 @@
                     {{ message }}
                 </div>
             {% endfor %}
-    
-            <h1>Log In</h1>
-    
+            <div class="label-wrapper">
+                <h2>Log In</h2>
+            </div>
+            <div class="message-wrapper">
+                <div class="login-message-wrapper">
+                    <h3 class="login-message">Hi, <span>Good Day!</span></h3>
+                </div>
+                <div class="action-message-wrapper">
+                    <p class="action-message">Please sign in to continue</p>
+                </div>
+            </div>
             <form method="POST" action="">
                 {{ form.csrf_token }}
     
-                <fieldset class="username">
-                    {{ form.username.label }}
-                    {{ form.username(placeholder='kfunk') }}
+                <fieldset class="form-group login-form-field">
+                    {{ form.username(placeholder='username', class='form-control input0field') }}
                     {% if form.username.errors %}
                     <ul class="errors">
                         {% for error in form.username.errors %}
@@ -25,9 +32,8 @@
                     </ul>
                     {% endif %}
                 </fieldset>
-                <fieldset class="password">
-                    {{ form.password.label }}
-                    {{ form.password }}
+                <fieldset class="form-group login-form-field">
+                    {{ form.password(placeholder='password', class='form-control input0field') }}
                     {% if form.password.errors %}
                     <ul class="errors">
                         {% for error in form.password.errors %}
@@ -36,9 +42,12 @@
                     {% endif %}
                 </fieldset>
                 <div class="submit-button">
-                    {{ form.submit }}
+                    {{ form.submit(class='input0submit') }}
+                    <svg width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.3727 4.85355C14.568 4.65829 14.568 4.34171 14.3727 4.14645L11.1908 0.964466C10.9955 0.769204 10.6789 0.769204 10.4836 0.964466C10.2884 1.15973 10.2884 1.47631 10.4836 1.67157L13.3121 4.5L10.4836 7.32843C10.2884 7.52369 10.2884 7.84027 10.4836 8.03553C10.6789 8.2308 10.9955 8.2308 11.1908 8.03553L14.3727 4.85355ZM0.980774 5H14.0192V4H0.980774V5Z" fill="white"/>
+                    </svg>    
                 </div>
             </form>
         </div>
-    </div>
+    <!-- </div> -->
 {% endblock %}
