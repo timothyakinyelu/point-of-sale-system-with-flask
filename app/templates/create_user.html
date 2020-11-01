@@ -3,10 +3,15 @@
     <div class="container">
         <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
             {{ form.csrf_token }}
-
+            
+            <input type='text' name='query' onkeyup="searchEmployees(event)"/>
+            <select id="result" onchange=selectEmployee()></select>
+            <fieldset class="username">
+                {{ form.employee(id='employee') }}
+            </fieldset>
             <fieldset class="username">
                 {{ form.username.label }}
-                {{ form.username(placeholder='John Smith') }}
+                {{ form.username(placeholder='John Smith', id='username') }}
                 {% if form.username.errors %}
                 <ul class="errors">
                     {% for error in form.username.errors %}
@@ -31,6 +36,10 @@
             <fieldset class="role">
                 {{ form.role.label }}
                 {{ form.role }}
+            </fieldset>
+            <fieldset class="shop">
+                {{ form.shop.label }}
+                {{ form.shop }}
             </fieldset>
             <div id="user_form" class="submit-button">
                 {{ form.submit }}

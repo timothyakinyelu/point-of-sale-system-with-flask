@@ -23,6 +23,11 @@ class Shop(db.Model):
         backref = 'shop',
         lazy = 'joined'
     )
+    users = db.relationship(
+        "User", 
+        backref = "shop", 
+        lazy = "joined"
+    )
     
     def __init__(self, *args, **kwargs):
         if not 'slug' in kwargs:

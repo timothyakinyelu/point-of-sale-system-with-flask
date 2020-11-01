@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField, BooleanField, SelectMultipleField, IntegerField, DecimalField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField, BooleanField, SelectMultipleField, IntegerField, DecimalField, HiddenField
 from wtforms.validators import DataRequired, InputRequired, Length
 from app.models.role import Role
+from app.models.shop import Shop
 from app.models.category import Category
 
 
@@ -13,7 +14,14 @@ class CreateUserForm(FlaskForm):
         
         roles = Role.query.all()
         self.role.choices = [(role.id, role.title) for role in roles]
+        
+        shops = Shop.query.all()
+        self.shop.choices = [(0, "select")]+[(shop.id, shop.name) for shop in shops]
     
+    employee = HiddenField(
+        'Employee',
+        validators=None
+    )
     username = StringField(
         'Username',
         validators=[DataRequired()]
@@ -33,6 +41,12 @@ class CreateUserForm(FlaskForm):
         'User Role',
         validators=[DataRequired()],
         coerce=int
+    )
+    shop = SelectField(
+        'User Shop',
+        validators=None,
+        coerce=int,
+        default=0
     )
     submit = SubmitField('Create User')
     

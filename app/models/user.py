@@ -13,6 +13,10 @@ class User(db.Model, UserMixin):
         primary_key = True,
         autoincrement = True
     )
+    employee_id = db.Column(
+        db.Integer,
+        db.ForeignKey('employees.id')
+    )
     username = db.Column(
         db.String(100),
         unique = True,
@@ -25,6 +29,10 @@ class User(db.Model, UserMixin):
     role_id = db.Column(
         db.Integer,
         db.ForeignKey('roles.id')
+    )
+    shop_id = db.Column(
+        db.Integer,
+        db.ForeignKey('shops.id')
     )
     active = db.Column(
         db.String(100),
