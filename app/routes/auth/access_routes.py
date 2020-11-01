@@ -161,3 +161,7 @@ def deleteProduct(id):
 @login_required
 def addTransaction(userID, shopID):
     return TransactionController.new_transaction(userID, shopID)
+
+@auth.route('/search-employees')
+def searchEmployees():
+    return UserController.searchEmployees()

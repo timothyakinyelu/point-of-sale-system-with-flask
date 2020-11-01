@@ -98,13 +98,14 @@ html, body {
         line-height: 22px;
         color: #FFFFFF;
         width: 119px;
-        padding-left: 0px;
+        padding-left: 25px;
         padding-right: 0;
         height: 40px;
         background: #3DBECF;
         border-radius: 40px;
         border: none;
         outline: none;
+        text-align: left;
     }
     input[type=text]:focus,
     input[type=text].form-control:focus, 
@@ -119,7 +120,7 @@ html, body {
     }
     svg {
         position: relative;
-        right: 35px;
+        right: 45px;
     }
     .input0submit:hover ~ svg {
         right: 30px;
