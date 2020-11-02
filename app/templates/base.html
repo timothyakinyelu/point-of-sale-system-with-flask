@@ -50,7 +50,7 @@
             function searchEmployees(e) {
                 e.preventDefault();
                 var search_term = $('input[name=query]').val();
-                console.log(search_term);
+
                 $.ajax(
                     {
                         type: "GET",
@@ -89,6 +89,57 @@
                 document.getElementById("username").value = username;
                 document.getElementById("employee").value = id;
             }
+
+            function searchBrands(e) {
+                e.preventDefault()
+                var search_term = $('input[name=brandName]').val();
+
+                $.ajax(
+                    {
+                        type: "GET",
+                        url: "{{url_for('auth.searchBrands')}}",
+                        data: { "query": search_term },
+                        success: function (response) {
+                            console.log(response.results)
+                            $("#brands").empty(); //remove whatever is there and append whatever is returned
+                            $('#brands').empty().append("<option value='0'>Select</option>");
+                                response.results.forEach((value)=>{
+                                    $('#brands').append(
+                                        `<option value="${value.id}">${value.name}</option>`
+                                    )
+
+                            });
+                            // $.each(response.results, function( index, value ) {
+                            //     // alert( index + ": " + value );
+                            //     $("#result").append(
+                            //         `<option value="${value.id}">${value.first_name + ' ' + value.last_name}</option>`
+                            //     )
+                            // });
+                        }
+                    }
+                )
+            }
+
+            function selectBrand() {
+                var sel = document.getElementById("brands");
+                var id = sel.options[sel.selectedIndex].value;
+                var name = sel.options[sel.selectedIndex].text;
+
+                document.getElementById("brandName").value = name;
+                document.getElementById("brandID").value = id;
+                $("#brands").empty();
+            }
         </script>
+        <script type="text/javascript"> 
+            function openDiscount() {
+                var checkBox = document.getElementById("apply");
+                var discount = document.getElementById("discount");
+                if (checkBox.checked == true){
+                    discount.classList.add('show');
+                } else {
+                    discount.classList.remove('show');
+                }
+            }
+        </script> 
     </body>
 </html>

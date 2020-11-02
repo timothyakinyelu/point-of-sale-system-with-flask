@@ -35,14 +35,18 @@
                 {{ form.gtin }}
             </fieldset>
             <fieldset class="">
-                {{ form.brand.label }}
-                {{ form.brand }}
-                {% if form.brand.errors %}
+                {{ form.brandName.label }}
+                {{ form.brandName(onkeyup="searchBrands(event)", id='brandName') }}
+                {% if form.brandName.errors %}
                 <ul class="errors">
-                    {% for error in form.brand.errors %}
+                    {% for error in form.brandName.errors %}
                     <li>{{ error }}</li>{% endfor %}
                 </ul>
                 {% endif %}
+            </fieldset>
+            <select id="brands" onchange=selectBrand()></select>
+            <fieldset class="">
+                {{ form.brand(id='brandID') }}
             </fieldset>
             <fieldset class="">
                 {{ form.categories.label }}
@@ -78,13 +82,13 @@
                 </ul>
                 {% endif %}
             </fieldset>
-            <fieldset class="">
+            <fieldset id="discount" class="discount">
                 {{ form.discount.label }}
                 {{ form.discount }}
             </fieldset>
             <fieldset class="">
                 {{ form.apply_discount.label }}
-                {{ form.apply_discount }}
+                {{ form.apply_discount(id='apply', onclick="openDiscount()") }}
             </fieldset>
             <fieldset class="">
                 {{ form.stock_qty.label }}

@@ -6,12 +6,21 @@ html, body {
     height: 100%;
 }
 
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: auto;
+}
+
 /* base */
 .base {
-    position: relative;
+    /* position: relative; */
     height: 100%;
     background: #EBF0F0;
-    display: flex;
+    /* display: flex;
+    flex-wrap: wrap; */
 }
 
 /* login */
@@ -118,11 +127,98 @@ html, body {
         width: 208px;
         padding-left: 69px;
     }
-    svg {
+    .submit-button svg {
         position: relative;
         right: 45px;
     }
     .input0submit:hover ~ svg {
         right: 30px;
+    }
+
+    /* create product */
+    .discount {
+        display: none;
+    }
+    .show {
+        display: block;
+    }
+
+    /* products */
+    .page-wrapper {
+        padding: 25px;
+    }
+    .back {
+        height: 32px;
+        width: 128px;
+        left: 25px;
+        top: 120px;
+        border-radius: 0px;
+    }
+    .back span {
+        height: 17px;
+        width: 36px;
+        left: 78px;
+        top: 127px;
+        font-family: Montserrat;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: center;
+    }
+    .back svg {
+        position: relative;
+        right: 0;
+    }
+    .page-header {
+        height: 62px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding-left: 30px;
+        padding-right: 30px;
+        justify-content: space-between;
+    }
+    .page-header .header-text {
+        height: 32px;
+        width: 181px;
+        font-family: Montserrat;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        letter-spacing: 0em;
+        text-align: left;
+    }
+    .buttons-wrapper button {
+        height: 37px;
+        width: 121px;
+        border-radius: 5px;
+        border: none;
+        font-family: 'Montserrat';
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #FFFFFF;
+        line-height: 35px;
+    }
+    .buttons-wrapper .button-add {
+        background: #3DBECF;
+    }
+    .buttons-wrapper .button-remove {
+        background: #F11212;
+    }
+    .button-add svg {
+        height: 20px;
+        margin-right: 4px;
+    }
+    .button-remove svg {
+        height: 20px;
+        margin-right: 4px;
+        width: 15px;
+        border-radius: 0px;
     }
 }

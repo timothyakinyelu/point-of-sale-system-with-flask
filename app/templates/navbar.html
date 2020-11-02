@@ -1,0 +1,24 @@
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+        Bootstrap
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="btn btn-light mr-2 btn-sm" href="{{ url_for('auth.logout') }}">
+                        <i class="fa fa-eject"></i>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a href="{{ url_for('nonAuth.signup') }}" class="navbar-item">
+                        Sign Up
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
