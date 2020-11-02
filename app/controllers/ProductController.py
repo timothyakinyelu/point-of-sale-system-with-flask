@@ -1,6 +1,7 @@
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request, jsonify
 from app.models.product import Product
 from app.models.category import Category
+from app.models.brand import Brand
 from app.models.pivots import category_product_table
 from app.db import session
 from app.forms import ProductForm
@@ -10,7 +11,6 @@ def products():
     """ Fetch all products from db"""
     
     products = Product.query.all()
-    
     return render_template('products.html', products = products)
 
 def createProduct():
@@ -27,8 +27,12 @@ def createProduct():
             product = Product(
                 name = form.name.data,
                 sku = form.sku.data,
+                gtin = form.gtin.data,
                 brand_id = form.brand.data,
                 price = form.price.data,
+                old_price = form.old_price.data,
+                discount_id = None if form.discount.data == '' else form.discount.data,
+                has_discount_applied = form.apply_discount.data,
                 cost_of_purchase = form.cost_of_purchase.data,
                 stock_qty = form.stock_qty.data,
                 min_stock_qty = form.min_stock_qty.data
@@ -43,7 +47,6 @@ def createProduct():
         flash('Product already exists!')
         return redirect(url_for('auth.addProduct'))
     
-    flash('Unable to add product!')
     return render_template('create_product.html', form = form, title = 'Add Product')
 
 def updateProduct(id):
@@ -99,3 +102,11 @@ def removeProduct(id):
     
     flash('Product deleted Successfully!')
     return redirect(url_for('auth.getProducts'))
+
+
+def searchBrands():
+    term = request.args.get('query')
+
+    records = Brand.query.filter(Brand.name.ilike('%' + term + '%')).all()
+    
+    return jsonify(results = [i.serialize for i in records])

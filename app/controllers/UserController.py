@@ -41,5 +41,4 @@ def searchEmployees():
     records = Employee.query.filter(Employee.first_name.ilike('%' + term + '%')).all()
     
     return jsonify(results = [i.serialize for i in records])
-    # return {'results': jsonify(employees)}
         

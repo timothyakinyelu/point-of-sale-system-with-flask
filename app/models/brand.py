@@ -35,3 +35,15 @@ class Brand(db.Model):
         if not 'identifier_code' in kwargs:
             self.identifier_code = kwargs['name'][0:2].lower()
         super().__init__(*args, **kwargs)
+        
+        
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'name': self.name,
+           'slug': self.slug,
+           'code': self.identifier_code
+           # This is an example how to deal with Many2Many relations
+        }

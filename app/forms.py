@@ -146,9 +146,13 @@ class ProductForm(FlaskForm):
         'GTIN',
         validators=None
     )
-    brand = StringField(
+    brandName = StringField(
         'Brand',
         validators=[InputRequired()]
+    )
+    brand = HiddenField(
+        'Brand Id',
+        validators=None
     )
     categories = SelectMultipleField(
         'Categories',

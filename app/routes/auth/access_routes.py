@@ -163,5 +163,11 @@ def addTransaction(userID, shopID):
     return TransactionController.new_transaction(userID, shopID)
 
 @auth.route('/search-employees')
+@login_required
 def searchEmployees():
     return UserController.searchEmployees()
+
+@auth.route('/search-brands')
+@login_required
+def searchBrands():
+    return ProductController.searchBrands()
