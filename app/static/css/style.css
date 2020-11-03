@@ -23,6 +23,37 @@ body {
     flex-wrap: wrap; */
 }
 
+/* navbar */
+.navbar-brand {
+    font-family: 'Montserrat';
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 200;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+.nav-item span {
+    border: 1px solid #000000;
+    height: 40px;
+    width: 40px;
+    border-radius: 60px;
+    padding: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: 0em;
+}
+
 /* login */
 @media screen and (min-width: 640px) {
     .form-wrapper {
@@ -119,7 +150,7 @@ body {
     input[type=text]:focus,
     input[type=text].form-control:focus, 
     input[type=password]:focus,
-    input[type=password].form-control:focus{
+    input[type=password].form-control:focus, a[type=button]:focus {
         box-shadow: none;
         outline: none;
     }
@@ -143,7 +174,7 @@ body {
         display: block;
     }
 
-    /* products */
+    /* general */
     .page-wrapper {
         padding: 25px;
     }
@@ -159,7 +190,7 @@ body {
         width: 36px;
         left: 78px;
         top: 127px;
-        font-family: Montserrat;
+        font-family: 'Montserrat';
         font-size: 14px;
         font-weight: 600;
         line-height: 17px;
@@ -184,14 +215,15 @@ body {
     .page-header .header-text {
         height: 32px;
         width: 181px;
-        font-family: Montserrat;
-        font-size: 20px;
+        font-family: 'Montserrat';
+        font-size: 18px;
         font-style: normal;
         font-weight: 600;
         letter-spacing: 0em;
         text-align: left;
+        line-height: 32px;
     }
-    .buttons-wrapper button {
+    .buttons-wrapper a {
         height: 37px;
         width: 121px;
         border-radius: 5px;
@@ -203,13 +235,20 @@ body {
         letter-spacing: 0em;
         text-align: center;
         color: #FFFFFF;
-        line-height: 35px;
+        line-height: 37px;
+        text-decoration: none;
     }
     .buttons-wrapper .button-add {
         background: #3DBECF;
     }
+    .buttons-wrapper .button-add:hover {
+        background: #1b9aab;
+    }
     .buttons-wrapper .button-remove {
         background: #F11212;
+    }
+    .buttons-wrapper .button-remove:hover {
+        background: #bd0d0d;
     }
     .button-add svg {
         height: 20px;
@@ -220,5 +259,115 @@ body {
         margin-right: 4px;
         width: 15px;
         border-radius: 0px;
+    }
+    .table-wrapper {
+        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+        margin-top: 36px;
+        height: auto;
+        width: 100%;
+        border-radius: 8px;
+        background: #FFFFFF;
+    }
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+        font-family: 'Montserrat';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #ffffff;
+    }
+    .table thead {
+        background: #3DBECF;
+    }
+    .table tbody td, .table tbody th {
+        font-family: 'Montserrat';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: center;
+    }
+    .table tbody th {
+        color: rgba(0,0,0,.9);
+        font-weight: bolder;
+        font-size: 13px;
+    }
+    .table tbody tr:hover ~ .table tbody th {
+        font-size: 15px;
+    }
+    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+        background-color: #ffffff;
+    }
+    .table-hover tbody tr:hover th {
+        font-size: 16px
+    }
+    .table tbody td a {
+        width: 45px;
+        border-radius: 7px;
+        border: 1px solid #000000;
+        font-family: 'Montserrat';
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 21px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #383232;
+        text-decoration: none;
+    }
+    .table-wrapper nav {
+        height: 42px;
+        border-radius: 0px;
+        display: flex;
+        flex-wrap: wrap;
+        padding-left: 30px;
+        padding-right: 30px;
+        justify-content: space-between;
+        align-content: center;
+    }
+    .pagination-total i {
+        font-family: 'Montserrat';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: center;
+        color: #212529;
+    }
+    .pagination {
+        list-style: none;
+        display: flex;
+        margin-bottom: 0;
+    }
+    .page-item a {
+        width: 84px;
+        border-radius: 7px;
+        font-family: 'Montserrat';
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 17px;
+        letter-spacing: 0em;
+        text-align: center;
+        border: 1px solid #212529;
+        color: #212529;
+    }
+    .page-item .num-link {
+        width: 25px;
+        border-radius: 9px;
+    }
+    .page-item.active a {
+        color: #f01212;
+    }
+    caption {
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 0;
     }
 }

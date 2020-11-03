@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css" rel="stylesheet">
 
-        <title>Document</title>
+        <title>POS System</title>
     </head>
     <body>
         <div class="base">
@@ -140,6 +140,12 @@
                     discount.classList.remove('show');
                 }
             }
+            $('document').ready(function(){
+                var username = "{{current_user.username}}"
+                var firstLetter = username.charAt(0)
+                
+                document.getElementById("user").innerHTML = firstLetter;
+            });
         </script> 
     </body>
 </html>
