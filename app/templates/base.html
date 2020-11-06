@@ -5,13 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-4.4.1-dist/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename= 'css/style.css') }}">
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" /> -->
 
-        <link href="https://fonts.googleapis.com/css?family=Livvic|Montserrat|Philosopher|ZCOOL+XiaoWei|Srisakdi:700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename= 'css/fonts.css') }}" rel="stylesheet">
 
         <title>POS System</title>
     </head>
@@ -21,131 +19,56 @@
         </div>
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/popper/popper.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='css/bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
         <script>
-            $(document).ready(function() {
-                var x = 0;
-                var span = document.querySelector('span'); // find the <span> element in the DOM
-                var increment = document.getElementById('increment'); // find the element with the ID 'increment'
-                var decrement = document.getElementById('decrement'); // find the element with the ID 'decrement'
-
-                function increment() {
-                    increment.addEventListener('click', function () {
-                        // this function is executed whenever the user clicks the increment button
-                        span.textContent = x++;
-                    });
-                }
-
-                function decrement() {
-                    decrement.addEventListener('click', function () {
-                        // this function is executed whenever the user clicks the decrement button
-                        span.textContent = x--;
-                    });
-                }
-            })
-        </script>
-        <script>
-            function searchEmployees(e) {
-                e.preventDefault();
-                var search_term = $('input[name=query]').val();
-
-                $.ajax(
-                    {
-                        type: "GET",
-                        url: "{{url_for('auth.searchEmployees')}}",
-                        data: { "query": search_term },
-                        success: function (response) {
-                            console.log(response.results)
-                            $("#result").empty(); //remove whatever is there and append whatever is returned
-                            $('#result').empty().append("<option value='0'>Select</option>");
-                                response.results.forEach((value)=>{
-                                    $('#result').append(
-                                        `<option value="${value.id}">${value.first_name + ' ' + value.last_name}</option>`
-                                    )
-
-                            });
-                            // $.each(response.results, function( index, value ) {
-                            //     // alert( index + ": " + value );
-                            //     $("#result").append(
-                            //         `<option value="${value.id}">${value.first_name + ' ' + value.last_name}</option>`
-                            //     )
-                            // });
-                        }
-                    }
-                )
-            }
-
-            function selectEmployee() {
-                var sel = document.getElementById("result");
-                var id = sel.options[sel.selectedIndex].value;
-                var fullName = sel.options[sel.selectedIndex].text;
-
-                var names = fullName.split(" ");
-                var rev_names = names.reverse()
-
-                var username = rev_names.join(".").toLowerCase()
-                document.getElementById("username").value = username;
-                document.getElementById("employee").value = id;
-            }
-
-            function searchBrands(e) {
-                e.preventDefault()
-                var search_term = $('input[name=brandName]').val();
-
-                $.ajax(
-                    {
-                        type: "GET",
-                        url: "{{url_for('auth.searchBrands')}}",
-                        data: { "query": search_term },
-                        success: function (response) {
-                            console.log(response.results)
-                            $("#brands").empty(); //remove whatever is there and append whatever is returned
-                            $('#brands').empty().append("<option value='0'>Select</option>");
-                                response.results.forEach((value)=>{
-                                    $('#brands').append(
-                                        `<option value="${value.id}">${value.name}</option>`
-                                    )
-
-                            });
-                            // $.each(response.results, function( index, value ) {
-                            //     // alert( index + ": " + value );
-                            //     $("#result").append(
-                            //         `<option value="${value.id}">${value.first_name + ' ' + value.last_name}</option>`
-                            //     )
-                            // });
-                        }
-                    }
-                )
-            }
-
-            function selectBrand() {
-                var sel = document.getElementById("brands");
-                var id = sel.options[sel.selectedIndex].value;
-                var name = sel.options[sel.selectedIndex].text;
-
-                document.getElementById("brandName").value = name;
-                document.getElementById("brandID").value = id;
-                $("#brands").empty();
-            }
-        </script>
-        <script type="text/javascript"> 
-            function openDiscount() {
-                var checkBox = document.getElementById("apply");
-                var discount = document.getElementById("discount");
-                if (checkBox.checked == true){
-                    discount.classList.add('show');
-                } else {
-                    discount.classList.remove('show');
-                }
-            }
             $('document').ready(function(){
                 var username = "{{current_user.username}}"
                 var firstLetter = username.charAt(0)
                 
                 document.getElementById("user").innerHTML = firstLetter;
             });
-        </script> 
+        </script>
+        <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
+        <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
+        <script>
+            $("#prtReceipt").on("click", function() {
+                var userID = "{{current_user.id}}";
+                var shopID = "{{current_user.shop_id}}";
+                var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();;
+                var quantity = $('input[id=quant]').map(function(){return $(this).val();}).get();;
+
+                console.log(userID)
+
+                var token =  $('input[name="csrf_token"]').attr('value')
+                console.log(token)
+                $.ajaxSetup({
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', token);
+                    }
+                });
+                $.ajax(
+                    {
+                        type: "POST",
+                        url: "{{ url_for('auth.submitTransaction') }}",
+                        data: JSON.stringify(
+                            {
+                                "userID": userID,
+                                "shopID": shopID,
+                                "productID": productID, 
+                                "quantity": quantity
+                            }
+                        ),
+                        contentType: 'application/json;charset=UTF-8',
+                        success: function (response) { 
+                                // var addSub = document.getElementById("subtotal").value;
+                                // var addDisc = document.getElementById("discount").value;
+                                // document.getElementById("total").value  
+                        }
+                    }
+                )
+            });
+        </script>
     </body>
 </html>

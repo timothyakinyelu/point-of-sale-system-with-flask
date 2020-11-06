@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for, request
+from flask import render_template, redirect, flash, url_for, request, make_response, jsonify
 from app.db import session
 from app.models.transaction import Transaction
 from app.models.productTransaction import ProductTransaction
@@ -8,15 +8,18 @@ def transactions():
     transactions = Transaction.query.all()
     
     return render_template('transactions.html', transactions = transactions)
+
+def new_transaction():
+    return render_template('new_transaction.html', title = 'Enter new sale')
     
-def new_transaction(userID, shopID):
+def submit_transaction():
     if request.method == 'POST':
-        products = request.form.getlist('item_id')
-        product_qtys = request.form.getlist('quantity')
+        products = request.json['productID']
+        product_qtys = request.json['quantity']
         
         transaction = Transaction(
-            user_id = userID,
-            shop_id = shopID
+            user_id = request.json['userID'],
+            shop_id = request.json['shopID']
         )
         session.add(transaction)
         session.flush()
@@ -32,8 +35,9 @@ def new_transaction(userID, shopID):
             session.flush()
         
         session.commit()
-        flash('Sale submitted Successfully!')
-        return redirect(url_for('auth.addTransaction', userID = userID, shopID = shopID))
+        data = {'message': 'Transaction submitted Successfully', 'status': 201}
+        return make_response(jsonify(data), 201)
     
-    return render_template('new_transaction.html', title = 'Enter new sale')
+    data = {'message': 'Unable to submit transaction', 'status': 400}
+    return make_response(jsonify(data), 400)
             

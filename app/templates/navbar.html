@@ -3,6 +3,11 @@
         <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
         BestDeals
     </a>
+    {% if url_for('auth.addTransaction', userID=current_user.id, shopID=current_user.shop_id) == request.path %}
+        <div class="page-label">Sales / <span>New Sale</span></div>
+    {% else %}
+    {% endif %}
+    
 
     <div class="" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">

@@ -157,10 +157,15 @@ def updateProduct(id):
 def deleteProduct(id):
     return ProductController.removeProduct(id)
 
-@auth.route('/sales/new-transaction/<int:userID>/<int:shopID>', methods=['GET', 'POST'])
+@auth.route('/sales/new-transaction')
 @login_required
-def addTransaction(userID, shopID):
-    return TransactionController.new_transaction(userID, shopID)
+def addTransaction():
+    return TransactionController.new_transaction()
+
+@auth.route('/sales/submit-transaction', methods=['POST',])
+@login_required
+def submitTransaction():
+    return TransactionController.submit_transaction()
 
 @auth.route('/search-employees')
 @login_required
@@ -171,3 +176,13 @@ def searchEmployees():
 @login_required
 def searchBrands():
     return ProductController.searchBrands()
+
+@auth.route('/search-products')
+@login_required
+def searchProducts():
+    return ProductController.searchProducts()
+
+@auth.route('/get-product')
+@login_required
+def getProduct():
+    return ProductController.getProduct()

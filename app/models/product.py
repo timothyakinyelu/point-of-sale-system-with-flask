@@ -1,6 +1,5 @@
 from app.db import db
 
-
 class Product(db.Model):
     __tablename__ = 'products'
     
@@ -58,3 +57,26 @@ class Product(db.Model):
         default = db.func.current_timestamp(),
         onupdate = db.func.current_timestamp()
     )
+    
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'name': self.name,
+           'price': self.price,
+           'discount_id':self.discount_id,
+           'discount': self.serialize_discount,
+           'stock': self.stock_qty
+           # This is an example how to deal with Many2Many relations
+        }
+        
+    @property
+    def serialize_discount(self):
+        """
+        Return object's relations in easily serializable format.
+        NB! Calls many2many's serialize property.
+        """
+        if self.discount_id is not None:
+            return self.discount.serialize
+        return None

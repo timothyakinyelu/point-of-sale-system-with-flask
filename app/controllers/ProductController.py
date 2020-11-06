@@ -110,3 +110,18 @@ def searchBrands():
     records = Brand.query.filter(Brand.name.ilike('%' + term + '%')).all()
     
     return jsonify(results = [i.serialize for i in records])
+
+
+def searchProducts():
+    term = request.args.get('query')
+
+    records = Product.query.filter(Product.name.ilike('%' + term + '%')).all()
+    
+    return jsonify(results = [i.serialize for i in records])
+
+
+def getProduct():
+    id = request.args.get('id')
+    product = Product.query.filter_by(id = id).first()
+    
+    return jsonify(result = product.serialize)
