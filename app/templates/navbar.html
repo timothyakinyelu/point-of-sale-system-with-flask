@@ -1,21 +1,41 @@
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-        BestDeals
-    </a>
-    {% if url_for('auth.addTransaction', userID=current_user.id, shopID=current_user.shop_id) == request.path %}
-        <div class="page-label">Sales / <span>New Sale</span></div>
-    {% else %}
-    {% endif %}
+    <div class="left-navbar">
+        <a class="navbar-brand" href="#">
+            <img src="/docs/4.5/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            BestDeals
+        </a>
+        {% if url_for('auth.addTransaction') == request.path %}
+            <div class="page-label">Sales / <span>New Sale</span></div>
+        {% else %}
+        {% endif %}
+    </div>
     
 
     <div class="" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             {% if current_user.is_authenticated %}
+                {% if url_for('auth.addTransaction') == request.path %}
+                <li class="notifications dropdown" onclick="showSavedLists(event)">
+                    <a tabindex="-1" data-target="#" class="" data-toggle="" role="button" aria-expanded="false">
+                        <svg width="23" height="25" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M2.95784 0H32.0447C32.3581 0 32.5888 0.226074 32.6116 0.499874L34.9984 29.5026C35.0212 29.7739 34.7421 30.0025 34.4316 30.0025H0.568106C0.260489 30.0025 -0.0214937 29.7789 0.00129272 29.5026L2.38817 0.499874C2.41096 0.223562 2.64452 0 2.95784 0ZM9.45198 5.97086V9.82165V9.82416H9.44913C9.44913 11.693 10.3207 13.3936 11.7164 14.627C13.1149 15.8603 15.0432 16.629 17.1595 16.629V16.6265H17.168H17.1737V16.629C19.2929 16.629 21.2212 15.8628 22.6197 14.6295C24.0182 13.3961 24.887 11.6956 24.8898 9.82919H24.8841V9.82165V5.92565C23.9442 5.65436 23.2663 4.87566 23.2663 3.95629C23.2663 2.81085 24.3173 1.88144 25.6161 1.88144C26.9149 1.88144 27.966 2.81085 27.966 3.95629C27.966 4.69731 27.5216 5.35041 26.858 5.71716V9.82165V9.82919H26.8551C26.8523 12.1753 25.7642 14.3105 24.0154 15.8528C22.2608 17.4002 19.8369 18.3622 17.1737 18.3647V18.3698H17.168H17.1595V18.3647C14.4992 18.3622 12.081 17.4027 10.3264 15.8603C8.57185 14.313 7.48095 12.1753 7.4781 9.82668H7.47525V9.82165V5.60914C6.90844 5.22984 6.54101 4.632 6.54101 3.95629C6.54101 2.81085 7.59488 1.88144 8.89371 1.88144C10.1925 1.88144 11.2436 2.81085 11.2436 3.95629C11.2493 4.93343 10.4831 5.74981 9.45198 5.97086Z" fill="#4393E8"/>
+                        </svg>  
+                        <span id="savedItems" class="badge info-number cart cart-number count">0</span>
+                    </a>
+                    <div class="savedLists"></div>
+                </li>
+                {% else %}
+                    <li class="dropdown">
+                        <a tabindex="-1">
+                            <i class="ion-bag  icon-notification"></i>
+                            <span class="badge info-number cart cart-number count">0</span>
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <span id="user"></span>
-                    <a class="btn btn-light mr-2 btn-sm" href="{{ url_for('auth.logout') }}">
-                        logout
+                    <a class="mr-2" href="{{ url_for('auth.logout') }}">
+                        {{ current_user.username }}
                     </a>
                 </li>
             {% else %}

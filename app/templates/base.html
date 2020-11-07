@@ -33,16 +33,13 @@
         <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
         <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
         <script>
-            $("#prtReceipt").on("click", function() {
+            $("#save").on("click", function() {
                 var userID = "{{current_user.id}}";
                 var shopID = "{{current_user.shop_id}}";
-                var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();;
-                var quantity = $('input[id=quant]').map(function(){return $(this).val();}).get();;
+                var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();
+                var quantity = $('input[id=quant]').map(function(){return $(this).val();}).get();
+                var token =  $('input[name="csrf_token"]').attr('value');
 
-                console.log(userID)
-
-                var token =  $('input[name="csrf_token"]').attr('value')
-                console.log(token)
                 $.ajaxSetup({
                     beforeSend: function(xhr) {
                         xhr.setRequestHeader('X-CSRFToken', token);
@@ -64,7 +61,15 @@
                         success: function (response) { 
                                 // var addSub = document.getElementById("subtotal").value;
                                 // var addDisc = document.getElementById("discount").value;
-                                // document.getElementById("total").value  
+                                // document.getElementById("total").value;
+                                $('.page-wrapper').prepend(`
+                                    <div class="alert alert-warning">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        ${response.message}
+                                    </div>
+                                `)
+                                
+                                console.log(response)
                         }
                     }
                 )

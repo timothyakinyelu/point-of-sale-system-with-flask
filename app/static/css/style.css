@@ -34,11 +34,15 @@ body {
         border: 1px solid #C4C4C4;
         box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
     }
+    .left-navbar {
+        display: flex;
+        align-items: center;
+    }
     .navbar .page-label {
         color: #C4C4C4;
         font-family: 'Montserrat';
         font-style: normal;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 15px;
         line-height: 30px;
     }
@@ -54,35 +58,94 @@ body {
         letter-spacing: 0em;
         text-align: left;
     }
+    .navbar-nav {
+        flex-direction: unset;
+        align-items: center;
+    }
+    .navbar-nav .notifications {
+        padding-right: 20px;
+        cursor: pointer;
+    }
+    .navbar-nav .notifications .savedLists {
+        position: absolute;
+        z-index: 100;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        width: 200px;
+        background: #ffffff;
+        border-radius: 5px;
+        border: 1px solid #adb5bd;
+        padding: 10px;
+        left: -45px;
+        top: 42px;
+        display: none;
+    }
+    .navbar-nav .notifications .savedLists span {
+        font-size: 13px;
+        font-family: 'Montserrat';
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #dae0e5;
+        width: 100%;
+    }
+    .info-number {
+        float: none;
+        min-width: 22px;
+        min-height: 22px;
+        line-height: 20px;
+        font-size: 13px;
+        margin-left: -13px;
+        margin-top: 5px;
+        font-weight: 300;
+        border-radius: 50%;
+        padding: 0px;
+    }
+    .info-number.cart {
+        background-color: white;
+        color: rgb(240 18 18);
+        position: absolute;
+        font-size: 12px;
+        margin-top: 14px;
+        border: 1px solid #dae0e5;
+    }
     .nav-item {
         display: flex;
         align-items: center;
     }
     .nav-item span {
         border: 1px solid #000000;
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
         border-radius: 60px;
-        padding: 20px;
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Montserrat';
-        font-size: 20px;
+        font-size: 16px;
         font-style: normal;
         font-weight: 500;
-        line-height: 30px;
+        line-height: 29px;
         letter-spacing: 0em;
+    }
+    .nav-item a {
+        text-decoration: none;
+        color: #6c757d;
+        font-size: 14px;
+        padding-left: 3px;
     }
 
     /* login */
     .form-wrapper {
-        position: relative;
         width: 500px;
         height: auto;
         background: #FFFFFF;
         border-radius: 20px;
-        margin: auto;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
     }
     .label-wrapper {
         height: 34px;
@@ -194,6 +257,9 @@ body {
     .show {
         display: block !important;
     }
+    .on {
+        display: flex !important;
+    }
 
     /* general */
     .col-sm-12 {
@@ -289,7 +355,7 @@ body {
     .table-wrapper {
         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
         margin-top: 24px;
-        height: auto;
+        max-height: 415px;
         width: 100%;
         border-radius: 8px;
         background: #FFFFFF;
@@ -440,12 +506,36 @@ body {
         position: absolute;
         right: 186px;
     }
-    #submit-transaction {
-        max-height: 500px;
+    .table thead.sales-head {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
     }
+    .table tbody#sale-body {
+        display: block;
+        width: 100%;
+        overflow: auto;
+        min-height: 100px;
+        max-height: 350px
+    }
+    .table tbody#sale-body tr {
+        display: table;
+        table-layout: fixed;
+        width: 100%;
+    }
+    .table thead th.items, .table tbody td.items {
+        width: 30vw;
+        text-align: left;
+    }
+    /* #submit-transaction {
+        max-height: 500px;
+    } */
     #sale-body .qty-row {
         display: flex;
         justify-content: center;
+    }
+    #sale-body .load-msg {
+        display: none;
     }
     #submit-transaction .table thead th, #submit-transaction .table tbody td {
         font-size: 15px;
@@ -461,7 +551,7 @@ body {
     }
     #sale-body td .dec, #sale-body td .inc {
         width: 30px;
-        font-size: 24px;
+        font-size: 16px;
         border: 1px solid #dee2e6;
         border-radius: 5px;
         line-height: 18px;
@@ -485,13 +575,12 @@ body {
         color: #000000;
     }
     .right-side {
-        height: auto;
-        max-height: 587px;
+        max-height: 500px;
         background: #FFFFFF;
         border-radius: 8px;
     }
     .right-side .right-inner {
-        height: 611px;
+        height: 500px;
         border-radius: 0px;
         padding-left: 15px;
         padding-right: 15px;
@@ -537,7 +626,7 @@ body {
     .right-side .right-values.ref {
         display: none;
     }
-    .right-inner .buttons-wrapper {
+    /* .right-inner .buttons-wrapper {
         margin: 70px;
         display: flex;
         justify-content: center;
@@ -545,7 +634,7 @@ body {
     .right-inner .buttons-wrapper .button-remove {
         font-size: 16px;
         width: 100%;
-    }
+    } */
     .ticket .modal-header {
         display: block;
         text-align: center;
@@ -555,6 +644,27 @@ body {
     }
     .vat {
         font-size: 12px;
+    }
+    .ctrl-btns {
+        width: 100%;
+        margin-left: 15px;
+        margin-right: 15px;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 35px;
+        background: #ffffff;
+        height: 50px;
+        border-radius: 10px;
+        align-items: center;
+    }
+    .ctrl-btns .buttons-wrapper {
+        padding-right: 20px;
+    }
+    .ctrl-btns .buttons-wrapper #saveLater {
+        background: #3DBECF;
+    }
+    .ctrl-btns .buttons-wrapper #save {
+        background: #4393e8;
     }
 
 }
@@ -649,5 +759,16 @@ body {
     }
     @page {
         size: 80mm 80mm;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #sale-body td .dec, #sale-body td .inc {
+        font-size: 24px;
+    }
+}
+@media screen and (min-width: 990px) {
+    .table thead th.items, .table tbody td.items {
+        width: 20vw;
     }
 }

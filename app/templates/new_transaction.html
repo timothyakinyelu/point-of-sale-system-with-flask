@@ -5,7 +5,7 @@
         <div class="page-wrapper">
             <form id="submit-transaction" method="POST" action="">
                 <div class="row">
-                    <div class="col-lg-8 col-sm-12">
+                    <div class="col-lg-8 col-md-12 col-sm-12">
                         <div class="page-header">
                             <div class="search-bar">
                                 <input 
@@ -44,21 +44,25 @@
                             <div class="table-responsive table-wrapper">
                                 <table class="table">
                                     <caption class="sr-only">List of Transactions</caption>
-                                    <thead>
+                                    <thead class="sales-head">
                                         <tr>
-                                            <th scope="col">Items</th>
+                                            <th scope="col" class="items">Item Name</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Discount</th>
                                             <th scope="col">Qty.</th>
-                                            <th scope="col">Subtotal</th>
+                                            <th scope="col">Total</th>
                                             <th scope="col"></th>
                                         </tr>
                                     </thead>
-                                    <tbody id="sale-body"></tbody>
+                                    <tbody id="sale-body">
+                                        <td class="load-msg show text-center">
+											<h4>There are no items in the cart</h4>
+										</td>
+                                    </tbody>
                                 </table>
                             </div>
                     </div>
-                    <div class="col-lg-4 col-sm-12">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="right-side">
                             <div class="right-inner">
                                 <div class="right-values">
@@ -84,13 +88,18 @@
                                     <label for="total" class="col-form-label">Total</label>
                                     <input id="total" type="text" class="reset form-control" id="total" data-original-value="0.00" value="0.00" readonly>
                                 </div>
-                                <div class="buttons-wrapper">
-                                    <button id="prtReceipt" type="button" class="button-remove">Print Receipt</button>
-                                </div>
-                                <div class="buttons-wrapper">
-                                    <button id="preview" type="button" class="button-remove">Preview</button>
-                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="ctrl-btns">
+                        <div class="buttons-wrapper">
+                            <button id="prtReceipt" type="button" class="button-remove">Print</button>
+                        </div>
+                        <div class="buttons-wrapper">
+                            <button id="save" type="button" class="">Save</button>
+                        </div>
+                        <div class="buttons-wrapper">
+                            <button id="saveLater" type="button" class="" onclick="saveToLocalStorage(event)">Save for Later</button>
                         </div>
                     </div>
                 </div>

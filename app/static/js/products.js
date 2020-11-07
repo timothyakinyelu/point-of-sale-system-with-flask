@@ -74,7 +74,7 @@
                 url: '/get-product',
                 data: { "id": id },
                 success: function (response) { 
-                    // $("#sale-body").empty();
+                    $('.load-msg').removeClass('show')
                     var product = response.result
             
                     if(product.discount == null) {
@@ -91,18 +91,19 @@
                     $('#sale-body').append(
                         `<tr class="rows" id="row${id}">
                             <input id="prd" type="hidden" name="productID[]" value="${id}" />
-                            <td class="item">
+                            <td class="items">
                                 <span id="item">${product.name}</span>
-                                <span class="stock">Stock: ${product.stock}</span>
+                                <br/>
+                                <span id="stock" class="stock">Stock: ${product.stock}</span>
                             </td>
-                            <td>₦${parseFloat(product.price).toFixed(2)}</td>
-                            <td><span id="disc${id}">${discount_percent}<span></td>
+                            <td id="price">₦${parseFloat(product.price).toFixed(2)}</td>
+                            <td><span id="disc${id}" class="disc">${discount_percent}<span></td>
                             <td class="qty-row">
                                 <div id="dec" class="dec button${id}">-</div>
                                 <input id="quant" type="text" value="1" name="quantity[]" />
                                 <div id="inc" class="inc button${id}">+</div>
                             </td>
-                            <td><input id="sub${id}" type="text" readonly value="₦${parseFloat(subtotal).toFixed(2)}" /></td>
+                            <td><input id="sub${id}" class="sub" type="text" readonly value="₦${parseFloat(subtotal).toFixed(2)}" /></td>
                             <td>
                                 <svg id="svg${id}" width="25" height="20" viewBox="0 0 25 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0)">
@@ -182,11 +183,35 @@
                     $("#svg" + id).on("click", function() {
                         var tr = document.getElementById("row" + id)
                         
-                        tr.remove()
+                        tr.remove();
+
+                        // console.log(tr.length)
+                        if($('.rows').length == 0){
+                            $('.load-msg').addClass('show');
+
+                            $('.refresh').change(function(){});
+                            $('.refresh').prop('selectedIndex',0).trigger('change');
+                            $(".reset").each(function(){
+                                var $t = $(this);
+                                $t.val($t.data("original-value"));
+                            });
+                            var posref = $("input#posRef");
+                            posref.val(posref.data("original-value"));
+                        }
                     });
 
                     $("#cancel").on("click", function() {
-                        $( "#sale-body" ).empty();
+                        $( ".rows" ).remove();
+                        $('.load-msg').addClass('show');
+
+                        $('.refresh').change(function(){});
+                        $('.refresh').prop('selectedIndex',0).trigger('change');
+                        $(".reset").each(function(){
+                            var $t = $(this);
+                            $t.val($t.data("original-value"));
+                        });
+                        var posref = $("input#posRef");
+                        posref.val(posref.data("original-value"));
                     });
 
                 }
@@ -195,52 +220,112 @@
         $("#brands").empty();
         $('#products').removeClass("show");
     }
-    
-    $("#preview").on("click", function() {
-        $('#receipt').modal('show'); 
 
-        var trs = document.getElementsByClassName('rows');
+    var custItems = []
+    saveToLocalStorage = (e) => {
+        e.preventDefault();
 
-        $(trs).each(function(index) {
-            
-            var item = $(this).find('#item')[0].innerText;
-            var id = $(this).find('#prd')[0].value;
-            var qty = $(this).find('#quant')[0].value;
-            var discount = $(this).find("#disc" + id)[0].innerText;
-            var subtotal = $(this).find("#sub" + id)[0].value;
+        var prdID = $('input[id=prd]').map(function(){return $(this).val();}).get();
+        var itemName = $('span[id=item]').map(function(){return $(this).text();}).get();
+        var itemStock = $('span[id=stock]').map(function(){return $(this).text();}).get();
+        var itemPrice = $('td[id=price]').map(function(){return $(this).text();}).get();
+        var itemDisc = $('span[class=disc]').map(function(){return $(this).text();}).get();
+        var qty = $('input[id=quant]').map(function(){return $(this).val();}).get();
+        var subtotal = $('input[class=sub]').map(function(){return $(this).val();}).get();
 
-            $('#receipt-body').append(
-                `<tr id="row${index}">
-                    <td class="qty-row">${qty}</td>
-                    <td class="item">${item}</td>
-                    <td class="disc">${discount}</td>
-                    <td class="price">${subtotal}</td>
-                </tr>`
-            )
-        });
-        var total = document.getElementById("total").value;
-        $('#receipt-body').append(
-            `<tr>
-                <td></td>
-                <td></td>
-                <td>TOTAL</td>
-                <td class="price">${total}</td>
-            </tr>`
-        );
-        
-        $(".close").on("click", function() {
-            $( "#receipt-body" ).empty();
-            $('#sale-body').empty();
-            $('.refresh').change(function(){});
-            $('.refresh').prop('selectedIndex',0).trigger('change');
-            $(".reset").each(function(){
-                var $t = $(this);
-                $t.val($t.data("original-value"));
-            });
-            var posref = $("input#posRef");
-            posref.val(posref.data("original-value"));
+        custItems.push({
+            'products' : prdID,
+            'names' : itemName,
+            'stocks' : itemStock,
+            'prices' : itemPrice,
+            'discounts' : itemDisc,
+            'quantities' : qty,
+            'totals' : subtotal
         })
-    })
+
+        localStorage.setItem('items', JSON.stringify(custItems));
+
+        $('document').ready(function(){
+            var items = JSON.parse(localStorage.getItem('items'));
+            var count = document.getElementById("savedItems");
+
+            count.innerText = items.length;
+        });
+    }
+
+    showSavedLists = (e) => {
+        e.preventDefault();
+
+        
+        if($('div').hasClass('on')) {
+            $('.savedLists').removeClass('on');
+            $('.savedLists').empty();
+        } else {
+            $('.savedLists').addClass('on');
+            var items = JSON.parse(localStorage.getItem('items'));
+            items.forEach(function(item, index) {
+                $('.savedLists').append(
+                    `<span id="lists${index}">${item.names[0]}</span>`
+                )
+            });
+        }
+        //     $('.savedLists').empty();
+        //     $('.savedLists').removeClass('on')
+        // }
+    }
+
+    $('document').ready(function(){
+        var items = JSON.parse(localStorage.getItem('items'));
+        var count = document.getElementById("savedItems");
+
+        count.innerText = items.length;
+    });
+    
+    // $("#preview").on("click", function() {
+    //     $('#receipt').modal('show'); 
+
+    //     var trs = document.getElementsByClassName('rows');
+
+    //     $(trs).each(function(index) {
+            
+    //         var item = $(this).find('#item')[0].innerText;
+    //         var id = $(this).find('#prd')[0].value;
+    //         var qty = $(this).find('#quant')[0].value;
+    //         var discount = $(this).find("#disc" + id)[0].innerText;
+    //         var subtotal = $(this).find("#sub" + id)[0].value;
+
+    //         $('#receipt-body').append(
+    //             `<tr id="row${index}">
+    //                 <td class="qty-row">${qty}</td>
+    //                 <td class="item">${item}</td>
+    //                 <td class="disc">${discount}</td>
+    //                 <td class="price">${subtotal}</td>
+    //             </tr>`
+    //         )
+    //     });
+    //     var total = document.getElementById("total").value;
+    //     $('#receipt-body').append(
+    //         `<tr>
+    //             <td></td>
+    //             <td></td>
+    //             <td>TOTAL</td>
+    //             <td class="price">${total}</td>
+    //         </tr>`
+    //     );
+        
+    //     $(".close").on("click", function() {
+    //         $( "#receipt-body" ).empty();
+    //         $('#sale-body').empty();
+    //         $('.refresh').change(function(){});
+    //         $('.refresh').prop('selectedIndex',0).trigger('change');
+    //         $(".reset").each(function(){
+    //             var $t = $(this);
+    //             $t.val($t.data("original-value"));
+    //         });
+    //         var posref = $("input#posRef");
+    //         posref.val(posref.data("original-value"));
+    //     })
+    // })
 
     openDiscount = () => {
         var checkBox = document.getElementById("apply");
