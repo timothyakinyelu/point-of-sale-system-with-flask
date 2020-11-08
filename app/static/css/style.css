@@ -546,7 +546,7 @@ body {
         border: none;
         font-weight: 500;
     }
-    #sale-body td #quant {
+    #sale-body td .quant {
         width: 39px;
     }
     #sale-body td .dec, #sale-body td .inc {

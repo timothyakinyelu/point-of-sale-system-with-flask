@@ -1,4 +1,5 @@
 (function() {
+    // search through employees list
     searchEmployees = (e) => {
         e.preventDefault();
         var search_term = $('input[name=query]').val();
@@ -22,6 +23,7 @@
         )
     }
 
+    // select employee to be registered as a new user
     selectEmployee = () => {
         var sel = document.getElementById("result");
         var id = sel.options[sel.selectedIndex].value;
