@@ -97,62 +97,62 @@ def updateShop(id):
 def deleteShop(id):
     return ShopController.removeShop(id)
 
-@auth.route('/system/brands')
+@auth.route('/inventory/brands')
 @login_required
 def getBrands():
     return BrandController.brands()
 
-@auth.route('/system/brands/add-brand', methods=['POST',])
+@auth.route('/inventory/brands/add-brand', methods=['POST',])
 @login_required
 def addBrand():
     return BrandController.createBrand()
 
-@auth.route('/system/brands/update-brand/<int:id>', methods=['POST',])
+@auth.route('/inventory/brands/update-brand/<int:id>', methods=['POST',])
 @login_required
 def updateBrand(id):
     return BrandController.updateBrand(id)
 
-@auth.route('/system/brands/delete-brand/<int:id>', methods=['POST',])
+@auth.route('/inventory/brands/delete-brand/<int:id>', methods=['POST',])
 @login_required
 def deleteBrand(id):
     return BrandController.removeBrand(id)
 
-@auth.route('/system/categories')
+@auth.route('/inventory/categories')
 @login_required
 def getCategories():
     return CategoryController.categories()
 
-@auth.route('/system/categories/add-category', methods=['POST',])
+@auth.route('/inventory/categories/add-category', methods=['POST',])
 @login_required
 def addCategory():
     return CategoryController.createCategory()
 
-@auth.route('/system/categories/update-category/<int:id>', methods=['POST',])
+@auth.route('/inventory/categories/update-category/<int:id>', methods=['POST',])
 @login_required
 def updateCategory(id):
     return CategoryController.updateCategory(id)
 
-@auth.route('/system/categories/delete-category/<int:id>', methods=['POST',])
+@auth.route('/inventory/categories/delete-category/<int:id>', methods=['POST',])
 @login_required
 def deleteCategory(id):
     return CategoryController.removeCategory(id)
 
-@auth.route('/system/products')
+@auth.route('/inventory/products')
 @login_required
 def getProducts():
     return ProductController.products()
 
-@auth.route('/system.products/add-product', methods=['GET', 'POST'])
+@auth.route('/inventory/products/add-product', methods=['GET', 'POST'])
 @login_required
 def addProduct():
     return ProductController.createProduct()
 
-@auth.route('/system/products/update-product/<int:id>', methods=['GET', 'POST'])
+@auth.route('/inventory/products/update-product/<int:id>', methods=['GET', 'POST'])
 @login_required
 def updateProduct(id):
     return ProductController.updateProduct(id)
 
-@auth.route('/system/products/delete-product/<int:id>', methods=['POST',])
+@auth.route('/inventory/products/delete-product/<int:id>', methods=['POST',])
 @login_required
 def deleteProduct(id):
     return ProductController.removeProduct(id)
