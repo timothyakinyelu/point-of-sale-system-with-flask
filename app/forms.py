@@ -148,7 +148,7 @@ class ProductForm(FlaskForm):
     )
     brandName = StringField(
         'Brand',
-        validators=[InputRequired()]
+        validators=None
     )
     brand = HiddenField(
         'Brand Id',
