@@ -124,3 +124,15 @@
         </div>
     </section>
 {% endblock %}
+{% block scripts %}
+    <script>
+        $('document').ready(function(){
+            var username = "{{current_user.username}}"
+            var firstLetter = username.charAt(0)
+            
+            document.getElementById("user").innerHTML = firstLetter;
+        });
+    </script>
+    <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
+{{super()}}
+{% endblock scripts %}

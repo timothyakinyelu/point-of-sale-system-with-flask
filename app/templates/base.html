@@ -22,58 +22,6 @@
         <script src="{{ url_for('static', filename='js/jquery-3.5.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/popper/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='css/bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
-        <script>
-            $('document').ready(function(){
-                var username = "{{current_user.username}}"
-                var firstLetter = username.charAt(0)
-                
-                document.getElementById("user").innerHTML = firstLetter;
-            });
-        </script>
-        <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
-        <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
-        <script>
-            $("#save").on("click", function() {
-                var userID = "{{current_user.id}}";
-                var shopID = "{{current_user.shop_id}}";
-                var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();
-                var quantity = $('input[id=quant]').map(function(){return $(this).val();}).get();
-                var token =  $('input[name="csrf_token"]').attr('value');
-
-                $.ajaxSetup({
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('X-CSRFToken', token);
-                    }
-                });
-                $.ajax(
-                    {
-                        type: "POST",
-                        url: "{{ url_for('auth.submitTransaction') }}",
-                        data: JSON.stringify(
-                            {
-                                "userID": userID,
-                                "shopID": shopID,
-                                "productID": productID, 
-                                "quantity": quantity
-                            }
-                        ),
-                        contentType: 'application/json;charset=UTF-8',
-                        success: function (response) { 
-                                // var addSub = document.getElementById("subtotal").value;
-                                // var addDisc = document.getElementById("discount").value;
-                                // document.getElementById("total").value;
-                                $('.page-wrapper').prepend(`
-                                    <div class="alert alert-warning">
-                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                        ${response.message}
-                                    </div>
-                                `)
-                                
-                                console.log(response)
-                        }
-                    }
-                )
-            });
-        </script>
+        {% block scripts%}{% endblock scripts%}
     </body>
 </html>
