@@ -1,11 +1,10 @@
-from flask import url_for
+from flask import url_for, json
 from app.tests.base import BaseCase
 from app.models.transaction import Transaction
 from app.models.productTransaction import ProductTransaction
 from app.models.shop import Shop
 from app.models.product import Product
 from app.db import session
-from app.forms import TransactionForm
 from flask_login import current_user
 
 
@@ -39,12 +38,14 @@ class TransactionTests(BaseCase):
                 
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.addTransaction', userID = current_user.id, shopID = shop.id), 
-                data = dict(
-                    item_id = [prod1.id, prod2.id],
-                    quantity = [20, 25]
-                ),
-                follow_redirects = True
+            response = self.client.post(url_for('auth.submitTransaction'), 
+                data = json.dumps(dict(
+                    productID = [prod1.id, prod2.id],
+                    quantity = [20, 25],
+                    userID = current_user.id, 
+                    shopID = shop.id
+                )),
+                content_type = 'application/json'  
             )
 
             transactions = session.query(ProductTransaction).all()
@@ -55,4 +56,4 @@ class TransactionTests(BaseCase):
             self.assertEqual(products[0].stock_qty, 30)
             self.assertEqual(products[1].stock_qty, 5)
             
-            assert b'Sale submitted Successfully!' in response.data
+            # assert b'Sale submitted Successfully!' in response.data
