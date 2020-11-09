@@ -312,6 +312,9 @@ body {
         text-align: left;
         line-height: 32px;
     }
+    .buttons-wrapper {
+        display: flex;
+    }
     .buttons-wrapper a, .buttons-wrapper button {
         height: 37px;
         width: 121px;
@@ -326,6 +329,7 @@ body {
         color: #FFFFFF;
         line-height: 37px;
         text-decoration: none;
+        margin-right: 10px;
     }
     .buttons-wrapper button {
         line-height: 29px;
@@ -719,6 +723,11 @@ body {
         letter-spacing: 0em;
         text-align: left;
         padding-top: 23px;
+    }
+
+    /* permissions */
+    .buttons-wrapper .button-save {
+        background: #4393e8;
     }
 }
 @media print {
