@@ -98,36 +98,4 @@
             discount.classList.remove('show');
         }
     }
-
-    // print using window.print but will be depreecated in final release
-    // const $btnPrint = document.querySelector("#btnPrint");
-    // $btnPrint.addEventListener("click", () => {
-    //     window.print();
-    // });
-    // document.getElementById("btnPrint").click = function () {
-    //     printElement(document.getElementById("printable"));
-    // };
-    // $("#btnPrint").on("click", function() {
-    //     printElement(document.getElementById("printable"));
-    //     window.print();
-    // });
-    
-    // function printElement(elem) {
-    //     var domClone = elem.cloneNode(true);
-    //     var $printSection = document.getElementById("printSection");
-    
-    //     if (!$printSection) {
-    //         var $printSection = document.createElement("div");
-    //         $printSection.id = "printSection";
-    //         document.body.appendChild($printSection);
-    //     }
-    
-    //     $printSection.innerHTML = "";
-    //     $printSection.appendChild(domClone);
-
-    //     $(document).click(function(e) {
-    //         $("#btnPrint").off("click")
-    //     });
-    // }
-    
 })();
