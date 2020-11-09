@@ -310,6 +310,23 @@ body {
     .on {
         display: flex !important;
     }
+    .table-form {
+        padding: 1.5rem;
+        border-width: 0.2rem;
+        height: auto;
+        max-height: 100% !important;
+    }
+    .table-form label {
+        font-family: 'Montserrat';
+    }
+    .table-form .select-brand {
+        font-size: 14px;
+        font-family: 'Montserrat';
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        display: none;
+    }
 
     /* general */
     #toTopBtn {

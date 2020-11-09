@@ -11,12 +11,11 @@
                 data: { "query": search_term },
                 success: function (response) {
                     $("#brands").empty(); //remove whatever is there and append whatever is returned
-                    $('#brands').empty().append("<option value='0'>Select</option>");
-                        response.results.forEach((value)=>{
-                            $('#brands').append(
-                                `<option value="${value.id}">${value.name}</option>`
-                            );
-
+                    $('#brands').addClass('show')
+                    response.results.forEach((value) => {
+                        $('#brands').append(
+                            `<option value="${value.id}">${value.name}</option>`
+                        );
                     });
                 }
             }
@@ -32,6 +31,7 @@
         document.getElementById("brandName").value = name;
         document.getElementById("brandID").value = id;
         $("#brands").empty();
+        $('#brands').removeClass('show')
     }
 
     // get number of saved transactions
@@ -93,9 +93,14 @@
         var checkBox = document.getElementById("apply");
         var discount = document.getElementById("discount");
         if (checkBox.checked == true){
-            discount.classList.add('show');
+            discount.classList.remove('discount');
         } else {
-            discount.classList.remove('show');
+            discount.classList.add('discount');
         }
     }
+
+    $('#saveProduct').on('click', function(event) {
+        event.preventDefault();
+        $('#create_product').submit();
+    })
 })();
