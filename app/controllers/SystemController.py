@@ -152,7 +152,8 @@ def updatePermission(id):
     return redirect(url_for('auth.Permissions'))
 
 
-def removePermission(id):
+def removePermissions():
+    """ delete permissions and detach from role relationship """
     Perm.query.filter_by(id = id).delete()
     flash('Permission deleted Successfully!')
     

@@ -70,7 +70,7 @@ class UserPermissionTests(BaseCase):
         
         with self.client:
             self.client.post(url_for('nonAuth.login'), data = login.data)
-            response = self.client.post(url_for('auth.deletePermission', id = 1), follow_redirects = True)
+            response = self.client.post(url_for('auth.deletePermissions', id = 1), follow_redirects = True)
             
             permissions = Permission.query.all()
             

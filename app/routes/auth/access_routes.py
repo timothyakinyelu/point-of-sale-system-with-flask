@@ -59,10 +59,10 @@ def addPermission():
 def updatePermission(id):
     return SystemController.updatePermission(id)
 
-@auth.route('/system/permissions/delete-permission/<int:id>', methods=['POST',])
+@auth.route('/system/permissions/delete-permission', methods=['POST',])
 @login_required
-def deletePermission(id):
-    return SystemController.removePermission(id)
+def deletePermissions():
+    return SystemController.removePermissions()
             
 @auth.route('/system/permissions/check-permission', methods=['POST',])
 @login_required
