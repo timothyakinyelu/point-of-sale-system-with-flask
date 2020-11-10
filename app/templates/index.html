@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="row h-100">
-        <div class="form-wrapper admin-panel col-lg-10 col-md-10 col-sm-10">
+    <div class="form-wrapper admin-panel container my-auto h-100 grid">
+        <div class="content-wrapper"> 
+            <div class="panel-header">
+                <h4>Admin Panel</h4>
+                <a href="" type="button" class="button">Log Out</a>
+            </div>
             <div class="top-pane">
                 <a href="{{ url_for('auth.getProducts') }}" class="panes">
                     <span class="pane-svg">
@@ -33,7 +37,7 @@
                             </defs>
                         </svg>                                                       
                     </span>
-                    <span class="pane-word">System Config</span>
+                    <span class="pane-word">System Setup</span>
                 </a>
             </div>
             <div class="bottom-pane">
@@ -50,7 +54,7 @@
                             </defs>
                         </svg> 
                     </span>
-                    <span class="pane-word">Staff Registration</span>
+                    <span class="pane-word">Manage Staff</span>
                 </a>
                 <a href="{{ url_for('auth.getUsers') }}" class="panes">
                     <span class="pane-svg">

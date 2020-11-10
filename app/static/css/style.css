@@ -1,15 +1,15 @@
-.modal {
+/* .modal {
     z-index: 1050 !important;
 }
 
 html, body {
-    /* height: 100%; */
+    /* height: 100%;
     background: #EBF0F0;
 }
 
 /* html {
     overflow: hidden;
-} */
+} 
 
 body {
     overflow-x: hidden;
@@ -22,13 +22,13 @@ body {
     
     display: flex;
     flex-wrap: wrap;
-} */
+} 
 
 #submit-transaction .table thead th, #submit-transaction .table tbody td {
     font-size: 13px;
 }
 @media screen and (min-width: 640px) {
-    /* sidebar */
+    /* sidebar 
     .sidebar__navbar.active {
         width: 250px !important;
         left: 0;
@@ -78,7 +78,7 @@ body {
         transition: 0.5s ease;
     }
 
-    /* navbar */
+    /* navbar 
     .navbar {
         border: 1px solid #C4C4C4;
         box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
@@ -184,123 +184,7 @@ body {
         padding-left: 3px;
     }
 
-    /* login */
-    .form-wrapper {
-        width: 500px;
-        height: auto;
-        background: #FFFFFF;
-        border-radius: 20px;
-        margin: 0;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
-    .label-wrapper {
-        height: 34px;
-        padding-left: 34px;
-        width: 100%;
-        margin-top: 30px;
-    }
-    .label-wrapper h2 {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 32px;
-        color: #000000;
-    }
-    .message-wrapper {
-        display: flex;
-        flex-wrap: wrap;
-        padding-top: 10px;
-        padding-bottom: 25px;
-    }
-    .message-wrapper .login-message-wrapper {
-        position: relative;
-        width: 100%;
-        height: 40px;
-        margin-left: 34px;
-        top: 0;
-    }
-    .message-wrapper .login-message {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: bold;
-        font-size: 27px;
-        line-height: 37px;
-        color: #000000;
-    }
-    .message-wrapper .action-message-wrapper {
-        width: 100%;
-        height: 16px;
-        margin-left: 34px;
-        display: flex;
-    }
-    .message-wrapper .action-message {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: bold;
-        font-size: 11px;
-        color: #000000;
-    }
-    .login-message span {
-        color: #3DBECF;
-    }
-    .login-form {
-        margin-top: 30px;
-        margin-bottom: 30px;
-    }
-    .login-form-field {
-        display: flex;
-        justify-content: center;
-    }
-    .input0field {
-        width: 361px;
-        height: 57px;
-        background: #F8F8F8;
-        border-radius: 30px;
-        border: 1px solid #F8F8F8;
-    }
-    .input0submit {
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 22px;
-        color: #FFFFFF;
-        width: 119px;
-        padding-left: 25px;
-        padding-right: 0;
-        height: 40px;
-        background: #3DBECF;
-        border-radius: 40px;
-        border: none;
-        outline: none;
-        text-align: left;
-    }
-    input[type=text]:focus,
-    input[type=text].form-control:focus, 
-    input[type=password]:focus,
-    input[type=password].form-control:focus, a[type=button]:focus,
-    button:focus {
-        box-shadow: none;
-        outline: none;
-    }
-    .submit-button {
-        width: 208px;
-        padding-left: 69px;
-    }
-    .submit-button svg {
-        position: relative;
-        right: 45px;
-    }
-    .input0submit:hover ~ svg {
-        right: 30px;
-    }
-
-    /* create product */
+    /* create product 
     .discount {
         display: none;
     }
@@ -318,6 +202,7 @@ body {
     }
     .table-form label {
         font-family: 'Montserrat';
+        font-size: 14px;
     }
     .table-form .select-brand {
         font-size: 14px;
@@ -328,7 +213,7 @@ body {
         display: none;
     }
 
-    /* general */
+    /* general 
     #toTopBtn {
         display: none;
         position: fixed;
@@ -552,7 +437,7 @@ body {
         padding-bottom: 0;
     }
 
-    /* sales */
+    /* sales 
     .page-header .new-sale {
         width: 100%;
         height: 37px;
@@ -731,67 +616,13 @@ body {
         background: #4393e8;
     }
 
-    /* index page styles */
-    .form-wrapper.admin-panel {
-        background: #F8F8F8;
-        width: auto;
-    }
-    .form-wrapper .panes {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-content: center;
-        height: 258px;
-        max-height: 180px;
-        min-width: 150px;
-        width: 256px;
-        max-width: 150px;
-        border-radius: 15px;
-        margin: 20px;
-        background: #FFFFFF;
-        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-        color: #000000;
-        text-decoration: none;
-    }
-    .form-wrapper .top-pane {
-        display: flex;
-        justify-content: space-evenly;
-        margin-top: 60px;
-        margin-left: 30px;
-        margin-right: 30px;
-    }
-    .form-wrapper .bottom-pane {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 60px;
-    }
-    .form-wrapper .panes span.pane-svg {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 80px;
-        width: 80px;
-        border-radius: 60px;
-        border: 1px solid #C4C4C4;
-    }
-    .form-wrapper .panes span.pane-word {
-        font-family: Montserrat;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 27px;
-        letter-spacing: 0em;
-        text-align: left;
-        padding-top: 23px;
-    }
-
-    /* permissions */
+    /* permissions 
     .buttons-wrapper .button-save {
         background: #4393e8;
     }
 }
 @media screen and (max-width: 1024px) {
-    /* sidebar */
+    /* sidebar 
     .sidebar__navbar.active span {
         content: "";
         position: fixed;
@@ -806,7 +637,7 @@ body {
         z-index: 99;
     }
 
-    /* navbar */
+    /* navbar 
     .sidebar-menu {
         width: 40px;
         height: 40px;
@@ -819,14 +650,14 @@ body {
     }
 }
 @media screen and (min-width: 1025px) {
-    /* sidebar */
+    /* sidebar 
     .sidebar__navbar span {
         position: fixed;
         left: -100%;
         transition: 0.5s ease;
     }
 
-    /* navbar */
+    /* navbar 
     .sidebar-menu {
         display: none;
     }
@@ -840,5 +671,299 @@ body {
 @media screen and (min-width: 990px) {
     .table thead th.items, .table tbody td.items {
         width: 20vw;
+    }
+} */
+
+/* variables */
+:root {
+    --primary: #3DBECF;
+    --secondary: #F11212;
+    --tertiary: #4393e8;
+    --background: #EBF0F0;
+    --primary-color: #FFFFFF;
+    --primary-black: #000000;
+    --secondary-color: #F8F8F8;
+    --primary-hover: #1b9aab;
+    --secondary-hover: #bd0d0d;
+    --input-border: #e9eef3;
+    --secondary-border: #C4C4C4;
+}
+
+/* reset */
+li {
+    list-style: none;
+}
+body, a, ul, li, p {
+    text-decoration: none;
+    padding: 0;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+/* base styles */
+body {
+    overflow-x: hidden;
+    background: var(--background);
+    font-family: 'Montserrat';
+}
+.button, .button-later, .button-save {
+    color: var(--primary-color);
+    border-radius: 5px; 
+    border: none;
+}
+.button-save {
+    background: var(--primary);
+}
+.button-later {
+    background: var(--tertiary);
+}
+.button {
+    background: var(--secondary);
+}
+input[type=submit],
+a[type=button],
+button {
+    border: none;
+    color: var(--primary-color);
+}
+input[type=submit]:focus,
+input[type=text]:focus,
+input[type=text].form-control:focus, 
+input[type=password]:focus,
+input[type=password].form-control:focus, 
+a[type=button]:focus,
+button:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* general-styles */
+.content-wrapper {
+    background: var(--primary-color);
+}
+
+/* styles for screens below 768px */
+.content-wrapper {
+    height: auto;
+    border-radius: 20px;
+    padding: 30px;
+    margin: auto;
+    position: absolute;
+    width: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* login */
+.content-wrapper .label-wrapper {
+    height: 34px;
+    padding-left: 0;
+    width: 100%;
+    margin-top: 30px;
+}
+.content-wrapper .label-wrapper h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 32px;
+    color: var(--primary-black);
+}
+.content-wrapper .message-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-bottom: 25px;
+}
+.content-wrapper .message-wrapper .login-message-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+    top: 0;
+}
+.content-wrapper .message-wrapper .login-message {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 27px;
+    line-height: 37px;
+    color: var(--primary-black);
+}
+.content-wrapper .message-wrapper .login-message span {
+    color: var(--primary);
+}
+.content-wrapper .message-wrapper .action-message-wrapper {
+    width: 100%;
+    height: 16px;
+    margin-left: 0;
+}
+.content-wrapper .message-wrapper .action-message {
+    font-size: 11px;
+    color: var(--primary-black);
+}
+.content-wrapper .login-form {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.content-wrapper .login-form .login-form-field {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.content-wrapper .login-form .login-form-field .input0field {
+    width: 100%;
+    height: 57px;
+    background: var(--secondary-color);
+    border-radius: 30px;
+    border: 1px solid var(--input-border);
+}
+.content-wrapper .login-form .input0submit {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 22px;
+    color: var(--primary-color);
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    background: var(--primary);
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    text-align: center;
+    height: 100%;
+}
+.content-wrapper .login-form .submit-button.login-form-field {
+    width: 50%;
+    height: 57px;
+    align-items: center;
+}
+.content-wrapper .login-form .input0submit:hover {
+    background: var(--primary-hover);
+}
+.content-wrapper .login-form .submit-button svg {
+    position: relative;
+    right: 45px;
+}
+.content-wrapper .login-form .input0submit:hover ~ svg {
+    right: 30px;
+}
+
+/* admin-panel */
+.form-wrapper.admin-panel {
+    background: var(--secondary-color);
+    width: auto;
+}
+.admin-panel .content-wrapper {
+    padding: 16px 30px;
+}
+.content-wrapper .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.content-wrapper .panel-header a {
+    padding: 10px;
+    border-radius: 10px;
+}
+.content-wrapper .panes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border-radius: 15px;
+    margin: 20px;
+    border: 1px solid #dae0e5;
+    background: var(--primary-color);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    color: var(--primary-black);
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+.content-wrapper .top-pane, .content-wrapper .bottom-pane {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.content-wrapper .panes span.pane-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    width: 60px;
+    border-radius: 60px;
+    border: 1px solid var(--secondary-border);
+}
+.content-wrapper .panes span.pane-svg svg {
+    width: 30px;
+    height: 30px;
+}
+.content-wrapper .panes span.pane-word {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 27px;
+    letter-spacing: 0em;
+    text-align: left;
+    align-self: center;
+}
+
+@media(max-width: 600px) {
+    /* login */
+    .content-wrapper .message-wrapper .login-message {
+        font-size: 20px;
+    }
+    .content-wrapper .login-form .login-form-field .input0field {
+        font-size: 0.8em;
+    }
+    .content-wrapper .login-form .submit-button.login-form-field {
+        width: 100%;
+        display: inline-block;
+    }
+    .content-wrapper .login-form .input0submit ~ svg {
+        display: none;
+    }
+    .content-wrapper .login-form .input0submit {
+        font-size: 18px;
+    }
+
+    /* index */
+    .content-wrapper .panes span.pane-word {
+        font-size: 11px;
+    }
+}
+
+@media(min-width: 600px) {
+    /* login */
+    .content-wrapper .message-wrapper .login-message {
+        font-size: 34px;
+    }
+    .content-wrapper .message-wrapper .action-message {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .content-wrapper .login-form .login-form-field {
+        width: 70%;
+    }
+}
+@media(min-width: 1024px) {
+    /* index */
+    .content-wrapper .top-pane, .content-wrapper .bottom-pane {
+        flex-wrap: unset;
+    }
+    .content-wrapper .panes {
+        width: 150px;
+        height: 180px;
+        align-content: space-around;
+    }
+    .content-wrapper .panes span.pane-word {
+        text-align: center;
+        align-self: center;
+        width: 100%;
     }
 }

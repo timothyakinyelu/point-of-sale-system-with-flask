@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="row h-100">
-        <div class="form-wrapper my-auto">
+    <div class="form-wrapper container my-auto h-100 grid">
+        <div class="content-wrapper"> 
             {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -41,7 +41,7 @@
                     </ul>
                     {% endif %}
                 </fieldset>
-                <div class="submit-button">
+                <div class="form-group login-form-field submit-button">
                     {{ form.submit(class='input0submit') }}
                     <svg width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M14.3727 4.85355C14.568 4.65829 14.568 4.34171 14.3727 4.14645L11.1908 0.964466C10.9955 0.769204 10.6789 0.769204 10.4836 0.964466C10.2884 1.15973 10.2884 1.47631 10.4836 1.67157L13.3121 4.5L10.4836 7.32843C10.2884 7.52369 10.2884 7.84027 10.4836 8.03553C10.6789 8.2308 10.9955 8.2308 11.1908 8.03553L14.3727 4.85355ZM0.980774 5H14.0192V4H0.980774V5Z" fill="white"/>
@@ -49,5 +49,5 @@
                 </div>
             </form>
         </div>
-    <!-- </div> -->
+    </div>
 {% endblock %}
