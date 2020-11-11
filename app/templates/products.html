@@ -48,7 +48,7 @@
                 </div>
             {% endfor %}
             <div class="table-responsive table-wrapper">
-                <table class="table table-hover">
+                <table class="table table-hover admin-table">
                     <caption class="sr-only">List of products</caption>
                     <thead>
                         <tr>
@@ -66,12 +66,12 @@
                         {% for product in products %}
                         <tr>
                                 <td><input type="checkbox" name="" id=""></td>
-                                <th scope="row">{{ product.sku }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>₦{{ product.price }}</td>
-                                <td>₦{{ product.cost_of_purchase }}</td>
-                                <td>{{ product.stock_qty }}</td>
-                                <td>{{ product.min_stock_qty }}</td>
+                                <th data-label="SKU" scope="row">{{ product.sku }}</td>
+                                <td data-label="Product">{{ product.name }}</td>
+                                <td data-label="Price">₦{{ product.price }}</td>
+                                <td data-label="Cost Price">₦{{ product.cost_of_purchase }}</td>
+                                <td data-label="Stock">{{ product.stock_qty }}</td>
+                                <td data-label="Min. Stock">{{ product.min_stock_qty }}</td>
                                 <td>
                                     <a href="" type="button">edit</a>
                                 </td>
@@ -124,5 +124,8 @@
 {% endblock %}
 {% block scripts %}
     <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
+    <script>
+
+    </script>
 {{super()}}
 {% endblock scripts %}

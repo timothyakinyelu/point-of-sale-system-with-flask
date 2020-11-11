@@ -22,12 +22,18 @@
     </script>
     <script>
         function resizeWindow() {
-            let widthsidebar = $(window).width();
+            let contentWidth = $(window).width();
 
-            if (widthsidebar > 1024) {
+            if (contentWidth > 1024) {
                 checkClass()
             } else {
                 unCheckClass()
+            }
+
+            if (contentWidth < 600) {
+                $('.admin-table').addClass('mobile-table');
+            } else {
+                $('.admin-table').removeClass('mobile-table');
             }
         }
         

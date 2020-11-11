@@ -54,7 +54,7 @@
             <div class="table-responsive table-wrapper">
                 <form id="submitACL" action="{{ url_for('auth.checkPerm') }}" method="POST">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-                    <table class="table table-hover">
+                    <table class="table table-hover admin-table">
                         <caption class="sr-only">ACL Lists</caption>
                         <thead>
                             <tr>
@@ -68,9 +68,9 @@
                         <tbody>
                             {% for permission in permissions %}
                                 <tr>
-                                    <th name="permission" value={{permission.id}} scope="row">{{ permission.name }}</th>
+                                    <th data-label="Permission Name" name="permission" value={{permission.id}} scope="row">{{ permission.name }}</th>
                                     {% for role in roles %}
-                                    <td>
+                                    <td data-label="{{ role.title }}">
                                         <input 
                                             id="task-{{permission.id}}" 
                                             class="check-task-button" 
