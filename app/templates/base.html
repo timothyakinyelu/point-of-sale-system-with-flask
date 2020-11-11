@@ -23,40 +23,7 @@
         <script src="{{ url_for('static', filename='js/popper/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='css/bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
         {% block scripts%}{% endblock scripts%}
-        <script>
-            function resizeWindow() {
-                let widthsidebar = $(window).width();
-    
-                if (widthsidebar > 1024) {
-                    $(".sidebar__navbar").addClass("active");
-                    $(".sidebar-menu").css("display", "none");
-                    $(".navbar-brand").css("display", "none");
-                } else {
-                    $(".sidebar__navbar").removeClass("active");
-                    $(".sidebar-menu").css("display", "flex");
-                    $(".navbar-brand").css("display", "inline-block");
-                }
-            }
-            
-            $(document).ready(function () {
-                resizeWindow();
-            });
-
-            $(window).resize(function() {
-                resizeWindow();
-            })
-            
-    
-            $(".sidebar-menu").click(function () {
-                $(".sidebar__navbar").addClass("active");
-                $(".sidebar-menu").css("display", "none");
-            });
-    
-            $("#close-menu").on('click', function () {
-                $(".sidebar__navbar").removeClass("active");
-                $(".sidebar-menu").css("display", "flex");
-            });
-        </script>
+        
         <script>
             //Get the button:
             var scrollButton = document.getElementById("toTopBtn");

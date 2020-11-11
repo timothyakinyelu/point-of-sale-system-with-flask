@@ -78,112 +78,6 @@ body {
         transition: 0.5s ease;
     }
 
-    /* navbar 
-    .navbar {
-        border: 1px solid #C4C4C4;
-        box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
-        height: 58px;
-    }
-    .left-navbar {
-        display: flex;
-        align-items: center;
-    }
-    .navbar .page-label {
-        color: #C4C4C4;
-        font-family: 'Montserrat';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 30px;
-    }
-    .navbar .page-label span {
-        color: #212529;
-    }
-    .navbar-brand {
-        font-family: 'Montserrat';
-        font-size: 21px;
-        font-style: normal;
-        font-weight: 200;
-        line-height: 30px;
-        letter-spacing: 0em;
-        text-align: left;
-    }
-    .navbar-nav {
-        flex-direction: unset;
-        align-items: center;
-    }
-    .navbar-nav .notifications {
-        padding-right: 20px;
-        cursor: pointer;
-    }
-    .navbar-nav .notifications .savedLists {
-        position: absolute;
-        z-index: 100;
-        flex-wrap: wrap;
-        flex-direction: column-reverse;
-        width: 200px;
-        background: #ffffff;
-        border-radius: 5px;
-        border: 1px solid #adb5bd;
-        padding: 10px;
-        left: -45px;
-        top: 42px;
-        display: none;
-    }
-    .navbar-nav .notifications .savedLists span {
-        font-size: 13px;
-        font-family: 'Montserrat';
-        padding-top: 5px;
-        padding-bottom: 5px;
-        border-bottom: 1px solid #dae0e5;
-        width: 100%;
-    }
-    .info-number {
-        float: none;
-        min-width: 22px;
-        min-height: 22px;
-        line-height: 20px;
-        font-size: 13px;
-        margin-left: -13px;
-        margin-top: 5px;
-        font-weight: 300;
-        border-radius: 50%;
-        padding: 0px;
-    }
-    .info-number.cart {
-        background-color: white;
-        color: rgb(240 18 18);
-        position: absolute;
-        font-size: 12px;
-        margin-top: 14px;
-        border: 1px solid #dae0e5;
-    }
-    .nav-item {
-        display: flex;
-        align-items: center;
-    }
-    .nav-item span {
-        border: 1px solid #000000;
-        height: 30px;
-        width: 30px;
-        border-radius: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Montserrat';
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 29px;
-        letter-spacing: 0em;
-    }
-    .nav-item a {
-        text-decoration: none;
-        color: #6c757d;
-        font-size: 14px;
-        padding-left: 3px;
-    }
-
     /* create product 
     .discount {
         display: none;
@@ -211,409 +105,6 @@ body {
         border-radius: 5px;
         width: 100%;
         display: none;
-    }
-
-    /* general 
-    #toTopBtn {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        right: 30px;
-        z-index: 99;
-        border: none;
-        outline: none;
-        background-color: #F11212;
-        color: white;
-        cursor: pointer;
-        padding: 15px;
-        border-radius: 10px;
-        font-size: 18px;
-    }
-    #toTopBtn:hover {
-        background-color: #3DBECF;
-    }
-    .col-sm-12 {
-        margin-bottom: 20px;
-    }
-    .page-wrapper {
-        padding: 25px;
-    }
-    .back {
-        height: 32px;
-        width: 128px;
-        left: 25px;
-        top: 120px;
-        border-radius: 0px;
-    }
-    .back span {
-        height: 17px;
-        width: 36px;
-        left: 78px;
-        top: 127px;
-        font-family: 'Montserrat';
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 17px;
-        letter-spacing: 0em;
-        text-align: center;
-    }
-    .back svg {
-        position: relative;
-        right: 0;
-    }
-    .page-header {
-        height: 62px;
-        background: #FFFFFF;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        padding-left: 20px;
-        padding-right: 20px;
-        justify-content: space-between;
-    }
-    .page-header .header-text {
-        height: 32px;
-        width: 181px;
-        font-family: 'Montserrat';
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 500;
-        letter-spacing: 0em;
-        text-align: left;
-        line-height: 32px;
-    }
-    .buttons-wrapper {
-        display: flex;
-    }
-    .buttons-wrapper a, .buttons-wrapper button {
-        height: 37px;
-        width: 121px;
-        border-radius: 5px;
-        border: none;
-        font-family: 'Montserrat';
-        font-size: 13px;
-        font-style: normal;
-        font-weight: 500;
-        letter-spacing: 0em;
-        text-align: center;
-        color: #FFFFFF;
-        line-height: 37px;
-        text-decoration: none;
-        margin-right: 10px;
-    }
-    .buttons-wrapper button {
-        line-height: 29px;
-    }
-    .buttons-wrapper .button-add {
-        background: #3DBECF;
-    }
-    .buttons-wrapper .button-add:hover {
-        background: #1b9aab;
-    }
-    .buttons-wrapper .button-remove {
-        background: #F11212;
-    }
-    .buttons-wrapper .button-remove:hover {
-        background: #bd0d0d;
-    }
-    .button-add svg {
-        height: 20px;
-        margin-right: 4px;
-    }
-    .button-remove svg {
-        height: 20px;
-        margin-right: 4px;
-        width: 15px;
-        border-radius: 0px;
-    }
-    .table-wrapper {
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-        margin-top: 24px;
-        max-height: 415px;
-        width: 100%;
-        border-radius: 8px;
-        background: #FFFFFF;
-    }
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-        font-family: 'Montserrat';
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 21px;
-        letter-spacing: 0em;
-        text-align: center;
-        color: #ffffff;
-    }
-    .table thead {
-        background: #3DBECF;
-    }
-    .table tbody td, .table tbody th {
-        font-family: 'Montserrat';
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 21px;
-        letter-spacing: 0em;
-        text-align: center;
-    }
-    .table tbody th {
-        color: rgba(0,0,0,.9);
-        font-weight: bolder;
-        font-size: 13px;
-    }
-    .table tbody tr:hover ~ .table tbody th {
-        font-size: 15px;
-    }
-    .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        background-color: #ffffff;
-    }
-    .table-hover tbody tr:hover th {
-        font-size: 16px
-    }
-    .table tbody td a {
-        width: 45px;
-        border-radius: 7px;
-        border: 1px solid #000000;
-        font-family: 'Montserrat';
-        font-size: 11px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 21px;
-        letter-spacing: 0em;
-        text-align: center;
-        color: #383232;
-        text-decoration: none;
-    }
-    .table-wrapper nav {
-        height: 42px;
-        border-radius: 0px;
-        display: flex;
-        flex-wrap: wrap;
-        padding-left: 30px;
-        padding-right: 30px;
-        justify-content: space-between;
-        align-content: center;
-    }
-    .pagination-total i {
-        font-family: 'Montserrat';
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 17px;
-        letter-spacing: 0em;
-        text-align: center;
-        color: #212529;
-    }
-    .pagination {
-        list-style: none;
-        display: flex;
-        margin-bottom: 0;
-    }
-    .page-item a {
-        width: 84px;
-        border-radius: 7px;
-        font-family: 'Montserrat';
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 17px;
-        letter-spacing: 0em;
-        text-align: center;
-        border: 1px solid #212529;
-        color: #212529;
-    }
-    .page-item .num-link {
-        width: 25px;
-        border-radius: 9px;
-    }
-    .page-item.active a {
-        color: #f01212;
-    }
-    caption {
-        padding-left: 30px;
-        padding-right: 30px;
-        padding-bottom: 0;
-    }
-
-    /* sales 
-    .page-header .new-sale {
-        width: 100%;
-        height: 37px;
-        border-radius: 8px;
-        background: #F8F8F8;
-        border: 1px solid #C4C4C4;
-        font-family: 'Montserrat';
-        font-size: 13px;
-        font-style: normal;
-        font-weight: 200;
-        line-height: 24px;
-        letter-spacing: 0em;
-        text-align: left;
-        padding-left: 10px;
-        padding-right: 35px;
-        margin-right: 20px;
-    }
-    .page-header .select-product {
-        display: none;
-        position: absolute;
-        width: 350px;
-        height: 100px;
-        top: 50px;
-        border-radius: 8px;
-        border: 1px solid #c4c4c4;
-    }
-    .page-header .select-product option {
-        font-size: 14px;
-        font-family: 'Montserrat';
-        padding: 5px;
-    }
-    .page-header .select-product option:first-child {
-        border-bottom: 1px solid #dee2e6;
-    }
-    .search-bar {
-        display: flex;
-        width: 100%;
-    }
-    .search-bar svg {
-        position: absolute;
-        right: 186px;
-    }
-    .table thead.sales-head {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-    }
-    .table tbody#sale-body {
-        display: block;
-        width: 100%;
-        overflow: auto;
-        min-height: 100px;
-        max-height: 350px
-    }
-    .table tbody#sale-body tr {
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-    }
-    .table thead th.items, .table tbody td.items {
-        width: 30vw;
-        text-align: left;
-    }
-    #sale-body .qty-row {
-        display: flex;
-        justify-content: center;
-    }
-    #sale-body .load-msg {
-        display: none;
-    }
-    #submit-transaction .table thead th, #submit-transaction .table tbody td {
-        font-size: 15px;
-    }
-    #sale-body td input {
-        width: 80px;
-        text-align: center;
-        border: none;
-        font-weight: 500;
-    }
-    #sale-body td .quant {
-        width: 39px;
-    }
-    #sale-body td .dec, #sale-body td .inc {
-        width: 30px;
-        font-size: 16px;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        line-height: 18px;
-    }
-    #sale-body td .inc {
-        line-height: 21px;
-    }
-    #sale-body .item {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    #sale-body .stock {
-        font-size: 12px;
-        color: #b22222;
-    }
-    .displayed {
-        border-radius: 11px;
-        background: #D788F2;
-        padding: 10px;
-        color: #000000;
-    }
-    .right-side {
-        max-height: 500px;
-        background: #FFFFFF;
-        border-radius: 8px;
-    }
-    .right-side .right-inner {
-        height: 500px;
-        border-radius: 0px;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    .right-side .right-values {
-        display: flex;
-        justify-content: space-between;
-        padding-top: 15px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #dee2e6;
-    }
-    .right-values, .form-control[readonly]{
-        background: #ffffff;
-        border: none;
-    }
-    .right-values label, .right-values input {
-        font-family: 'Montserrat';
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 24px;
-        letter-spacing: 0em;
-    }
-    .right-values input {
-        text-align: right;
-    }
-    .right-values [for="total"] {
-        color: #F11212;
-        font-size: 20px;
-    }
-    .right-values [for="total"] ~ input {
-        font-size: 20px;
-    }
-    .right-values select {
-        width: 100px;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        font-family: 'Montserrat';
-    }
-    .right-side .right-values.ref {
-        display: none;
-    }
-    .ctrl-btns {
-        width: 100%;
-        margin-left: 15px;
-        margin-right: 15px;
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 35px;
-        background: #ffffff;
-        height: 50px;
-        border-radius: 10px;
-        align-items: center;
-    }
-    .ctrl-btns .buttons-wrapper {
-        padding-right: 20px;
-    }
-    .ctrl-btns .buttons-wrapper #saveLater {
-        background: #3DBECF;
-    }
-    .ctrl-btns .buttons-wrapper #save {
-        background: #4393e8;
     }
 
     /* permissions 
@@ -663,17 +154,6 @@ body {
     }
 }
 
-@media screen and (min-width: 768px) {
-    #sale-body td .dec, #sale-body td .inc {
-        font-size: 24px;
-    }
-}
-@media screen and (min-width: 990px) {
-    .table thead th.items, .table tbody td.items {
-        width: 20vw;
-    }
-} */
-
 /* variables */
 :root {
     --primary: #3DBECF;
@@ -683,10 +163,12 @@ body {
     --primary-color: #FFFFFF;
     --primary-black: #000000;
     --secondary-color: #F8F8F8;
+    --tertiary-color: #212529;
     --primary-hover: #1b9aab;
     --secondary-hover: #bd0d0d;
     --input-border: #e9eef3;
     --secondary-border: #C4C4C4;
+    --tertiary-border: #dee2e6;
 }
 
 /* reset */
@@ -737,10 +219,210 @@ button:focus {
     box-shadow: none;
     outline: none;
 }
+.show {
+    display: block !important;
+}
+.on {
+    display: flex !important;
+}
 
 /* general-styles */
 .content-wrapper {
     background: var(--primary-color);
+}
+#toTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: var(--secondary);
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+#toTopBtn:hover {
+    background-color: var(--primary);
+}
+.col-sm-12 {
+    margin-bottom: 20px;
+}
+.page-wrapper {
+    padding: 25px;
+}
+.back {
+    height: 32px;
+    width: 128px;
+    left: 25px;
+    top: 120px;
+    border-radius: 0px;
+}
+.back span {
+    height: 17px;
+    width: 36px;
+    left: 78px;
+    top: 127px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+.back svg {
+    position: relative;
+    right: 0;
+}
+.page-header {
+    height: 62px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+}
+.page-header .header-text {
+    height: 32px;
+    width: 181px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: left;
+    line-height: 32px;
+}
+.buttons-wrapper {
+    display: flex;
+}
+.buttons-wrapper a, .buttons-wrapper button {
+    height: 37px;
+    width: 121px;
+    border-radius: 5px;
+    border: none;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0em;
+    text-align: center;
+    color: var(--primary-color);
+    line-height: 37px;
+    text-decoration: none;
+    margin-right: 10px;
+}
+.button-save svg {
+    height: 20px;
+    margin-right: 4px;
+}
+.button svg {
+    height: 20px;
+    margin-right: 4px;
+    width: 15px;
+    border-radius: 0px;
+}
+.table-wrapper {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+    margin-top: 24px;
+    max-height: 415px;
+    width: 100%;
+    border-radius: 8px;
+    background: var(--primary-color);
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--tertiary-border);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: var(--primary-color);
+}
+.table thead {
+    background: var(--primary);
+}
+.table tbody td, .table tbody th {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+.table tbody th {
+    color: rgba(0,0,0,.9);
+    font-weight: bolder;
+    font-size: 13px;
+}
+.table tbody tr:hover ~ .table tbody th {
+    font-size: 15px;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: var(--primary-color);
+}
+.table-hover tbody tr:hover th {
+    font-size: 16px
+}
+.table tbody td a {
+    width: 45px;
+    border-radius: 7px;
+    border: 1px solid var(--primary-black);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 21px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: #383232;
+    text-decoration: none;
+}
+.table-wrapper nav {
+    height: 42px;
+    border-radius: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: space-between;
+    align-content: center;
+}
+.pagination-total i {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+    color: var(--tertiary-color);
+}
+.pagination {
+    list-style: none;
+    display: flex;
+    margin-bottom: 0;
+}
+.page-item a {
+    width: 84px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 17px;
+    letter-spacing: 0em;
+    text-align: center;
+    border: 1px solid var(--tertiary-color);
+    color: var(--tertiary-color);
+}
+.page-item .num-link {
+    width: 25px;
+    border-radius: 9px;
+}
+.page-item.active a {
+    color: var(--secondary);
+}
+caption {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 0;
 }
 
 /* styles for screens below 768px */
@@ -754,6 +436,105 @@ button:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* navbar */
+.navbar {
+    border: 1px solid var(--secondary-border);
+    box-shadow: 0px 4px 7px rgba(0, 0, 0, 0.25);
+    height: 58px;
+}
+.left-navbar {
+    display: flex;
+    align-items: center;
+}
+.navbar .page-label {
+    color: var(--secondary-border);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 30px;
+}
+.navbar .page-label span {
+    color: #212529;
+}
+.navbar-brand {
+    font-size: 21px;
+    font-weight: 200;
+    line-height: 30px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+.navbar-nav {
+    flex-direction: unset;
+    align-items: center;
+}
+.navbar-nav .notifications {
+    padding-right: 20px;
+    cursor: pointer;
+}
+.navbar-nav .notifications .savedLists {
+    position: absolute;
+    z-index: 100;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    width: 200px;
+    background: var(--primary-color);
+    border-radius: 5px;
+    border: 1px solid var(--tertiary-border);
+    padding: 10px;
+    left: -45px;
+    top: 42px;
+    display: none;
+}
+.navbar-nav .notifications .savedLists span {
+    font-size: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--tertiary-border);
+    width: 100%;
+}
+.info-number {
+    float: none;
+    min-width: 22px;
+    min-height: 22px;
+    line-height: 20px;
+    font-size: 13px;
+    margin-left: -13px;
+    margin-top: 5px;
+    font-weight: 300;
+    border-radius: 50%;
+    padding: 0px;
+}
+.info-number.cart {
+    background-color: var(--primary-color);
+    color: rgb(240 18 18);
+    position: absolute;
+    font-size: 12px;
+    margin-top: 14px;
+    border: 1px solid var(--tertiary-border);
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+.nav-item span {
+    border: 1px solid var(--primary-black);
+    height: 30px;
+    width: 30px;
+    border-radius: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 29px;
+    letter-spacing: 0em;
+}
+.nav-item a {
+    text-decoration: none;
+    color: #6c757d;
+    font-size: 14px;
+    padding-left: 3px;
 }
 
 /* login */
@@ -913,6 +694,186 @@ button:focus {
     align-self: center;
 }
 
+/* new-transaction */
+.page-wrapper .page-header .new-sale {
+    width: 100%;
+    height: 37px;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    border: 1px solid var(--secondary-border);
+    font-size: 13px;
+    font-weight: 200;
+    line-height: 24px;
+    letter-spacing: 0em;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 35px;
+    margin-right: 20px;
+}
+.page-wrapper .page-header .select-product {
+    display: none;
+    position: absolute;
+    width: 350px;
+    height: 100px;
+    top: 50px;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-border);
+}
+.page-wrapper .page-header .select-product option {
+    font-size: 14px;
+    padding: 5px;
+}
+.page-wrapper .page-header .select-product option:first-child {
+    border-bottom: 1px solid #dee2e6;
+}
+.page-wrapper .page-header .search-bar {
+    display: flex;
+    width: 100%;
+}
+.page-wrapper .page-header .search-bar svg {
+    position: absolute;
+    right: 186px;
+}
+.page-wrapper .table thead.sales-head {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.page-wrapper .table tbody#sale-body {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    min-height: 100px;
+    max-height: 350px
+}
+.page-wrapper .table tbody#sale-body tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.page-wrapper .table thead th.items, .table tbody td.items {
+    width: 30vw;
+    text-align: left;
+}
+#sale-body .qty-row {
+    display: flex;
+    justify-content: center;
+}
+#sale-body .load-msg {
+    display: none;
+}
+#submit-transaction .table thead th, #submit-transaction .table tbody td {
+    font-size: 15px;
+}
+#sale-body td input {
+    width: 80px;
+    text-align: center;
+    border: none;
+    font-weight: 500;
+}
+#sale-body td .quant {
+    width: 39px;
+}
+#sale-body td .dec, #sale-body td .inc {
+    width: 30px;
+    font-size: 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    line-height: 18px;
+}
+#sale-body td .inc {
+    line-height: 21px;
+}
+#sale-body .item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#sale-body .stock {
+    font-size: 12px;
+    color: var(--secondary);
+}
+.right-side {
+    max-height: 500px;
+    background: var(--primary-color);
+    border-radius: 8px;
+}
+.right-side .right-inner {
+    height: 500px;
+    border-radius: 0px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.right-side .right-values {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+.right-values, .form-control[readonly]{
+    background: var(--primary-color);
+    border: none;
+}
+.right-values label, .right-values input {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0em;
+}
+.right-values input {
+    text-align: right;
+}
+.right-values [for="total"] {
+    color: var(--secondary);
+    font-size: 20px;
+}
+.right-values [for="total"] ~ input {
+    font-size: 20px;
+}
+.right-values select {
+    width: 100px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+.right-side .right-values.ref {
+    display: none;
+}
+.ctrl-btns {
+    width: 100%;
+    margin-left: 15px;
+    margin-right: 15px;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 35px;
+    background: var(--primary-color);
+    height: 50px;
+    border-radius: 10px;
+    align-items: center;
+}
+.ctrl-btns .buttons-wrapper {
+    padding-right: 20px;
+}
+.ctrl-btns .buttons-wrapper #saveLater {
+    background: var(--primary-black);
+}
+.ctrl-btns .buttons-wrapper #save {
+    background: var(--tertiary);
+}
+
+@media(max-width: 1024px) {
+    /* navbar */
+    .sidebar-menu {
+        width: 40px;
+        height: 40px;
+        background-color: #f8f9fa;
+        font-size: 18px;
+        border-radius: 5px;
+        margin-right: 1rem;
+        align-items: center;
+        justify-content: center;
+    }
+}
 @media(max-width: 600px) {
     /* login */
     .content-wrapper .message-wrapper .login-message {
@@ -932,9 +893,14 @@ button:focus {
         font-size: 18px;
     }
 
-    /* index */
+    /* admin-panel */
     .content-wrapper .panes span.pane-word {
         font-size: 11px;
+    }
+
+    /* new-transaction */
+    #submit-transaction .table thead th, #submit-transaction .table tbody td {
+        font-size: 12px;
     }
 }
 
@@ -952,7 +918,7 @@ button:focus {
     }
 }
 @media(min-width: 1024px) {
-    /* index */
+    /* admin-panel */
     .content-wrapper .top-pane, .content-wrapper .bottom-pane {
         flex-wrap: unset;
     }

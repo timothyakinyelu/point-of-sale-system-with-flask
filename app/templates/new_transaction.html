@@ -28,7 +28,7 @@
                             </div>
                             <select id="products" class="select-product" onchange=selectProduct(event) multiple></select>
                             <div class="buttons-wrapper">
-                                <button id="cancel" class="button-remove" type="button">
+                                <button id="cancel" class="button" type="button">
                                     Cancel Sale
                                 </button>
                             </div>
@@ -93,13 +93,13 @@
                     </div>
                     <div class="ctrl-btns">
                         <div class="buttons-wrapper">
-                            <button id="prtReceipt" type="button" class="button-remove">Print</button>
+                            <button id="prtReceipt" type="button" class="button">Print</button>
                         </div>
                         <div class="buttons-wrapper">
-                            <button id="save" type="button" class="">Save</button>
+                            <button id="save" type="button" class="button-save">Save</button>
                         </div>
                         <div class="buttons-wrapper">
-                            <button id="saveLater" type="button" class="" onclick="saveToLocalStorage(event)">Save for Later</button>
+                            <button id="saveLater" type="button" class="button-later" onclick="saveToLocalStorage(event)">Save for Later</button>
                         </div>
                     </div>
                 </div>
