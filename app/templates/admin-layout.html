@@ -13,17 +13,21 @@
 {% endblock content %}
 {% block scripts %}
     <script>
+        $('document').ready(function(){
+            var username = "{{current_user.username}}"
+            var firstLetter = username.charAt(0)
+            
+            document.getElementById("user").innerHTML = firstLetter;
+        });
+    </script>
+    <script>
         function resizeWindow() {
             let widthsidebar = $(window).width();
 
             if (widthsidebar > 1024) {
-                $(".sidebar__navbar").addClass("active");
-                $(".sidebar-menu").css("display", "none");
-                $(".navbar-brand").css("display", "none");
+                checkClass()
             } else {
-                $(".sidebar__navbar").removeClass("active");
-                $(".sidebar-menu").css("display", "flex");
-                $(".navbar-brand").css("display", "inline-block");
+                unCheckClass()
             }
         }
         
@@ -34,16 +38,53 @@
         $(window).resize(function() {
             resizeWindow();
         })
+
+        function checkClass() {
+            $(".sidebar__navbar").addClass("active");
+            $(".sidebar-menu").css("display", "none");
+            $(".navbar-brand").css("display", "none");
+        }
+
+        function unCheckClass() {
+            $(".sidebar__navbar").removeClass("active");
+            $(".sidebar-menu").css("display", "flex");
+            $(".navbar-brand").css("display", "inline-block");
+        }
         
 
         $(".sidebar-menu").click(function () {
-            $(".sidebar__navbar").addClass("active");
-            $(".sidebar-menu").css("display", "none");
+            checkClass()
         });
 
         $("#close-menu").on('click', function () {
-            $(".sidebar__navbar").removeClass("active");
-            $(".sidebar-menu").css("display", "flex");
+            unCheckClass()
+        });
+    </script>
+    <script>
+        //Get the button:
+        var scrollButton = document.getElementById("toTopBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        $(window).scroll(function(){
+            scrollFunction()
+        });
+    
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollButton.style.display = "block";
+            } else {
+                scrollButton.style.display = "none";
+            }
+        }
+
+        // animate scroll to top action
+        $(document).ready(function(){
+            $("#toTopBtn").click(function() {
+                $("html, body").animate({ 
+                    scrollTop: 0 
+                }, "slow");
+                return false;
+            });
         });
     </script>
 {{super()}}

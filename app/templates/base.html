@@ -23,33 +23,5 @@
         <script src="{{ url_for('static', filename='js/popper/popper.min.js') }}"></script>
         <script src="{{ url_for('static', filename='css/bootstrap-4.4.1-dist/js/bootstrap.min.js') }}"></script>
         {% block scripts%}{% endblock scripts%}
-        
-        <script>
-            //Get the button:
-            var scrollButton = document.getElementById("toTopBtn");
-
-            // When the user scrolls down 20px from the top of the document, show the button
-            $(window).scroll(function(){
-                scrollFunction()
-            });
-        
-            function scrollFunction() {
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    scrollButton.style.display = "block";
-                } else {
-                    scrollButton.style.display = "none";
-                }
-            }
-
-            // animate scroll to top action
-            $(document).ready(function(){
-                $("#toTopBtn").click(function() {
-                    $("html, body").animate({ 
-                        scrollTop: 0 
-                    }, "slow");
-                    return false;
-                });
-            });
-        </script>
     </body>
 </html>
