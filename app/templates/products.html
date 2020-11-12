@@ -2,14 +2,7 @@
 {% block inner %}
     <section class="h-auto">
         <div class="page-wrapper">
-            <div class="back">
-                <span>
-                    <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.469698 5.46967C0.176806 5.76256 0.176806 6.23744 0.469698 6.53033L5.24267 11.3033C5.53556 11.5962 6.01044 11.5962 6.30333 11.3033C6.59622 11.0104 6.59622 10.5355 6.30333 10.2426L2.06069 6L6.30333 1.75736C6.59622 1.46447 6.59622 0.989593 6.30333 0.696699C6.01044 0.403806 5.53556 0.403806 5.24267 0.696699L0.469698 5.46967ZM39.03 5.25L1.00003 5.25V6.75L39.03 6.75V5.25Z" fill="#3DBECF"/>
-                    </svg>
-                    back
-                </span>
-            </div>
+            {% include "back.html" %}
             <div class="page-header">
                 <span class="header-text">Products</span>
                 <div class="buttons-wrapper">
