@@ -31,3 +31,22 @@ class Role(db.Model, HasPermissionTrait):
     def __init__(self, title):
         super(Role, self).__init__()
         self.title = title
+        
+        
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'title': self.title,
+           'permissions': self.serialize_permissions
+           # This is an example how to deal with Many2Many relations
+        }
+        
+    @property
+    def serialize_permissions(self):
+        """
+        Return object's relations in easily serializable format.
+        NB! Calls many2many's serialize property.
+        """
+        return [ item.serialize for item in self.permissions];

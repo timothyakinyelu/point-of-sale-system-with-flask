@@ -12,10 +12,11 @@
         </button>
 {% endblock content %}
 {% block scripts %}
+    {% block inner_scripts %}{% endblock inner_scripts %}
     <script>
         $('document').ready(function(){
             var username = "{{current_user.username}}"
-            var firstLetter = username.charAt(0)
+            var firstLetter = username.charAt(0);
             
             document.getElementById("user").innerHTML = firstLetter;
         });
@@ -25,9 +26,9 @@
             let contentWidth = $(window).width();
 
             if (contentWidth > 1024) {
-                checkClass()
+                checkClass();
             } else {
-                unCheckClass()
+                unCheckClass();
             }
 
             if (contentWidth < 600) {
@@ -59,11 +60,11 @@
         
 
         $(".sidebar-menu").click(function () {
-            checkClass()
+            checkClass();
         });
 
         $("#close-menu").on('click', function () {
-            unCheckClass()
+            unCheckClass();
         });
     </script>
     <script>
@@ -72,7 +73,7 @@
 
         // When the user scrolls down 20px from the top of the document, show the button
         $(window).scroll(function(){
-            scrollFunction()
+            scrollFunction();
         });
     
         function scrollFunction() {
@@ -87,7 +88,7 @@
         $(document).ready(function(){
             $("#toTopBtn").click(function() {
                 $("html, body").animate({ 
-                    scrollTop: 0 
+                    scrollTop: 0
                 }, "slow");
                 return false;
             });

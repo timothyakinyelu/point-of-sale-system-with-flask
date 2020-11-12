@@ -123,21 +123,7 @@
         </div>
     </section>
 {% endblock inner %}
-{% block scripts %}
-    <script>
-        $('#saveACL').on('click', function(event) {
-            event.preventDefault();
-            $('#submitACL').submit();
-        })
-
-        $('#deletePermission').on('click', function(event) {
-            var form = document.getElementById('submitACL');
-            form.target = "_blank";
-            form.action = "{{ url_for('auth.deletePermissions') }}";
-            form.submit();
-            form.action = "{{ url_for('auth.checkPerm') }}";
-            form.target = '';
-        });
-    </script>
+{% block inner_scripts %}
+    <script src="{{ url_for('static', filename= 'js/permissions.js') }}"></script>
 {{super()}}
-{% endblock scripts %}
+{% endblock inner_scripts %}

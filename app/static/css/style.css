@@ -942,6 +942,10 @@ a.brand__sidebar {
     .table-hover tbody tr:hover th {
         font-size: 16px
     }
+    .table-hover tbody tr:hover td a {
+        color: #383232;
+        border-color: var(--primary-black);
+    }
     .table tbody td a {
         width: 45px;
         border-radius: 7px;

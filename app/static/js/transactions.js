@@ -1,5 +1,4 @@
 (function() {
-
     // function to search products for new transaction
     searchProducts = (e) => {
         e.preventDefault();

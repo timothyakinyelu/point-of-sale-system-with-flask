@@ -90,16 +90,16 @@ def permissions():
     roles = getAllRoles()
     permissions = getAllPermissions()
     
-    access = []
+    access_role = []
     perms = []
     rights = ()
     
     for role in roles:
         for permission in role.permissions:
-            access.append(role.id)
+            access_role.append(role.id)
             perms.append(permission.id)
     
-    rights = list(zip(perms, access))
+    rights = list(zip(perms, access_role))
         
     return render_template(
         'permissions.html', 
@@ -108,7 +108,8 @@ def permissions():
         permissions = permissions, 
         roles = roles, 
         access = rights
-    ) 
+    )
+    
 
 def createPermission():
     """ Create new system permissions."""
