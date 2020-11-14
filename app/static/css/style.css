@@ -1076,7 +1076,8 @@ a.brand__sidebar {
         font-size: 15px;
     }
     .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        background-color: var(--primary-color);
+        background: var(--primary-color);
+        color: var(--primary-black);
     }
     .table-hover tbody tr:hover th {
         font-size: 16px
