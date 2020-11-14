@@ -17,7 +17,7 @@ def ajaxFetchProducts():
     """ Fetch all products from db"""
     page = request.args.get('page', 1, type=int)
     
-    products = Product.query.paginate(page, 2, True)
+    products = Product.query.paginate(page, 20, True)
     next_url = url_for('auth.fetchProducts', page = products.next_num) \
         if products.has_next else None
         

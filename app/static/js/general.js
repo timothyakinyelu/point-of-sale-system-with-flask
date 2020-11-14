@@ -1,7 +1,7 @@
 (function() {
     var routeParams = window.location.pathname.split('/');
     var routeName = routeParams[routeParams.length - 1];
-    
+
     // call back to build table on load or search
     productCallBack = (response) => {
         buildTable(response);
@@ -82,9 +82,17 @@
 
     // show table content range
     const pageRange = (data) => {
-        const differential = data.limit - 1;
-        const dataCount = data.limit * data.current_page;
-        const firstItem = dataCount - differential;
+        var differential;
+        var dataCount;
+
+        if (data.limit > data.total) {
+            differential = data.total - 1;
+            dataCount = data.total;
+        } else {
+            differential = data.limit - 1;
+            dataCount = data.limit * data.current_page;
+        }
+        var firstItem = dataCount - differential;
 
         function prependZero(value) {
             if (value <= 9) {
