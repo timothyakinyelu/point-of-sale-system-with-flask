@@ -142,6 +142,11 @@ def deleteCategory(id):
 def getProducts():
     return ProductController.products()
 
+@auth.route('/products')
+@login_required
+def fetchProducts():
+    return ProductController.ajaxFetchProducts()
+
 @auth.route('/inventory/products/add-product', methods=['GET', 'POST'])
 @login_required
 def addProduct():

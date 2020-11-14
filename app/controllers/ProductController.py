@@ -1,4 +1,5 @@
 from flask import render_template, redirect, flash, url_for, request, jsonify
+from sqlalchemy import or_
 from app.models.product import Product
 from app.models.category import Category
 from app.models.brand import Brand
@@ -8,10 +9,22 @@ from app.forms import ProductForm
 
 
 def products():
-    """ Fetch all products from db"""
+    """ show products template page"""
     
-    products = Product.query.all()
-    return render_template('products.html', products = products)
+    return render_template('products.html')
+
+def ajaxFetchProducts():
+    """ Fetch all products from db"""
+    page = request.args.get('page', 1, type=int)
+    
+    products = Product.query.paginate(page, 2, True)
+    next_url = url_for('auth.fetchProducts', page = products.next_num) \
+        if products.has_next else None
+        
+    prev_url = url_for('auth.fetchProducts', page = products.prev_num) \
+        if products.has_prev else None
+
+    return jsonify(products = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
 
 def createProduct():
     """ Add new product to the db"""
@@ -115,9 +128,14 @@ def searchBrands():
 def searchProducts():
     term = request.args.get('query')
 
-    records = Product.query.filter(Product.name.ilike('%' + term + '%')).all()
+    records = Product.query.filter(
+        or_(
+            Product.name.ilike('%' + term + '%'),
+            Product.sku.ilike('%' + term + '%')
+        )
+    ).all()
     
-    return jsonify(results = [i.serialize for i in records])
+    return jsonify([i.serialize for i in records])
 
 
 def getProduct():

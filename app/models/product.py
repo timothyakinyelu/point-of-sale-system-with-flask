@@ -63,11 +63,14 @@ class Product(db.Model):
         """Return object data in easily serializable format"""
         return {
            'id': self.id,
+           'sku': self.sku,
            'name': self.name,
            'price': self.price,
+           'cost': self.cost_of_purchase,
            'discount_id':self.discount_id,
            'discount': self.serialize_discount,
-           'stock': self.stock_qty
+           'stock': self.stock_qty,
+           'min_qty': self.min_stock_qty
            # This is an example how to deal with Many2Many relations
         }
         

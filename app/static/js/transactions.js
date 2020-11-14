@@ -14,7 +14,7 @@
                     $('#products').empty().append("<option value='0'>Select Product</option>");
                     $('#products').addClass("show");
 
-                    response.results.forEach((value)=>{
+                    response.forEach((value)=>{
                         $('#products').append(
                             `<option value="${value.id}">${value.name}</option>`
                         );
