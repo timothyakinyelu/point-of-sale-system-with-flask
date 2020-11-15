@@ -15,7 +15,7 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/search-products",
+                url: "/" + routeName,
                 data: { "query": value },
                 success: productCallBack
             }
@@ -24,30 +24,16 @@
 
     // build products table from ajax response
     function buildTable(data) {
-        var table = document.getElementById('products-table');
+        var table = document.getElementById(routeName + '-table');
         // var nav = document.getElementById('pagination0nav');
+        var text = [];
+        $('thead tr th').each(function() {
+            var $this = $(this);
 
-        table.innerHTML = '';
-        // nav.innerHTML = '';
+            text.push($this.text())
+        })
 
-        data.products.forEach(product => {
-            var row = `
-                <tr id="row${product.id}">
-                    <td><input type="checkbox" name="" id=""></td>
-                    <th data-label="SKU" scope="row">${product.sku}</td>
-                    <td data-label="Product">${product.name}</td>
-                    <td data-label="Price">₦${product.price}</td>
-                    <td data-label="Cost Price">₦${product.cost}</td>
-                    <td data-label="Stock">${product.stock}</td>
-                    <td data-label="Min. Stock">${product.min_qty}</td>
-                    <td>
-                        <a href="" type="button">edit</a>
-                    </td>
-                </tr>
-            `
-
-            table.innerHTML += row;
-        });
+        table.innerHTML = dataList(data, text);
 
         // Include table range text
         $(".pagination-range").empty()
@@ -55,16 +41,65 @@
             pageRange(data)
         );
 
-        $(document).on("click", ".pagination li.current-page:not(.active)", function () {
-            return pageList(data, +$(this).text());
+        $(document).one("click", ".pagination li.current-page:not(.active)", function () {
+            getPageItems(+$(this).text());
         });
-        $('#next').on('click', function() {
-            getPageItems(getUrlParam('page', data.next_url));
+
+        $('#next').unbind().click(function() {
+            getPageItems(data.current_page + 1);
         });
-        $('#prev').on('click', function() {
-            getPageItems(getUrlParam('page', data.prev_url));
+
+        $('#prev').unbind().click(function() {
+            getPageItems(data.current_page - 1);
         });
     }
+
+    const showKey = (key, index, data) => {
+        var peg;
+        if (key === 'Cost Price(₦)' || key === 'Price(₦)') {
+            peg = key.slice(0, -3).split(' ').join('_').toLowerCase();
+        } else {
+            peg = key.split(' ').join('_').toLowerCase();
+        }
+
+        if (key !== '') {
+            if (key === 'SKU') {
+                return `<th data-label="${key}" scope="row" key="${index}">
+                            ${data[peg]}
+                        </th>`
+            } else if(key === 'Cost Price' || key === 'Price') {
+                return `<td data-label="${key}" key="${index}">
+                            ${data[peg]}
+                        </td>`
+            } else {
+                return `<td data-label="${key}" key="${index}">
+                            ${data[peg]}
+                        </td>`
+            }
+        }
+    };
+
+    const dataList = (data, text) => {
+        if (data === undefined) return;
+        
+        if (data.results.length) {
+            return data.results.map((data, index) => {
+                return `<tr key=${index} id="row${data.id}">
+                            <td>
+                                <input
+                                    type="checkbox"
+                                    name=""
+                                    key="${index}"
+                                />
+                            </td>
+                            ${text.map((key, index) => showKey(key, index, data)).join('')}
+                            <td data-label="">
+                                <a href="" type="button">edit</a>
+                            </td>
+                        </tr>`
+            }).join('');
+        }
+    };
 
     // Include the prev/next buttons:
     $(".pagination").append(
@@ -121,10 +156,12 @@
 
     // get new page items
     const getPageItems = (page) => {
+        var value = $('#searchable').val();
         $.ajax(
             {
                 type: "GET",
                 url: "/" + routeName + "?page=" + page,
+                data: { "query": value },
                 success: productCallBack
             }
         )
@@ -132,7 +169,7 @@
 
     // generate page numbers
     function getPageList(totalPages, page, maxLength) {
-        // if (maxLength < ) throw "maxLength must be at least 5";
+        // if (maxLength < 5) throw "maxLength must be at least 5";
     
         function range(start, end) {
             return Array.from(Array(end - start + 1), (_, i) => i + start); 

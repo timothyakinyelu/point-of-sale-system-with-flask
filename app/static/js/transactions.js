@@ -7,16 +7,16 @@
         $.ajax(
             {
                 type: "GET",
-                url: '/search-products',
+                url: '/products',
                 data: { "query": search_term },
                 success: function (response) {
                     $("#products").empty(); //remove whatever is there and append whatever is returned
                     $('#products').empty().append("<option value='0'>Select Product</option>");
                     $('#products').addClass("show");
 
-                    response.forEach((value)=>{
+                    response.results.forEach((value)=>{
                         $('#products').append(
-                            `<option value="${value.id}">${value.name}</option>`
+                            `<option value="${value.id}">${value.product}</option>`
                         );
                     });
                 }
@@ -119,7 +119,7 @@
                     item.products.forEach(function(product, index) {
                         var product = {
                             'id': product,
-                            'name': item.names[index],
+                            'product': item.names[index],
                             'stock': item.stocks[index].substring(7),
                             'price': item.prices[index].substring(1),
                             'quantity': item.quantities[index],
@@ -158,7 +158,7 @@
             `<tr class="rows" id="row${product.id}">
                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
                 <td class="items">
-                    <span id="item">${product.name}</span>
+                    <span id="item">${product.product}</span>
                     <br/>
                     <span id="stock" class="stock">Stock: ${product.stock}</span>
                 </td>

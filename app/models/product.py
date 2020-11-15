@@ -1,5 +1,13 @@
 from app.db import db
+from sqlalchemy import func
 
+# class MixinSearch:
+
+#     @classmethod
+#     def fulltext_search(cls, session, search_string, field, page):
+#         return session.query(cls). \
+#             filter(func.to_tsvector('english', getattr(cls, field)).match(search_string, postgresql_regconfig='english')).paginate(page, 1, True)
+            
 class Product(db.Model):
     __tablename__ = 'products'
     
@@ -64,13 +72,13 @@ class Product(db.Model):
         return {
            'id': self.id,
            'sku': self.sku,
-           'name': self.name,
+           'product': self.name,
            'price': self.price,
-           'cost': self.cost_of_purchase,
+           'cost_price': self.cost_of_purchase,
            'discount_id':self.discount_id,
            'discount': self.serialize_discount,
            'stock': self.stock_qty,
-           'min_qty': self.min_stock_qty
+           'min_stock': self.min_stock_qty
            # This is an example how to deal with Many2Many relations
         }
         

@@ -182,11 +182,6 @@ def searchEmployees():
 def searchBrands():
     return ProductController.searchBrands()
 
-@auth.route('/search-products')
-@login_required
-def searchProducts():
-    return ProductController.searchProducts()
-
 @auth.route('/get-product')
 @login_required
 def getProduct():

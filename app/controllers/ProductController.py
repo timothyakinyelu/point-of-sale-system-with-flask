@@ -15,16 +15,26 @@ def products():
 
 def ajaxFetchProducts():
     """ Fetch all products from db"""
+    term = request.args.get('query')
     page = request.args.get('page', 1, type=int)
     
-    products = Product.query.paginate(page, 20, True)
+    if term:
+        products = Product.query.filter(
+            or_(
+                Product.name.ilike('%' + term + '%'),
+                Product.sku.ilike('%' + term + '%')
+            )
+        ).paginate(page, 20, True)
+    else:
+        products = Product.query.paginate(page, 20, True)
+
     next_url = url_for('auth.fetchProducts', page = products.next_num) \
         if products.has_next else None
         
     prev_url = url_for('auth.fetchProducts', page = products.prev_num) \
         if products.has_prev else None
 
-    return jsonify(products = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
+    return jsonify(results = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
 
 def createProduct():
     """ Add new product to the db"""
@@ -123,19 +133,6 @@ def searchBrands():
     records = Brand.query.filter(Brand.name.ilike('%' + term + '%')).all()
     
     return jsonify(results = [i.serialize for i in records])
-
-
-def searchProducts():
-    term = request.args.get('query')
-
-    records = Product.query.filter(
-        or_(
-            Product.name.ilike('%' + term + '%'),
-            Product.sku.ilike('%' + term + '%')
-        )
-    ).all()
-    
-    return jsonify([i.serialize for i in records])
 
 
 def getProduct():

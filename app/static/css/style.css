@@ -187,14 +187,15 @@ button:focus {
 }
 
 /* pagination */
-.table-wrapper nav {
-    height: 100%;
-    border-radius: 0px;
+.pagination0nav {
     display: flex;
-    padding-left: 30px;
-    padding-right: 30px;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
+    margin: 1rem;
+    border-radius: 0.6rem;
+    background: #ffffff;
+    box-shadow: 0 0.8rem 2rem rgba(90, 97, 129, 0.05);
 }
 .pagination {
     justify-content: center;
