@@ -92,6 +92,11 @@ def logout():
 def getShops():
     return ShopController.shops()
 
+@auth.route('/shops')
+@login_required
+def fetchShops():
+    return ShopController.ajaxFetchShops()
+
 @auth.route('/system/shops/add-shop', methods=['POST',])
 @login_required
 def addShop():

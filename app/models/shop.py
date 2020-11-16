@@ -33,3 +33,14 @@ class Shop(db.Model):
         if not 'slug' in kwargs:
             self.slug = slugify(kwargs['name'])
         super().__init__(*args, **kwargs)
+        
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'shop': self.name,
+           'slug': self.slug
+           # This is an example how to deal with Many2Many relations
+        }
+        

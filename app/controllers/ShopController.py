@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from app.models.shop import Shop
 from app.db import session
 from app.forms import ShopForm
@@ -7,9 +7,28 @@ from app.forms import ShopForm
 def shops():
     """ get all shops from db"""
     form = ShopForm()
-    shops = Shop.query.all()
     
     return render_template('shops.html', shops = shops, form = form, title = 'Add a Shop')
+
+def ajaxFetchShops():
+    """ Fetch all users from db"""
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        shops = Shop.query.filter(
+            Shop.name.ilike('%' + term + '%'),     
+        ).paginate(page, 20, True)
+    else:
+        shops = Shop.query.paginate(page, 20, True)
+
+    next_url = url_for('auth.fetchShops', page = shops.next_num) \
+        if shops.has_next else None
+        
+    prev_url = url_for('auth.fetchShops', page = shops.prev_num) \
+        if shops.has_prev else None
+
+    return jsonify(results = [i.serialize for i in shops.items], next_url = next_url, prev_url = prev_url, current_page = shops.page, limit = shops.per_page, total = shops.total)
 
 def createShop():
     """ create a new shop"""
