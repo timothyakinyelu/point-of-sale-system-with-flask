@@ -122,6 +122,11 @@ def deleteBrand(id):
 def getCategories():
     return CategoryController.categories()
 
+@auth.route('/categories')
+@login_required
+def fetchCategories():
+    return CategoryController.ajaxFetchCategories()
+
 @auth.route('/inventory/categories/add-category', methods=['POST',])
 @login_required
 def addCategory():

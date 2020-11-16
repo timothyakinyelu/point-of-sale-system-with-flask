@@ -109,7 +109,7 @@ class CategoryForm(FlaskForm):
     def __init__(self):
         super().__init__()
         categories = Category.query.all()
-        self.parent.choices =[(category.id, category.name) for category in categories]
+        self.parent.choices =[(0, "select")] + [(category.id, category.name) for category in categories]
     
     name = StringField(
         'Name',
@@ -123,6 +123,7 @@ class CategoryForm(FlaskForm):
         'Parent Category',
         validate_choice=None,
         coerce=int,
+        default=0
     )
     submit = SubmitField('Add Category')
     

@@ -30,6 +30,9 @@ class Category(db.Model):
         db.String(3),
         nullable = False
     )
+    display_order = db.Column(
+        db.String(3)
+    )
     children = db.relationship(
         "Category",
         backref = db.backref('parent', remote_side=[id]),
@@ -53,3 +56,25 @@ class Category(db.Model):
         if not 'identifier_code' in kwargs:
             self.identifier_code = kwargs['name'][0:2].lower()
         super().__init__(*args, **kwargs)
+      
+      
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'parent_id': self.parent_id,
+           'name': self.name,
+           'slug': self.slug,
+           'parent': self.serialize_parent
+           # This is an example how to deal with Many2Many relations
+        }
+        
+    @property
+    def serialize_parent(self):
+        """
+        Return object's relations in easily serializable format.
+        NB! Calls many2many's serialize property.
+        """
+        if self.parent_id is not None:
+            return self.parent.serialize

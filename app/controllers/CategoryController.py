@@ -1,4 +1,4 @@
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request, jsonify
 from app.db import session
 from app.models.category import Category
 from app.forms import CategoryForm
@@ -6,9 +6,29 @@ from app.forms import CategoryForm
 """ Controller for all category functions"""
 def categories():
     form = CategoryForm()
-    categories = Category.query.all()
+    # categories = Category.query.all()
     
-    return render_template('categories.html', form = form, categories = categories, title = 'Add a Category')
+    return render_template('categories.html', form = form, title = 'Add a Category')
+
+def ajaxFetchCategories():
+    """ Fetch all products from db"""
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        categories = Category.query.filter(
+            Category.name.ilike('%' + term + '%')
+        ).order_by(Category.display_order.desc()).paginate(page, 20, True)
+    else:
+        categories = Category.query.order_by(Category.display_order, Category.parent_id.desc()).paginate(page, 20, True)
+
+    next_url = url_for('auth.fetchCategories', page = categories.next_num) \
+        if categories.has_next else None
+        
+    prev_url = url_for('auth.fetchCategories', page = categories.prev_num) \
+        if categories.has_prev else None
+
+    return jsonify(results = [i.serialize for i in categories.items], next_url = next_url, prev_url = prev_url, current_page = categories.page, limit = categories.per_page, total = categories.total)
 
 def createCategory():
     form = CategoryForm()
@@ -20,7 +40,7 @@ def createCategory():
             category = Category(
                 name = form.name.data,
                 description = form.description.data,
-                parent_id = form.parent.data
+                parent_id = None if form.parent.data == 0 else form.parent.data
             )
             
             session.add(category)
@@ -40,7 +60,7 @@ def updateCategory(id):
         session.query(Category).filter(Category.id == id).update({
             Category.name: form.name.data,
             Category.description: form.description.data,
-            Category.parent_id: form.parent.data
+            Category.parent_id: None if form.parent.data == 0 else form.parent.data
         })
         
         flash('Category updated Successfully!')

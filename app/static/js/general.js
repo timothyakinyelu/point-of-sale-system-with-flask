@@ -71,6 +71,10 @@
                 return `<td data-label="${key}" key="${index}">
                             ${data[peg]}
                         </td>`
+            } else if(key === 'Name' && data.parent_id !== null) {
+                return `
+                    <td>${data.parent.name} >> ${data[peg]}</td>                
+                `
             } else {
                 return `<td data-label="${key}" key="${index}">
                             ${data[peg]}

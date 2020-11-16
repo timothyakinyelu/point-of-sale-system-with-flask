@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% block content %}
+{% extends "admin-layout.html" %}
+{% block inner %}
     <section class="h-auto">
         <div class="page-wrapper">
             {% include "back.html" %}
@@ -48,11 +48,12 @@
                     <caption class="sr-only">List of products</caption>
                     <thead>
                         <tr>
-                            <th>Category</th>
-                            <th>Action</th>
+                            <th scope="col"><input type="checkbox" name="" id=""></th>
+                            <th>Name</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tbody id="products-table"></tbody>
+                    <tbody id="categories-table"></tbody>
                 </table>
                 <nav id="pagination0nav" class="pagination0nav">
                     <span class="pagination-range"></span>
@@ -70,7 +71,7 @@
                         <h4 class="modal-title" id="catName">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="{{ url_for('auth.addCategory') }}">
+                        <form id="saveCategory" method="POST" action="{{ url_for('auth.addCategory') }}">
                             {{ form.csrf_token }}
                 
                             <fieldset class="name">
@@ -107,4 +108,8 @@
         </div>
     </section>
 
-{% endblock %}
+{% endblock inner %}
+{% block scripts %}
+    <script src="{{ url_for('static', filename= 'js/categories.js') }}"></script>
+{{super()}}
+{% endblock scripts %}
