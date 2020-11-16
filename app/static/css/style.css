@@ -905,7 +905,7 @@ a.brand__sidebar {
 .table-form label {
     font-size: 14px;
 }
-.table-form .select-brand {
+.table-form .select-brand, .table-form .select-employee {
     font-size: 14px;
     padding: 5px;
     border-radius: 5px;

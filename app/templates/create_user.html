@@ -1,49 +1,91 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="container">
-        <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
-            {{ form.csrf_token }}
-            
-            <input type='text' name='query' onkeyup="searchEmployees(event)"/>
-            <select id="result" onchange=selectEmployee()></select>
-            <fieldset class="username">
-                {{ form.employee(id='employee') }}
-            </fieldset>
-            <fieldset class="username">
-                {{ form.username.label }}
-                {{ form.username(placeholder='John Smith', id='username') }}
-                {% if form.username.errors %}
-                <ul class="errors">
-                    {% for error in form.username.errors %}
-                    <li>{{ error }}</li>{% endfor %}
-                </ul>
-                {% endif %}
-            </fieldset>
-            <fieldset class="password">
-                {{ form.password.label }}
-                {{ form.password }}
-                {% if form.password.errors %}
-                <ul class="errors">
-                    {% for error in form.password.errors %}
-                    <li>{{ error }}</li>{% endfor %}
-                </ul>
-                {% endif %}
-            </fieldset>
-            <fieldset class="active">
-                {{ form.active.label }}
-                {{ form.active }}
-            </fieldset>
-            <fieldset class="role">
-                {{ form.role.label }}
-                {{ form.role }}
-            </fieldset>
-            <fieldset class="shop">
-                {{ form.shop.label }}
-                {{ form.shop }}
-            </fieldset>
-            <div id="user_form" class="submit-button">
-                {{ form.submit }}
+{% extends 'admin-layout.html' %}
+{% block inner %}
+    <section class="h-auto newProduct">
+        <div class="page-wrapper">
+            {% include "back.html" %}
+            <div class="page-header">
+                <span class="header-text">New User</span>
+                <div class="buttons-wrapper">
+                    <a id="saveUser" href="" class="button-save" type="button">
+                        Save
+                    </a>
+                </div>
             </div>
-        </form>
-    </div>
-{% endblock %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="notification is-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="table-wrapper table-form">
+                <form id="create_user" method="POST" action="{{ url_for('auth.addProduct') }}">
+                    {{ form.csrf_token }}
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <fieldset class="form-group row">
+                                <label class="col-sm-2 col-lg-3 col-form-label">Search Employees</label>
+                                <div class="col-sm-10 col-lg-8">
+                                    <input type='text' name='query' class="form-control" onkeyup="searchEmployees(event)"/>
+                                    <select id="employee" class="select-employee form-control" onchange=selectEmployee()></select>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.employee(id='employee', class="form-control") }}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.username.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    {{ form.username(placeholder='John Smith', id='username', class="form-control") }}
+                                </div>
+                                {% if form.username.errors %}
+                                <ul class="errors">
+                                    {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.password.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    {{ form.password(class="form-control") }}
+                                </div>
+                                {% if form.password.errors %}
+                                <ul class="errors">
+                                    {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>{% endfor %}
+                                </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.active.label(class="col-sm-2 col-lg-3 form-check-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    <div class="form-check form-check-inline">
+                                        {{ form.active(class="form-check-input") }}
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.role.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    {{ form.role(class="form-control") }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.shop.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    {{ form.shop(class="form-control") }}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock inner %}
+{% block inner_scripts %}
+    <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
+{{super()}}
+{% endblock inner_scripts %}
