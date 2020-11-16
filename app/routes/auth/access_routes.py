@@ -34,6 +34,11 @@ def createUser():
 def getRoles():
     return SystemController.roles()
 
+@auth.route('/roles')
+@login_required
+def fetchRoles():
+    return SystemController.ajaxFetchRoles()
+
 @auth.route('/system/roles/add-role', methods=['POST',])
 @login_required
 def addRole():

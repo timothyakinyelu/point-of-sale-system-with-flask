@@ -47,9 +47,28 @@ def roles():
     """ Fetch all system roles from database."""
     
     form = RoleForm()
-    roles = getAllRoles()
     
-    return render_template('roles.html', form=form, title='Create a User Role', roles = roles)
+    return render_template('roles.html', form=form, title='Create a User Role')
+
+def ajaxFetchRoles():
+    """ Fetch all roles from db"""
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        roles = Role.query.filter(
+            Role.title.ilike('%' + term + '%')
+        ).paginate(page, 20, True)
+    else:
+        roles = Role.query.paginate(page, 20, True)
+
+    next_url = url_for('auth.fetchRoles', page = roles.next_num) \
+        if roles.has_next else None
+        
+    prev_url = url_for('auth.fetchRoles', page = roles.prev_num) \
+        if roles.has_prev else None
+
+    return jsonify(results = [i.serialize for i in roles.items], next_url = next_url, prev_url = prev_url, current_page = roles.page, limit = roles.per_page, total = roles.total)
 
 def createRole():
     """ Create new system roles."""
