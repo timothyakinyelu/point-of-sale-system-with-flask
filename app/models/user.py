@@ -51,3 +51,23 @@ class User(db.Model, UserMixin):
         
     def check_password(self, password):
         return check_password_hash(self.password, password)
+    
+    @property
+    def serialize(self):
+        """Return object data in easily serializable format"""
+        return {
+           'id': self.id,
+           'username': self.username,
+           'role': self.role.serialize,
+           'status': self.active
+           # This is an example how to deal with Many2Many relations
+        }
+        
+    # @property
+    # def serialize_parent(self):
+    #     """
+    #     Return object's relations in easily serializable format.
+    #     NB! Calls many2many's serialize property.
+    #     """
+    #     if self.parent_id is not None:
+    #         return self.parent.serialize

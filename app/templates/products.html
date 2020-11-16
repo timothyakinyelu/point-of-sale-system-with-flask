@@ -41,7 +41,7 @@
                 </div>
             {% endfor %}
             <div class="searchable">
-                <input id="searchable" type="text" placeholder="Search products table"/>
+                <input id="searchable" type="text" placeholder="Search Product, SKU"/>
             </div>
             <div class="table-responsive table-wrapper">
                 <table class="table table-hover admin-table">
@@ -68,7 +68,7 @@
         </div>
     </section>
 {% endblock inner %}
-{% block scripts %}
+{% block inner_scripts %}
     <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
 {{super()}}
-{% endblock scripts %}
+{% endblock inner_scripts %}

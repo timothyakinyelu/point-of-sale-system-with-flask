@@ -75,6 +75,10 @@
                 return `
                     <td>${data.parent.name} >> ${data[peg]}</td>                
                 `
+            } else if(key === 'Role') {
+                return `
+                    <td>${data[peg].title}</td>                
+                `
             } else {
                 return `<td data-label="${key}" key="${index}">
                             ${data[peg]}

@@ -19,6 +19,11 @@ def index():
 def getUsers(): 
     return SystemController.users()
 
+@auth.route('/users')
+@login_required
+def fetchUsers():
+    return SystemController.ajaxFetchUsers()
+
 @auth.route('/system/users/create-new-user', methods=['GET', 'POST'])
 @login_required
 def createUser():

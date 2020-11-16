@@ -36,4 +36,14 @@
         document.getElementById("username").value = username;
         document.getElementById("employee").value = id;
     }
+
+    $(document).ready(function() {
+        $.ajax(
+            {
+                type: "GET",
+                url: "/users",
+                success: productCallBack
+            }
+        )
+    });
 })();

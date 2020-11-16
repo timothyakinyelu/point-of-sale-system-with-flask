@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from app.models import *
 from app.forms import *
 from app.db import session
@@ -18,15 +18,30 @@ def getAllPermissions():
 """ Controller that handles all system settings and access controls """
 def users():
     """ Fetch all users from database."""
-    
-    form = CreateUserForm()
-    users = User.query.all()
+
     return render_template(
-        'users.html', 
-        users = users, 
-        form = form,
-        title = 'Create a New User.'
+        'users.html'
     )
+    
+def ajaxFetchUsers():
+    """ Fetch all products from db"""
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        users = User.query.filter(
+            User.username.ilike('%' + term + '%'),     
+        ).paginate(page, 20, True)
+    else:
+        users = User.query.paginate(page, 20, True)
+
+    next_url = url_for('auth.fetchUsers', page = users.next_num) \
+        if users.has_next else None
+        
+    prev_url = url_for('auth.fetchUsers', page = users.prev_num) \
+        if users.has_prev else None
+
+    return jsonify(results = [i.serialize for i in users.items], next_url = next_url, prev_url = prev_url, current_page = users.page, limit = users.per_page, total = users.total)
     
 def roles():
     """ Fetch all system roles from database."""
