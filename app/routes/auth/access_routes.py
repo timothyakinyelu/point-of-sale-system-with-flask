@@ -107,6 +107,11 @@ def deleteShop(id):
 def getBrands():
     return BrandController.brands()
 
+@auth.route('/brands')
+@login_required
+def fetchBrands():
+    return BrandController.ajaxFetchBrands()
+
 @auth.route('/inventory/brands/add-brand', methods=['POST',])
 @login_required
 def addBrand():

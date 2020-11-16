@@ -24,7 +24,7 @@ def users():
     )
     
 def ajaxFetchUsers():
-    """ Fetch all products from db"""
+    """ Fetch all users from db"""
     term = request.args.get('query')
     page = request.args.get('page', 1, type=int)
     

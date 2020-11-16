@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from app.models.brand import Brand
 from app.db import session
 from app.forms import BrandForm
@@ -7,9 +7,29 @@ from app.forms import BrandForm
 def brands():
     """ get all brands from db"""
     form = BrandForm()
-    brands = Brand.query.all()
     
-    return render_template('brands.html', brands = brands, form = form, title = 'Add a Brand')
+    return render_template('brands.html',form = form, title = 'Add a Brand')
+
+def ajaxFetchBrands():
+    """ Fetch all brands from db"""
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        brands = Brand.query.filter(
+            Brand.name.ilike('%' + term + '%')
+        ).paginate(page, 20, True)
+    else:
+        brands = Brand.query.paginate(page, 20, True)
+
+    next_url = url_for('auth.fetchBrands', page = brands.next_num) \
+        if brands.has_next else None
+        
+    prev_url = url_for('auth.fetchBrands', page = brands.prev_num) \
+        if brands.has_prev else None
+
+    return jsonify(results = [i.serialize for i in brands.items], next_url = next_url, prev_url = prev_url, current_page = brands.page, limit = brands.per_page, total = brands.total)
+
 
 def createBrand():
     """ create a new brand"""

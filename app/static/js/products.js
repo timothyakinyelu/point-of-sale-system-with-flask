@@ -14,7 +14,7 @@
                     $('#brands').addClass('show')
                     response.results.forEach((value) => {
                         $('#brands').append(
-                            `<option value="${value.id}">${value.name}</option>`
+                            `<option value="${value.id}">${value.brand}</option>`
                         );
                     });
                 }

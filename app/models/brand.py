@@ -42,7 +42,7 @@ class Brand(db.Model):
         """Return object data in easily serializable format"""
         return {
            'id': self.id,
-           'name': self.name,
+           'brand': self.name,
            'slug': self.slug,
            'code': self.identifier_code
            # This is an example how to deal with Many2Many relations

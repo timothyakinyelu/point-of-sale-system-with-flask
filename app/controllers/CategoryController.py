@@ -11,7 +11,7 @@ def categories():
     return render_template('categories.html', form = form, title = 'Add a Category')
 
 def ajaxFetchCategories():
-    """ Fetch all products from db"""
+    """ Fetch all brands from db"""
     term = request.args.get('query')
     page = request.args.get('page', 1, type=int)
     
