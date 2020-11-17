@@ -27,6 +27,9 @@ class Transaction(db.Model):
     pos_ref_number = db.Column(
         db.String(100)
     )
+    amount = db.Column(
+        db.Float
+    )
     date_created  = db.Column(
         db.DateTime,  
         default = db.func.current_timestamp()

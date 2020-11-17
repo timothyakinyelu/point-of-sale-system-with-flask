@@ -1,0 +1,101 @@
+{% extends "admin-layout.html" %}
+{% block inner %}
+    <section class="h-auto">
+        <div class="page-wrapper">
+            {% include "back.html" %}
+            <div class="page-header">
+                
+            </div>
+            <h1>Simple Line Chart</h1>
+            <!-- bar chart canvas element -->
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <p id="caption">The chart is displaying a simple line chart.</p>
+
+        </div>
+    </section>
+{% endblock inner %}
+{% block inner_scripts %}
+    <script src="{{ url_for('static', filename= 'js/Chart.min.js') }}"></script>
+    <script>
+        var labels = {{ labels | safe }}
+        var values = {{ values | safe }}
+        var legend = {{ legend | safe }}
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: legend,
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(55, 129, 64, 0.2)',
+                        'rgba(255, 59, 64, 0.2)',
+                        'rgba(235, 139, 64, 0.2)',
+                        'rgba(225, 129, 64, 0.2)',
+                        'rgba(205, 59, 64, 0.2)',
+                        'rgba(215, 149, 64, 0.2)',
+                        'rgba(25, 169, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 109, 63, 1)',
+                        'rgba(255, 129, 234, 1)',
+                        'rgba(255, 119, 214, 1)',
+                        'rgba(255, 139, 124, 1)',
+                        'rgba(255, 149, 124, 1)',
+                        'rgba(255, 159, 134, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // $(document).ready(function() {
+        //     $.ajax(
+        //         {
+        //             type: "GET",
+        //             url: "/fetch-chart",
+        //             success: function(response) {
+        //                 var labels = response.labels
+        //                 var legend = response.legend
+        //                 var values = response.values
+
+                       
+        //             }
+        //         }
+        //     )
+        // });
+
+        // function getLabels(data) {
+        //     var labels = [];
+
+        //     for(var i = 0; i < data.length; i++) {
+        //         labels.push(data[i])
+        //     }
+
+        //     return labels;
+        // }
+        
+    </script>
+{{super()}}
+{% endblock inner_scripts %}

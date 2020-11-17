@@ -19,7 +19,8 @@ def submit_transaction():
         
         transaction = Transaction(
             user_id = request.json['userID'],
-            shop_id = request.json['shopID']
+            shop_id = request.json['shopID'],
+            amount = request.json['amount'],
         )
         session.add(transaction)
         session.flush()

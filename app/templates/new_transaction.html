@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="right-values">
                                     <label for="total" class="col-form-label">Total</label>
-                                    <input id="total" type="text" class="reset form-control" id="total" data-original-value="0.00" value="0.00" readonly>
+                                    <input id="total" type="text" class="reset form-control" data-original-value="0.00" value="0.00" readonly>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +122,8 @@
             var userID = "{{current_user.id}}";
             var shopID = "{{current_user.shop_id}}";
             var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();
-            var quantity = $('input[id=quant]').map(function(){return $(this).val();}).get();
+            var quantity = $('input[class=quant]').map(function(){return $(this).val();}).get();
+            var amount = document.getElementById("total").value;
             var token =  $('input[name="csrf_token"]').attr('value');
 
             $.ajaxSetup({
@@ -139,7 +140,8 @@
                             "userID": userID,
                             "shopID": shopID,
                             "productID": productID, 
-                            "quantity": quantity
+                            "quantity": quantity,
+                            "amount": parseFloat(amount.substring(1))
                         }
                     ),
                     contentType: 'application/json;charset=UTF-8',

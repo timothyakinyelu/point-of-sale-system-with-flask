@@ -7,12 +7,17 @@ from app.controllers import BrandController
 from app.controllers import CategoryController
 from app.controllers import ProductController
 from app.controllers import TransactionController
+from app.controllers import DashboardController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
 @login_required
 def index():
     return render_template('index.html')
+
+@auth.route("/dashboard/simple_chart")
+def dashboard():
+    return DashboardController.dashboard()
 
 @auth.route('/system/users')
 @login_required
