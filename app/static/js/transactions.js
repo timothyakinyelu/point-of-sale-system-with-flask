@@ -62,6 +62,7 @@
         e.preventDefault();
 
         var prdID = $('input[id=prd]').map(function(){return $(this).val();}).get();
+        var itemCostPrice = $('input[id=cost]').map(function(){return $(this).val();}).get();
         var itemName = $('span[id=item]').map(function(){return $(this).text();}).get();
         var itemStock = $('span[class=stock]').map(function(){return $(this).text();}).get();
         var itemPrice = $('td[id=price]').map(function(){return $(this).text();}).get();
@@ -73,6 +74,7 @@
             'names' : itemName,
             'stocks' : itemStock,
             'prices' : itemPrice,
+            'costPrices': itemCostPrice,
             'discounts' : itemDisc,
             'quantities' : qty
         });
@@ -122,6 +124,7 @@
                             'product': item.names[index],
                             'stock': item.stocks[index].substring(7),
                             'price': item.prices[index].substring(1),
+                            'cost_price': item.costPrices[index],
                             'quantity': item.quantities[index],
                             'discount': item.discounts[index]
                         }
@@ -157,6 +160,7 @@
         $('#sale-body').append(
             `<tr class="rows" id="row${product.id}">
                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
+                <input id="cost${product.id}" type="hidden" name="cost" value="${product.cost_price}" />
                 <td class="items">
                     <span id="item">${product.product}</span>
                     <br/>
@@ -194,6 +198,7 @@
         }
 
         var sub = document.getElementById("sub" + product.id).value;
+        var cost = document.getElementById("cost" + product.id).value;
 
         // action to add or subtract quantity when button is clicked
         $(".button" + product.id).on("click", function() {
@@ -201,6 +206,7 @@
             var oldValue = $button.parent().find("input").val();
             var addSub = document.getElementById("subtotal").value;
             var addDisc = document.getElementById("discount").value;
+            var addCost = document.getElementById("totalCost").value;
             var count = 1;
 
             if ($button.text() == "+") {
@@ -211,11 +217,16 @@
                 newS = parseFloat(addSub.substring(1)) + parseFloat(product.price);
                 document.getElementById("subtotal").value = "₦" + parseFloat(newS).toFixed(2);
 
+                newCost = parseFloat(addCost) + parseFloat(product.cost_price);
+                document.getElementById("totalCost").value = parseFloat(newCost);
+
                 newDisc = parseFloat(addDisc.substring(2)) + (discount * parseFloat(product.price));
                 document.getElementById("discount").value = "-" + "₦" +parseFloat(newDisc).toFixed(2);
 
                 var total = parseFloat(newS) - parseFloat(newDisc);
                 document.getElementById("total").value = "₦" + parseFloat(total).toFixed(2);
+
+                document.getElementById('cost'+product.id).value = cost * count
             } else {
                 // Don't allow decrementing below zero
                 if (oldValue > 1) {
@@ -226,11 +237,16 @@
                     newS = parseFloat(addSub.substring(1)) - parseFloat(product.price);
                     document.getElementById("subtotal").value = "₦" + parseFloat(newS).toFixed(2);
 
+                    newCost = parseFloat(addCost) - parseFloat(product.cost_price);
+                    document.getElementById("totalCost").value = parseFloat(newCost);
+
                     newDisc = parseFloat(addDisc.substring(2)) - (discount * parseFloat(product.price));
                     document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
 
                     var total = parseFloat(newS) - parseFloat(newDisc);
                     document.getElementById("total").value = "₦" + parseFloat(total).toFixed(2);
+
+                    document.getElementById('cost'+product.id).value = cost * count
                 } else {
                     count = 1;
                 }
@@ -244,6 +260,11 @@
         var newSub = parseFloat(addSub.substring(1)) + parseFloat(product.price);
 
         document.getElementById("subtotal").value = "₦" + parseFloat(newSub).toFixed(2);
+
+        var addCost = document.getElementById("totalCost").value;
+        var newCost = parseFloat(addCost) + parseFloat(product.cost_price);
+
+        document.getElementById("totalCost").value = parseFloat(newCost);
 
         var addDisc = document.getElementById("discount").value;
         var newDisc = parseFloat(addDisc.substring(2)) + (discount * parseFloat(product.price));
@@ -262,6 +283,10 @@
 
             var diff = parseFloat(currentSubTotal.substring(1)) - (parseFloat(product.price) * parseInt(removedQuant));
             document.getElementById("subtotal").value = "₦" + parseFloat(diff).toFixed(2);
+
+            var currentCost = document.getElementById('totalCost').value;
+            var diffCost = parseFloat(currentCost) - (parseFloat(product.cost_price) * parseInt(removedQuant));
+            document.getElementById("totalCost").value = parseFloat(diffCost);
 
             var currentDisc = document.getElementById("discount").value;
             var removedDisc = parseFloat(discount * removedQuant * product.price).toFixed(2);
@@ -314,6 +339,9 @@
         if (title == 'CARD'){
             posRef.classList.remove('ref');
         } else {
+            var posref = $("input#posRef");
+            posref.val(posref.data("original-value"));
+
             posRef.classList.add('ref');
         }
     }

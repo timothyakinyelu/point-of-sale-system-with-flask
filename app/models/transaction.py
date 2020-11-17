@@ -30,6 +30,9 @@ class Transaction(db.Model):
     amount = db.Column(
         db.Float
     )
+    cost = db.Column(
+        db.Float
+    )
     date_created  = db.Column(
         db.DateTime,  
         default = db.func.current_timestamp()

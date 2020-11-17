@@ -21,6 +21,9 @@ def submit_transaction():
             user_id = request.json['userID'],
             shop_id = request.json['shopID'],
             amount = request.json['amount'],
+            payment_method = request.json['payMethod'],
+            pos_ref_number = None if request.json['posRef'] == '' else request.json['posRef'],
+            cost = request.json['cost']
         )
         session.add(transaction)
         session.flush()

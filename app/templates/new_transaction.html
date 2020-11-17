@@ -69,6 +69,7 @@
                                     <label for="subtotal" class="col-form-label">Subtotal</label>
                                     <input id="subtotal" type="text" class="reset form-control" id="subtotal" data-original-value="0.00" value="0.00" readonly>
                                 </div>
+                                <input id="totalCost" type="hidden" name="totalCost" value="0.00" readonly />
                                 <div class="right-values">
                                     <label for="discount" class="col-form-label">Discount</label>
                                     <input id="discount" type="text" class="reset form-control" id="discount" data-original-value="0.00" value="0.00" readonly>
@@ -124,6 +125,9 @@
             var productID = $('input[id=prd]').map(function(){return $(this).val();}).get();
             var quantity = $('input[class=quant]').map(function(){return $(this).val();}).get();
             var amount = document.getElementById("total").value;
+            var cost = document.getElementById("totalCost").value;
+            var payMethod = document.getElementById('refSel').value;
+            var posRef = document.getElementById('posRef').value;
             var token =  $('input[name="csrf_token"]').attr('value');
 
             $.ajaxSetup({
@@ -141,7 +145,10 @@
                             "shopID": shopID,
                             "productID": productID, 
                             "quantity": quantity,
-                            "amount": parseFloat(amount.substring(1))
+                            "amount": parseFloat(amount.substring(1)),
+                            "cost": parseFloat(cost),
+                            "payMethod": payMethod,
+                            "posRef": posRef
                         }
                     ),
                     contentType: 'application/json;charset=UTF-8',
