@@ -19,6 +19,10 @@ def index():
 def dashboard():
     return DashboardController.dashboard()
 
+@auth.route("/chart")
+def fetchChart():
+    return DashboardController.chart()
+
 @auth.route('/system/users')
 @login_required
 def getUsers(): 

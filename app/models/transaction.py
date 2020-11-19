@@ -1,6 +1,5 @@
 from app.db import db
 
-
 class Transaction(db.Model):
     __tablename__ = 'transactions'
     
