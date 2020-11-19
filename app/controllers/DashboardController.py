@@ -2,8 +2,14 @@ from flask import render_template, request, jsonify
 from datetime import datetime, timedelta
 from sqlalchemy import extract, func, Date
 from app.models.transaction import Transaction
+from app.models.product import Product
 from app.db import session
 import calendar
+
+def get_count(q):
+    count_q = q.statement.with_only_columns([func.count()]).order_by(None)
+    count = q.session.execute(count_q).scalar()
+    return count
 
 def dashboard():
     """ Display year sales and cost of products sold."""
@@ -17,6 +23,9 @@ def dashboard():
     
     purchases = Transaction.query.with_entities(func.sum(Transaction.cost).label("total_cost")).filter(search_year == selected_year).first()
     
+    products = Product.query.filter(Product.stock_qty == Product.min_stock_qty)
+    item_count = get_count(products)
+    
     sales = "₦{:,.2f}".format(float(orders.total_amount)) \
         if orders.total_amount else 0.00
         
@@ -26,7 +35,8 @@ def dashboard():
     return render_template(
         'dashboard.html', 
         sales = sales, 
-        costs = costs
+        costs = costs,
+        product_count = item_count
     )
 
 def chart():

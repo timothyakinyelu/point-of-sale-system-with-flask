@@ -850,6 +850,9 @@ a.brand__sidebar {
 }
 
 /* dashboard */
+.dashboard .page-wrapper .dashboard-header {
+    margin-bottom: 20px;
+}
 .dashboard .page-wrapper .page-header .shop-stats {
     background-color: #FFFFFF;
     position: relative;
