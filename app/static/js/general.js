@@ -56,7 +56,7 @@
 
     const showKey = (key, index, data) => {
         var peg;
-        if (key === 'Cost Price(₦)' || key === 'Price(₦)') {
+        if (key === 'Cost Price(₦)' || key === 'Price(₦)' || key === 'Total(₦)') {
             peg = key.slice(0, -3).split(' ').join('_').toLowerCase();
         } else {
             peg = key.split(' ').join('_').toLowerCase();

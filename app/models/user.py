@@ -44,6 +44,11 @@ class User(db.Model, UserMixin):
         backref = 'users', 
         lazy = 'joined'
     )
+    transactions = db.relationship(
+        'Transaction',
+        backref = 'user',
+        lazy = 'joined'
+    )
       
     def set_password(self, password):
         rounds = current_app.config.get('HASH_ROUNDS', 100000)

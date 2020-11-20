@@ -8,6 +8,7 @@ from app.controllers import CategoryController
 from app.controllers import ProductController
 from app.controllers import TransactionController
 from app.controllers import DashboardController
+from app.controllers import ReportsController
 from flask_login import login_required, logout_user
 
 @auth.route('/')
@@ -220,3 +221,13 @@ def searchBrands():
 @login_required
 def getProduct():
     return ProductController.getProduct()
+
+@auth.route('/reports/sales-report')
+@login_required
+def salesReport():
+    return ReportsController.reportsPage()
+
+@auth.route('/sales-report')
+@login_required
+def fetchSalesReport():
+    return ReportsController.allSalesByCurrentYear()
