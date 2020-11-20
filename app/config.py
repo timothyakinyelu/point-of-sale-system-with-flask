@@ -7,6 +7,8 @@ class BaseConfig:
     WTF_CSRF_ENABLED = True
     DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    CURRENCY_ICON = '₦'
+    JSON_SORT_KEYS = False
     
     
 class DevelopmentConfig(BaseConfig):

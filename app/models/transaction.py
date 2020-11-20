@@ -1,3 +1,4 @@
+from flask import current_app
 from app.db import db
 from datetime import datetime
 
@@ -56,7 +57,7 @@ class Transaction(db.Model):
            'shop': self.serialize_shop,
            'payment_type': self.payment_method,
            'pos_ref_number': self.pos_ref_number,
-           'total': "{:,.2f}".format(float(self.amount)),
+           'total': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.amount)),
         }
         
     @property

@@ -1,3 +1,4 @@
+from flask import current_app
 from app.db import db
 from sqlalchemy import func
 
@@ -73,8 +74,8 @@ class Product(db.Model):
            'id': self.id,
            'sku': self.sku,
            'product': self.name,
-           'price': self.price,
-           'cost_price': self.cost_of_purchase,
+           'price': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.price)),
+           'cost_price': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.cost_of_purchase)),
            'discount_id':self.discount_id,
            'discount': self.serialize_discount,
            'stock': self.stock_qty,

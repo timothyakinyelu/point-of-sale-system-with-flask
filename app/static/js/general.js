@@ -62,7 +62,17 @@
     }
 
     const columnHead = (value) => {
-        return value.split('_').join(' ').toLowerCase();
+        if (value === 'sku') {
+            return value.toUpperCase();
+        } else {
+            valueStr = value.split('_');
+
+            for (var i = 0; i < valueStr.length; i++) {
+                
+                valueStr[i] = valueStr[i].charAt(0).toUpperCase() + valueStr[i].substring(1);
+            }
+            return valueStr.join(" ");
+        }
     }
 
     const tableHeads = (data) => {
@@ -84,15 +94,10 @@
 
     const showKey = (key, index, data) => {
         var peg;
-
-        if (key === 'Cost Price(₦)' || key === 'Price(₦)' || key === 'Total(₦)') {
-            peg = key.slice(0, -3).split(' ').join('_').toLowerCase();
-        } else {
-            peg = key.split(' ').join('_').toLowerCase();
-        }
+        peg = key.split(' ').join('_').toLowerCase();
 
         if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug') {
-            if (key === 'SKU' || key === 'Date') {
+            if (key === 'sku' || key === 'date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
                         </th>`

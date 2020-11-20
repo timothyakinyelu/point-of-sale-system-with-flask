@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, current_app
 from datetime import datetime, timedelta
 from sqlalchemy import extract, func, Date
 from app.models.transaction import Transaction
@@ -26,10 +26,10 @@ def dashboard():
     products = Product.query.filter(Product.stock_qty == Product.min_stock_qty)
     item_count = get_count(products)
     
-    sales = "₦{:,.2f}".format(float(orders.total_amount)) \
+    sales = "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(orders.total_amount)) \
         if orders.total_amount else 0.00
         
-    costs = "₦{:,.2f}".format(float(purchases.total_cost)) \
+    costs = "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(purchases.total_cost)) \
         if purchases.total_cost else 0.00
     
     return render_template(
