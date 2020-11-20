@@ -49,4 +49,4 @@ class Role(db.Model, HasPermissionTrait):
         Return object's relations in easily serializable format.
         NB! Calls many2many's serialize property.
         """
-        return [ item.serialize for item in self.permissions];
+        return [ item.name for item in self.permissions];

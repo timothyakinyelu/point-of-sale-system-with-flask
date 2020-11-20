@@ -63,7 +63,7 @@ class User(db.Model, UserMixin):
         return {
            'id': self.id,
            'username': self.username,
-           'role': self.role.serialize,
+           'role': self.role.title,
            'status': self.active
            # This is an example how to deal with Many2Many relations
         }

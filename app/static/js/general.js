@@ -67,7 +67,7 @@
 
     const tableHeads = (data) => {
         return getKeys(data).map((column, index) => {
-            if (column !== 'isChecked' && column !== 'id' && column !== 'assigned') {
+            if (column !== 'isChecked' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug') {
                 return `
                     <th scope="col" class="table-head" key=${index}>
                         ${columnHead(column)}
@@ -91,23 +91,11 @@
             peg = key.split(' ').join('_').toLowerCase();
         }
 
-        if (key !== 'id' && key !== '') {
+        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug') {
             if (key === 'SKU' || key === 'Date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
                         </th>`
-            } else if(key === 'Cost Price' || key === 'Price') {
-                return `<td data-label="${key}" key="${index}">
-                            ${data[peg]}
-                        </td>`
-            } else if(key === 'Name' && data.parent_id !== null) {
-                return `
-                    <td>${data.parent.name} >> ${data[peg]}</td>                
-                `
-            } else if(key === 'Role') {
-                return `
-                    <td>${data[peg].title}</td>                
-                `
             } else {
                 return `<td data-label="${key}" key="${index}">
                             ${data[peg]}

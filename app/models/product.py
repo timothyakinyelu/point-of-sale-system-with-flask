@@ -89,5 +89,5 @@ class Product(db.Model):
         NB! Calls many2many's serialize property.
         """
         if self.discount_id is not None:
-            return self.discount.serialize
+            return str(self.discount.amount * 100) + "%"
         return None

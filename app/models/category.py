@@ -77,4 +77,4 @@ class Category(db.Model):
         NB! Calls many2many's serialize property.
         """
         if self.parent_id is not None:
-            return self.parent.serialize
+            return self.parent.name
