@@ -225,7 +225,7 @@ def getProduct():
 @auth.route('/reports/sales-report')
 @login_required
 def salesReport():
-    return ReportsController.reportsPage()
+    return ReportsController.salesReports()
 
 @auth.route('/sales-report')
 @login_required

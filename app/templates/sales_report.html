@@ -5,39 +5,12 @@
             {% include "back.html" %}
             <div class="page-header">
                 <div class="header-text">Sales Report <span class="time-range"></span></div>
-                <div class="period-filter col-sm-6 col-md-6 col-lg-4">
-                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                <div class="period-filter col-sm-6 col-md-8 col-lg-8">
+                    <span>Filter by Date</span>
+                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; border-radius: 5px;">
                         <span></span>
                     </div>
                 </div>
-                <!-- <div class="buttons-wrapper">
-                    <a href="{{ url_for('auth.addProduct') }}" class="button-save" type="button">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0)">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.506514 5.5132H5.39235V1.14546C5.39235 0.89702 5.62096 0.692657 5.89887 0.692657H7.87001C8.14904 0.692657 8.37653 0.89702 8.37653 1.14546V5.5132H13.2624C13.5414 5.5132 13.7689 5.71756 13.7689 5.966V7.72812C13.7689 7.97656 13.5403 8.18092 13.2624 8.18092H8.37653V12.5487C8.37653 12.7981 8.14792 13.0015 7.87001 13.0015H5.89999C5.62208 13.0015 5.39348 12.7971 5.39348 12.5487V8.18092H0.506514C0.228604 8.18192 0 7.97756 0 7.72812V5.967C0 5.71756 0.228604 5.5132 0.506514 5.5132Z" fill="white"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0">
-                                    <rect width="15" height="21.5206" fill="white" transform="translate(0 0.692657)"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        Add New
-                    </a>
-                    <a href="" class="button" type="button">
-                        <svg width="15" height="23" viewBox="0 0 15 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0)">
-                                <path d="M0.674968 2.38795H5.29434V1.88741V1.88514C5.29434 1.8685 5.29461 1.85256 5.29628 1.83627C5.30667 1.55746 5.40182 1.30439 5.54781 1.12067L5.54685 1.11945C5.69976 0.926096 5.9121 0.805953 6.14591 0.803151L6.14909 0.803501V0.801575H6.15339H8.90756H8.90977C8.92446 0.801575 8.93845 0.803151 8.95257 0.805428C9.17184 0.820139 9.37074 0.938531 9.51549 1.12242C9.66813 1.31577 9.76287 1.5839 9.76522 1.87813L9.76481 1.88181H9.76675V1.88741V2.38778H14.325H14.3274C14.3465 2.38778 14.3645 2.39023 14.3829 2.39373C14.5467 2.4123 14.6951 2.50319 14.8032 2.64067L14.8037 2.6419L14.8044 2.64067C14.9223 2.79076 14.9964 2.99935 14.9985 3.23053L14.9982 3.23613H15.0001V3.24174V5.13828C15.0001 5.39608 14.8346 5.60501 14.6307 5.60501H14.621H0.369411C0.165522 5.60484 0 5.3959 0 5.13828V5.12724V3.24174V3.23928C0 3.22072 0.000554047 3.20233 0.00249321 3.18412V3.18044C0.0148208 2.96905 0.0889246 2.77693 0.199457 2.63787L0.198487 2.63752C0.317885 2.48673 0.483406 2.39303 0.666242 2.38988L0.670674 2.39023V2.38795H0.674968ZM10.7748 9.4002H9.95138V19.2241H10.7748V9.4002ZM8.0974 9.4002H7.27353V19.2241H8.0974V9.4002ZM5.41997 9.4002H4.59638V19.2241H5.41997V9.4002ZM1.50105 6.33043H13.6049L13.6436 6.33358L13.6611 6.3348L13.6797 6.33673H13.681L13.7035 6.34076C13.8923 6.36931 14.0689 6.47894 14.1983 6.63989C14.3423 6.8194 14.4345 7.06284 14.4345 7.33413C14.4345 7.35129 14.4332 7.36793 14.4318 7.38421L14.4315 7.39612L14.4296 7.42309L13.4056 21.3175L13.4046 21.325H13.4056L13.4034 21.3493L13.3963 21.3989L13.396 21.3998L13.3958 21.4029C13.3881 21.4609 13.3791 21.5161 13.3668 21.5655L13.3658 21.5693L13.3656 21.5702L13.3643 21.5733L13.3611 21.5842L13.3606 21.5879C13.3442 21.6499 13.324 21.7101 13.3007 21.7646C13.161 22.0938 12.902 22.3227 12.5799 22.3227H2.51122L2.47701 22.3203V22.3208L2.47548 22.3203L2.47105 22.3196C2.40734 22.3156 2.34791 22.3037 2.29265 22.2842C2.23517 22.2639 2.17935 22.2341 2.12685 22.1975L2.1256 22.1972L2.12533 22.1975C1.87808 22.0264 1.71325 21.6928 1.68624 21.318L0.675938 7.41994L0.674414 7.39805L0.67289 7.35479L0.672336 7.33448H0.671644C0.671644 7.06249 0.763616 6.81853 0.908084 6.63901C1.04327 6.47176 1.22943 6.35897 1.42833 6.33673L1.44523 6.33603V6.3348L1.48679 6.33253L1.50119 6.33288V6.33043H1.50105ZM13.605 7.2646H1.50105V7.26337L1.48499 7.26407C1.46241 7.26793 1.44038 7.28264 1.42432 7.30295C1.41559 7.31399 1.40991 7.32607 1.40991 7.3343H1.40894L1.40991 7.35497L2.41856 21.2334H2.41828L2.41856 21.2355C2.42299 21.3014 2.44653 21.3565 2.48047 21.38L2.48019 21.3807L2.49183 21.3863L2.50055 21.3884H2.51122H12.5803C12.609 21.3884 12.6356 21.3609 12.6521 21.3224L12.6637 21.2879L12.6712 21.25L12.6731 21.2259H12.6738L13.6966 7.35339L13.6962 7.33413C13.6962 7.32625 13.6905 7.31469 13.6819 7.304C13.6653 7.28334 13.6423 7.26863 13.6195 7.26425L13.605 7.2646ZM13.6204 7.26425H13.6182H13.6204ZM13.6965 7.35392V7.35322V7.35392ZM14.4302 7.41994L14.4299 7.42309L14.4302 7.41994ZM5.66333 3.3216H0.738545V4.67119H14.2615V3.3216H9.40592H9.3972C9.19331 3.3216 9.0282 3.11284 9.0282 2.85504V1.88741V1.88181H9.02917C9.0282 1.84328 9.01449 1.80598 8.9933 1.77936C8.97432 1.75466 8.94842 1.73925 8.92113 1.73522H8.90977H8.90756H6.15339H6.14909V1.73417C6.11959 1.7354 6.09064 1.75239 6.06931 1.77953L6.06876 1.77883L6.06779 1.77953C6.04964 1.803 6.03579 1.83435 6.03191 1.86727L6.03288 1.88514V1.88741V2.85486C6.03274 3.11266 5.86722 3.3216 5.66333 3.3216Z" fill="white"/>
-                            </g>
-                            <defs>
-                                <clipPath id="clip0">
-                                    <rect width="15" height="21.5206" fill="white" transform="translate(0 0.801575)"/>
-                                </clipPath>
-                            </defs>
-                        </svg>
-                        Delete
-                    </a>
-                </div> -->
             </div>
             {% for message in get_flashed_messages() %}
                 <div class="alert alert-warning">
@@ -46,7 +19,7 @@
                 </div>
             {% endfor %}
             <div class="searchable">
-                <input id="searchable" type="text" placeholder="Search Product, SKU"/>
+                <input id="searchable" type="text" placeholder="Search User, payment, pos"/>
             </div>
             <div class="table-responsive table-wrapper">
                 <table class="table table-hover admin-table">
@@ -68,39 +41,5 @@
     <script type="text/javascript" src="{{ url_for('static', filename= 'js/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename= 'js/daterangepicker.min.js') }}"></script>
     <script src="{{ url_for('static', filename= 'js/reports.js') }}"></script>
-    <script>
-        var start = moment().subtract(29, 'days');
-        var end = moment();
-
-        function cb(start, end) {
-            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-
-            $.ajax(
-                {
-                    type: "GET",
-                    url: "/sales-report",
-                    data: { "start": start.format('YYYY-MM-DD'), "end": end.format('YYYY-MM-DD') },
-                    success: productCallBack
-                }
-            )
-        }
-
-        $('#reportrange').daterangepicker({
-            startDate: start,
-            endDate: end,
-            ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'This Year': [moment().startOf('year'), moment().endOf('year')],
-                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
-            }
-        }, cb);
-
-        cb(start, end);
-    </script>
 {{super()}}
 {% endblock inner_scripts %}
