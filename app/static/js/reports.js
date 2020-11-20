@@ -10,6 +10,7 @@
         )
     });
 
+
     // filter table by date period
     selectDate = () => {
         var sel = document.getElementById("date-selection");

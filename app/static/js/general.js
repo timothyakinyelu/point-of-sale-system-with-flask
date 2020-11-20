@@ -24,8 +24,14 @@
 
     // build products table from ajax response
     function buildTable(data) {
-        var table = document.getElementById(routeName + '-table');
-        // var nav = document.getElementById('pagination0nav');
+        var thead = document.getElementById(routeName + '-head');
+        var tbody = document.getElementById(routeName + '-body');
+
+        var head = `
+                <th scope="col"><input type="checkbox" name="" id=""></th>
+                ${tableHeads(data)}
+                <th scope="col"></th>
+            `
         var text = [];
         $('thead tr th').each(function() {
             var $this = $(this);
@@ -33,7 +39,8 @@
             text.push($this.text())
         })
 
-        table.innerHTML = dataList(data, text);
+        thead.innerHTML = head;
+        tbody.innerHTML = dataList(data);
 
         // Include table range text
         $(".pagination-range").empty()
@@ -54,16 +61,38 @@
         });
     }
 
+    const columnHead = (value) => {
+        return value.split('_').join(' ').toLowerCase();
+    }
+
+    const tableHeads = (data) => {
+        return getKeys(data).map((column, index) => {
+            if (column !== 'isChecked' && column !== 'id' && column !== 'assigned') {
+                return `
+                    <th scope="col" class="table-head" key=${index}>
+                        ${columnHead(column)}
+                    </th>
+                `
+            }
+        }).join('');
+    }
+
+    function getKeys(response) {
+        if (response.results === undefined) return;
+        return Object.keys(response.results[0]);
+    }
+
     const showKey = (key, index, data) => {
         var peg;
+
         if (key === 'Cost Price(₦)' || key === 'Price(₦)' || key === 'Total(₦)') {
             peg = key.slice(0, -3).split(' ').join('_').toLowerCase();
         } else {
             peg = key.split(' ').join('_').toLowerCase();
         }
 
-        if (key !== '') {
-            if (key === 'SKU') {
+        if (key !== 'id' && key !== '') {
+            if (key === 'SKU' || key === 'Date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
                         </th>`
@@ -87,9 +116,9 @@
         }
     };
 
-    const dataList = (data, text) => {
+    const dataList = (data) => {
         if (data === undefined) return;
-        
+
         if (data.results.length) {
             return data.results.map((data, index) => {
                 return `<tr key=${index} id="row${data.id}">
@@ -100,7 +129,7 @@
                                     key="${index}"
                                 />
                             </td>
-                            ${text.map((key, index) => showKey(key, index, data)).join('')}
+                            ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
                             <td data-label="">
                                 <a href="" type="button">edit</a>
                             </td>

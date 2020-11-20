@@ -5,18 +5,10 @@
             {% include "back.html" %}
             <div class="page-header">
                 <div class="header-text">Sales Report <span class="time-range"></span></div>
-                <div class="col-sm-3 col-md-3 col-lg-2">
-                    <label for="date-selection" class="filter-date">Filter By Date Period</label>
-                    <select name="date-periods" id="date-selection" class="form-control" onchange="selectDate()">
-                        <option value="0">Today</option>
-                        <option value="1">Yesterday</option>
-                        <option value="7">Last 7 Days</option>
-                        <option value="30">Last 30 Days</option>
-                        <option value="THIS_MONTH">This Month</option>
-                        <option value="LAST_MONTH">Last Month</option>
-                        <option value="THIS_YEAR">This Year</option>
-                        <option value="LAST_YEAR">Last Year</option>
-                    </select>
+                <div class="period-filter col-sm-6 col-md-6 col-lg-4">
+                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                        <span></span>
+                    </div>
                 </div>
                 <!-- <div class="buttons-wrapper">
                     <a href="{{ url_for('auth.addProduct') }}" class="button-save" type="button">
@@ -60,18 +52,9 @@
                 <table class="table table-hover admin-table">
                     <caption class="sr-only">Sales Report</caption>
                     <thead>
-                        <tr>
-                            <th scope="col"><input type="checkbox" name="" id=""></th>
-                            <th scope="col">Date</th>
-                            <th scope="col">User</th>
-                            <th scope="col">Shop</th>
-                            <th scope="col">Total(₦)</th>
-                            <th scope="col">Payment Type</th>
-                            <th scope="col">Pos Ref Number</th>
-                            <th scope="col"></th>
-                        </tr>
+                        <tr id="sales-report-head"></tr>
                     </thead>
-                    <tbody id="sales-report-table"></tbody>
+                    <tbody id="sales-report-body"></tbody>
                 </table>
             </div>
             <nav id="pagination0nav" class="pagination0nav">
@@ -82,6 +65,42 @@
     </section>
 {% endblock inner %}
 {% block inner_scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/daterangepicker.min.js') }}"></script>
     <script src="{{ url_for('static', filename= 'js/reports.js') }}"></script>
+    <script>
+        var start = moment().subtract(29, 'days');
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+            $.ajax(
+                {
+                    type: "GET",
+                    url: "/sales-report",
+                    data: { "start": start.format('YYYY-MM-DD'), "end": end.format('YYYY-MM-DD') },
+                    success: productCallBack
+                }
+            )
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'This Year': [moment().startOf('year'), moment().endOf('year')],
+                'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+            }
+        }, cb);
+
+        cb(start, end);
+    </script>
 {{super()}}
 {% endblock inner_scripts %}

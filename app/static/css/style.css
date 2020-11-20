@@ -853,6 +853,10 @@ a.brand__sidebar {
 .dashboard .page-wrapper .dashboard-header {
     margin-bottom: 20px;
 }
+.dashboard .page-wrapper .page-header.row {
+    margin-right: 0;
+    margin-left: 0;
+}
 .dashboard .page-wrapper .page-header .shop-stats {
     background-color: #FFFFFF;
     position: relative;
@@ -933,6 +937,12 @@ a.brand__sidebar {
     margin-right: 20px;
     margin-bottom: 20px;
     padding-top: 20px;
+}
+
+/* sales-report */
+.page-wrapper .page-header .period-filter {
+    display: flex;
+    align-items: center;
 }
 
 /* styles for specific screen ranges */

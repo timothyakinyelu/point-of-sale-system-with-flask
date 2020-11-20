@@ -56,7 +56,7 @@ class Transaction(db.Model):
            'shop': self.serialize_shop,
            'payment_type': self.payment_method,
            'pos_ref_number': self.pos_ref_number,
-           'total': self.amount,
+           'total': "{:,.2f}".format(float(self.amount)),
         }
         
     @property
