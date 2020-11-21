@@ -87,3 +87,32 @@ def allProductsReport():
         if products.has_prev else None
         
     return jsonify(results = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
+
+def lowStocksReport():
+    return render_template('low_stock.html')
+
+def allLowStocks():
+    term = request.args.get('query')
+    page = request.args.get('page', 1, type=int)
+    
+    if term:
+        products = Product.query.filter(Product.stock_qty == Product.min_stock_qty).\
+            filter(
+                or_(
+                    Product.name.ilike('%' + term + '%'),
+                    Product.sku.ilike('%' + term + '%')
+                )
+            ).\
+            paginate(page, 20, True)
+    else:
+        products = Product.query.filter(Product.stock_qty == Product.min_stock_qty).\
+            paginate(page, 20, True)
+        
+    next_url = url_for('auth.fetchLowStocks', page = products.next_num) \
+        if products.has_next else None
+        
+    prev_url = url_for('auth.fetchLowStocks', page = products.prev_num) \
+        if products.has_prev else None
+        
+    return jsonify(results = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
+    

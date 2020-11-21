@@ -27,11 +27,8 @@
         var thead = document.getElementById(routeName + '-head');
         var tbody = document.getElementById(routeName + '-body');
 
-        var head = `
-                <th scope="col"><input type="checkbox" name="" id=""></th>
-                ${tableHeads(data)}
-                <th scope="col"></th>
-            `
+        var head = getHeadColumns(data);
+            
         var text = [];
         $('thead tr th').each(function() {
             var $this = $(this);
@@ -59,6 +56,19 @@
         $('#prev').unbind().click(function() {
             getPageItems(data.current_page - 1);
         });
+    }
+
+    const getHeadColumns = (data) => {
+        if(routeParams.includes('reports')) {
+            return tableHeads(data);
+        } else {
+            var row = `
+                    <th scope="col"><input type="checkbox" name="" id=""></th>
+                    ${tableHeads(data)}
+                    <th scope="col"></th>
+                `
+            return row;
+        }
     }
 
     const columnHead = (value) => {
@@ -114,19 +124,25 @@
 
         if (data.results.length) {
             return data.results.map((data, index) => {
-                return `<tr key=${index} id="row${data.id}">
-                            <td>
-                                <input
-                                    type="checkbox"
-                                    name=""
-                                    key="${index}"
-                                />
-                            </td>
-                            ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
-                            <td data-label="">
-                                <a href="" type="button">edit</a>
-                            </td>
-                        </tr>`
+                if(routeParams.includes('reports')) {
+                    return `<tr key=${index} id="row${data.id}">
+                                ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
+                            </tr>`
+                } else {
+                    return `<tr key=${index} id="row${data.id}">
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        key="${index}"
+                                    />
+                                </td>
+                                ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
+                                <td data-label="">
+                                    <a href="" type="button">edit</a>
+                                </td>
+                            </tr>`
+                }
             }).join('');
         }
     };

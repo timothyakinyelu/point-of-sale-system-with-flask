@@ -241,3 +241,13 @@ def productsReport():
 @login_required
 def fetchProductsReport():
     return ReportsController.allProductsReport()
+
+@auth.route('/reports/low-stock')
+@login_required
+def lowStockReport():
+    return ReportsController.lowStocksReport()
+
+@auth.route('/low-stock')
+@login_required
+def fetchLowStocks():
+    return ReportsController.allLowStocks()
