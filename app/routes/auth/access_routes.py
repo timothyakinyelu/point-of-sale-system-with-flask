@@ -11,16 +11,18 @@ from app.controllers import DashboardController
 from app.controllers import ReportsController
 from flask_login import login_required, logout_user
 
-@auth.route('/')
-@login_required
-def index():
-    return render_template('index.html')
+# @auth.route('/')
+# @login_required
+# def index():
+#     return render_template('index.html')
 
-@auth.route("/dashboard")
+@auth.route("/")
+@login_required
 def dashboard():
     return DashboardController.dashboard()
 
 @auth.route("/chart")
+@login_required
 def fetchChart():
     return DashboardController.chart()
 

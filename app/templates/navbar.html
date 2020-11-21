@@ -9,7 +9,7 @@
                 </a>
             {% endif %}
             <a class="navbar-brand" href="#">
-                BestDeals
+                RC-POS
             </a>
             {% if url_for('auth.addTransaction') == request.path %}
                 <div class="page-label">Sales / <span>New Sale</span></div>
@@ -37,11 +37,20 @@
                             </a>
                         </li> -->
                     {% endif %}
-                    <li class="nav-item">
-                        <span id="user"></span>
-                        <a class="mr-2" href="{{ url_for('auth.logout') }}">
-                            {{ current_user.username }}
-                        </a>
+                    <li class='nav-item' id='sub-nav'>
+                        <div class='nav-icon'>
+                            <span id="user"></span>
+                            <a class='url' href='#'>{{ current_user.username }}</a>
+                            <div class='svg-arrow'>
+                                <svg class='arrow' viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width='14' height='10'>
+                                    <line class='line-1' x1="10" y1="30" x2="30" y2="30" stroke-linecap="round" />
+                                    <line class='line-2' x1="50" y1="30" x2="30" y2="30" stroke-linecap="round" />
+                                </svg>
+                            </div>
+                        </div>
+                        <ul class='nav-sub-list'>
+                            <li class='nav-sub-sect'><a class='sub-url' href="{{ url_for('auth.logout') }}">Log out</a></li>
+                        </ul>
                     </li>
                 {% else %}
                     <li class="nav-item">
