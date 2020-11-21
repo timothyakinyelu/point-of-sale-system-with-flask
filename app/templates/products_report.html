@@ -1,0 +1,45 @@
+{% extends "admin-layout.html" %}
+{% block inner %}
+    <section class="h-auto">
+        <div class="page-wrapper">
+            {% include "back.html" %}
+            <div class="page-header">
+                <div class="header-text">Products Report <span class="time-range"></span></div>
+                <div class="period-filter col-sm-6 col-md-8 col-lg-8">
+                    <span>Filter by Date</span>
+                    <div id="reportrange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; border-radius: 5px;">
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="searchable">
+                <input id="searchable" type="text" placeholder="Search Product, stock"/>
+            </div>
+            <div class="table-responsive table-wrapper">
+                <table class="table table-hover admin-table">
+                    <caption class="sr-only">Products Report</caption>
+                    <thead>
+                        <tr id="products-report-head"></tr>
+                    </thead>
+                    <tbody id="products-report-body"></tbody>
+                </table>
+            </div>
+            <nav id="pagination0nav" class="pagination0nav">
+                <span class="pagination-range"></span>
+                <ul class="pagination"></ul>
+            </nav>
+        </div>
+    </section>
+{% endblock inner %}
+{% block inner_scripts %}
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename= 'js/daterangepicker.min.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/reports.js') }}"></script>
+{{super()}}
+{% endblock inner_scripts %}

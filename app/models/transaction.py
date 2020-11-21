@@ -72,5 +72,4 @@ class Transaction(db.Model):
     
     @property
     def serialize_user(self):
-    
         return self.user.username

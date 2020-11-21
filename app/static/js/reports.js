@@ -1,4 +1,7 @@
 (function() {
+    var routeParams = window.location.pathname.split('/');
+    var routeName = routeParams[routeParams.length - 1];
+
     // fetch all sales by current year
     $(document).ready(function() {
         cb(start, end);
@@ -14,7 +17,7 @@
         $.ajax(
             {
                 type: "GET",
-                url: "/sales-report",
+                url: "/" + routeName,
                 data: { "start": start.format('YYYY-MM-DD'), "end": end.format('YYYY-MM-DD') },
                 success: productCallBack
             }

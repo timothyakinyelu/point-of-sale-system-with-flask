@@ -16,7 +16,7 @@ from flask_login import login_required, logout_user
 def index():
     return render_template('index.html')
 
-@auth.route("/dashboard/simple_chart")
+@auth.route("/dashboard")
 def dashboard():
     return DashboardController.dashboard()
 
@@ -230,4 +230,14 @@ def salesReport():
 @auth.route('/sales-report')
 @login_required
 def fetchSalesReport():
-    return ReportsController.allSalesByCurrentYear()
+    return ReportsController.allSalesReport()
+
+@auth.route('/reports/products-report')
+@login_required
+def productsReport():
+    return ReportsController.productsReports()
+
+@auth.route('/products-report')
+@login_required
+def fetchProductsReport():
+    return ReportsController.allProductsReport()
