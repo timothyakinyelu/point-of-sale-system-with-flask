@@ -153,9 +153,6 @@
                     ),
                     contentType: 'application/json;charset=UTF-8',
                     success: function (response) { 
-                            // var addSub = document.getElementById("subtotal").value;
-                            // var addDisc = document.getElementById("discount").value;
-                            // document.getElementById("total").value;
                             $('.page-wrapper').prepend(`
                                 <div class="alert alert-warning">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -163,7 +160,19 @@
                                 </div>
                             `)
                             
-                            console.log(response)
+                            if(response.status === 201) {
+                                $( ".rows" ).remove();
+                                $('.load-msg').addClass('show');
+    
+                                $('.refresh').change(function(){});
+                                $('.refresh').prop('selectedIndex',0).trigger('change');
+                                $(".reset").each(function(){
+                                    var $t = $(this);
+                                    $t.val($t.data("original-value"));
+                                });
+                                var posref = $("input#posRef");
+                                posref.val(posref.data("original-value"));
+                            }
                     }
                 }
             )

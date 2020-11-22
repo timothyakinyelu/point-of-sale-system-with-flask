@@ -266,9 +266,7 @@
         document.getElementById("totalCost").value = parseFloat(newCost);
 
         var addDisc = document.getElementById("discount").value;
-        console.log(demo)
         var newDisc = parseFloat(addDisc.substring(2)) + (discount_value * parseFloat(product.price.substring(1)));
-        console.log(newDisc.value)
         
         document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
 
