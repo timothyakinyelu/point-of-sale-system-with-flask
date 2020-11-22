@@ -15,7 +15,7 @@ class DevelopmentConfig(BaseConfig):
     """ Config for development purposes. """
     
     DEBUG = os.environ.get('DEBUG')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     TEMPLATES_AUTO_RELOAD = True
     
 class ProductionConfig(BaseConfig):
