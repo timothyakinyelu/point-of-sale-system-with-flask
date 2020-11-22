@@ -481,6 +481,7 @@ caption {
     opacity: 1;
     transform: scale(1);
     transition: opacity 299ms ease 199ms, transform 0ms ease;
+    z-index: 2;
 }
 .chevron-up {
     transform: rotate(0);
@@ -891,6 +892,13 @@ a.brand__sidebar {
     border: 1px solid #dee2e6;
     border-radius: 5px;
     line-height: 18px;
+}
+#sale-body .disc.displayed {
+    background: #ca4de6;
+    padding: 5px;
+    border-radius: 8px;
+    color: var(--primary-color);
+    font-size: 0.9em;
 }
 #sale-body td .inc {
     line-height: 21px;

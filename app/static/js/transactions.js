@@ -46,8 +46,6 @@
                     var product = response.result;
                     if(product.discount == null) {
                         product.discount = null;
-                    } else {
-                        product.discount = product.discount.amount;
                     }
                     openLists(product);
                 }
@@ -147,28 +145,29 @@
     openLists = (product) => {
         $('.load-msg').removeClass('show');
         if(product.discount) {
-            var discount = product.discount;
-            var discount_percent = "-" + discount * 100 + "%";
-            var subtotal = parseFloat(product.price) - (discount * product.price);
+            var discount = "-" + product.discount;
+            var prdlen = product.discount.slice(0, -1);
+            var discount_value = parseFloat(prdlen) / 100;
+            var subtotal = parseFloat(product.price.substring(1)) - (discount_value * product.price.substring(1));
         } else {
-            var discount = 0.0;
-            var discount_percent = '';
-            var subtotal = parseFloat(product.price);
+            var discount = '';
+            var discount_value = 0.0;
+            var subtotal = parseFloat(product.price.substring(1));
         }
 
         
         $('#sale-body').append(
             `<tr class="rows" id="row${product.id}">
                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
-                <input id="cost${product.id}" type="hidden" name="cost" value="${product.cost_price}" />
+                <input id="cost${product.id}" type="hidden" name="cost" value="${product.cost_price.substring(1)}" />
                 <td class="items">
                     <span id="item">${product.product}</span>
                     <br/>
                     <span id="stock" class="stock">Stock: ${product.stock}</span>
                 </td>
-                <td id="price">₦${parseFloat(product.price).toFixed(2)}</td>
+                <td id="price">₦${parseFloat(product.price.substring(1)).toFixed(2)}</td>
                 <td>
-                    <span class="disc" id="disc${product.id}">${discount_percent}</span>
+                    <span class="disc" id="disc${product.id}">${discount}</span>
                 </td>
                 <td class="qty-row">
                     <div id="dec" class="dec button${product.id}">-</div>
@@ -214,13 +213,13 @@
                 sub = subtotal * count;
                 document.getElementById("sub" + product.id).value = "₦" + parseFloat(sub).toFixed(2);
 
-                newS = parseFloat(addSub.substring(1)) + parseFloat(product.price);
+                newS = parseFloat(addSub.substring(1)) + parseFloat(product.price.substring(1));
                 document.getElementById("subtotal").value = "₦" + parseFloat(newS).toFixed(2);
 
-                newCost = parseFloat(addCost) + parseFloat(product.cost_price);
+                newCost = parseFloat(addCost) + parseFloat(product.cost_price.substring(1));
                 document.getElementById("totalCost").value = parseFloat(newCost);
 
-                newDisc = parseFloat(addDisc.substring(2)) + (discount * parseFloat(product.price));
+                newDisc = parseFloat(addDisc.substring(2)) + (discount_value * parseFloat(product.price.substring(1)));
                 document.getElementById("discount").value = "-" + "₦" +parseFloat(newDisc).toFixed(2);
 
                 var total = parseFloat(newS) - parseFloat(newDisc);
@@ -234,13 +233,13 @@
                     sub = subtotal * count;
                     document.getElementById("sub" + product.id).value = "₦" + parseFloat(sub).toFixed(2);
 
-                    newS = parseFloat(addSub.substring(1)) - parseFloat(product.price);
+                    newS = parseFloat(addSub.substring(1)) - parseFloat(product.price.substring(1));
                     document.getElementById("subtotal").value = "₦" + parseFloat(newS).toFixed(2);
 
-                    newCost = parseFloat(addCost) - parseFloat(product.cost_price);
+                    newCost = parseFloat(addCost) - parseFloat(product.cost_price.substring(1));
                     document.getElementById("totalCost").value = parseFloat(newCost);
 
-                    newDisc = parseFloat(addDisc.substring(2)) - (discount * parseFloat(product.price));
+                    newDisc = parseFloat(addDisc.substring(2)) - (discount_value * parseFloat(product.price.substring(1)));
                     document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
 
                     var total = parseFloat(newS) - parseFloat(newDisc);
@@ -257,17 +256,17 @@
 
         // on product selection add values to right sidebar
         var addSub = document.getElementById("subtotal").value;
-        var newSub = parseFloat(addSub.substring(1)) + parseFloat(product.price);
+        var newSub = parseFloat(addSub.substring(1)) + parseFloat(product.price.substring(1));
 
         document.getElementById("subtotal").value = "₦" + parseFloat(newSub).toFixed(2);
 
         var addCost = document.getElementById("totalCost").value;
-        var newCost = parseFloat(addCost) + parseFloat(product.cost_price);
+        var newCost = parseFloat(addCost) + parseFloat(product.cost_price.substring(1));
 
         document.getElementById("totalCost").value = parseFloat(newCost);
 
         var addDisc = document.getElementById("discount").value;
-        var newDisc = parseFloat(addDisc.substring(2)) + (discount * parseFloat(product.price));
+        var newDisc = parseFloat(addDisc.substring(2)) + (discount_value * parseFloat(product.price.substring(1)));
         
         document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
 
@@ -281,15 +280,15 @@
             var currentSubTotal = document.getElementById("subtotal").value;
             var removedQuant = document.getElementById("quant" + product.id).value;
 
-            var diff = parseFloat(currentSubTotal.substring(1)) - (parseFloat(product.price) * parseInt(removedQuant));
+            var diff = parseFloat(currentSubTotal.substring(1)) - (parseFloat(product.price.substring(1)) * parseInt(removedQuant));
             document.getElementById("subtotal").value = "₦" + parseFloat(diff).toFixed(2);
 
             var currentCost = document.getElementById('totalCost').value;
-            var diffCost = parseFloat(currentCost) - (parseFloat(product.cost_price) * parseInt(removedQuant));
+            var diffCost = parseFloat(currentCost) - (parseFloat(product.cost_price.substring(1)) * parseInt(removedQuant));
             document.getElementById("totalCost").value = parseFloat(diffCost);
 
             var currentDisc = document.getElementById("discount").value;
-            var removedDisc = parseFloat(discount * removedQuant * product.price).toFixed(2);
+            var removedDisc = parseFloat(discount_value * removedQuant * product.price.substring(1)).toFixed(2);
             
             var newDisc = currentDisc.substring(2) - removedDisc;
             document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
