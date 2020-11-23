@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, jsonify
-from datetime import date
+from datetime import date, datetime
 from sqlalchemy import extract, func, Date, or_
 from app.models.transaction import Transaction
 from app.models.product import Product
@@ -116,3 +116,24 @@ def allLowStocks():
         
     return jsonify(results = [i.serialize for i in products.items], next_url = next_url, prev_url = prev_url, current_page = products.page, limit = products.per_page, total = products.total)
     
+
+def salesByCurrentDate():
+    return render_template('today-sales.html')
+
+def getTodaySales():
+    value = datetime.today()
+    now = value.strftime("%Y-%m-%d")
+    page = request.args.get('page', 1, type=int)
+
+    sales = Transaction.query.join(ProductTransaction).\
+        filter(Transaction.date_created.cast(Date) == now).\
+        order_by(Transaction.user_id).\
+        group_by(Transaction.user_id, Transaction.id).paginate(page, 20, True)
+        
+    next_url = url_for('auth.fetchTodaySales', page = sales.next_num) \
+        if sales.has_next else None
+        
+    prev_url = url_for('auth.fetchTodaySales', page = sales.prev_num) \
+        if sales.has_prev else None
+
+    return jsonify(results = [i.serialize for i in sales.items], next_url = next_url, prev_url = prev_url, current_page = sales.page, limit = sales.per_page, total = sales.total)

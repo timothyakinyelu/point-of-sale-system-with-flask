@@ -23,7 +23,7 @@ def dashboard():
     
     purchases = Transaction.query.with_entities(func.sum(Transaction.cost).label("total_cost")).filter(search_year == selected_year).first()
     
-    products = Product.query.filter(Product.stock_qty == Product.min_stock_qty)
+    products = Product.query.filter(Product.stock_qty <= Product.min_stock_qty)
     item_count = get_count(products)
     
     sales = "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(orders.total_amount)) \

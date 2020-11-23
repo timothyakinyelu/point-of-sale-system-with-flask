@@ -58,6 +58,7 @@ class Transaction(db.Model):
            'payment_type': self.payment_method,
            'pos_ref_number': self.pos_ref_number,
            'total': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.amount)),
+           'link': self.serialize_transaction_assoc
         }
         
     @property
@@ -73,3 +74,11 @@ class Transaction(db.Model):
     @property
     def serialize_user(self):
         return self.user.username
+    
+    @property
+    def serialize_transaction_assoc(self):
+       """
+       Return object's relations in easily serializable format.
+       NB! Calls many2many's serialize property.
+       """
+       return [ item.serialize for item in self.transaction_assoc]

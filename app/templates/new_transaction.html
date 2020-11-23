@@ -163,7 +163,19 @@
                                 </div>
                             `)
                             
-                            console.log(response)
+                            if(response.status === 201) {
+                                $( ".rows" ).remove();
+                                $('.load-msg').addClass('show');
+
+                                $('.refresh').change(function(){});
+                                $('.refresh').prop('selectedIndex',0).trigger('change');
+                                $(".reset").each(function(){
+                                    var $t = $(this);
+                                    $t.val($t.data("original-value"));
+                                });
+                                var posref = $("input#posRef");
+                                posref.val(posref.data("original-value"));
+                            }
                     }
                 }
             )

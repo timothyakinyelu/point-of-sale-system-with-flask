@@ -60,7 +60,15 @@
 
     const getHeadColumns = (data) => {
         if(routeParams.includes('reports')) {
-            return tableHeads(data);
+            if(routeParams.includes('today-sales')) {
+                var row = `
+                    ${tableHeads(data)}
+                    <th scope="col"></th>
+                `
+                return row;
+            } else {
+                return tableHeads(data);
+            }
         } else {
             var row = `
                     <th scope="col"><input type="checkbox" name="" id=""></th>
@@ -87,7 +95,7 @@
 
     const tableHeads = (data) => {
         return getKeys(data).map((column, index) => {
-            if (column !== 'isChecked' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug') {
+            if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug') {
                 return `
                     <th scope="col" class="table-head" key=${index}>
                         ${columnHead(column)}
@@ -106,11 +114,13 @@
         var peg;
         peg = key.split(' ').join('_').toLowerCase();
 
-        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug') {
+        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug' && key !== 'link') {
             if (key === 'sku' || key === 'date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
                         </th>`
+            } else if(data[peg] === null) {
+                return `<td data-label="${key}" key="${index}"></td>`
             } else {
                 return `<td data-label="${key}" key="${index}">
                             ${data[peg]}
@@ -125,9 +135,18 @@
         if (data.results.length) {
             return data.results.map((data, index) => {
                 if(routeParams.includes('reports')) {
-                    return `<tr key=${index} id="row${data.id}">
-                                ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
-                            </tr>`
+                    if(routeParams.includes('today-sales')) {
+                        return `<tr key=${index} id="row${data.id}">
+                                    ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
+                                    <td data-label="">
+                                        <a id="sale${data.id}" href="" type="button">view more</a>
+                                    </td>
+                                </tr>`
+                    } else {
+                        return `<tr key=${index} id="row${data.id}">
+                                    ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
+                                </tr>`
+                    }
                 } else {
                     return `<tr key=${index} id="row${data.id}">
                                 <td>

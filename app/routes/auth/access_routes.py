@@ -253,3 +253,13 @@ def lowStockReport():
 @login_required
 def fetchLowStocks():
     return ReportsController.allLowStocks()
+
+@auth.route('/reports/today-sales')
+@login_required
+def todaysReport():
+    return ReportsController.salesByCurrentDate()
+
+@auth.route('/today-sales')
+@login_required
+def fetchTodaySales():
+    return ReportsController.getTodaySales()
