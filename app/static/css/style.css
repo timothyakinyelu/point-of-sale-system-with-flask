@@ -75,7 +75,7 @@ button:focus {
     outline: none;
 }
 .show {
-    display: block !important;
+    display: table-row !important;
 }
 .on {
     display: flex !important;
@@ -785,11 +785,12 @@ a.brand__sidebar {
 .page-wrapper .page-header .select-product {
     display: none;
     position: absolute;
-    width: 350px;
+    width: 70%;
     height: 100px;
     top: 50px;
     border-radius: 8px;
     border: 1px solid var(--secondary-border);
+    overflow-x: auto;
 }
 .page-wrapper .page-header .select-product option {
     font-size: 14px;
@@ -1236,6 +1237,10 @@ a.brand__sidebar {
     .table thead {
         background: var(--primary);
     }
+    .transaction_details .table thead {
+        background: var(--secondary-color);
+        /* background: #f8f9fa; */
+    }
     .table tbody td, .table tbody th {
         font-size: 12px;
         font-weight: 500;
@@ -1248,15 +1253,9 @@ a.brand__sidebar {
         font-weight: bolder;
         font-size: 13px;
     }
-    .table tbody tr:hover ~ .table tbody th {
-        font-size: 15px;
-    }
     .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-        background: var(--primary-color);
+        background: var(--background);
         color: var(--primary-black);
-    }
-    .table-hover tbody tr:hover th {
-        font-size: 16px
     }
     .table-hover tbody tr:hover td a {
         color: #383232;

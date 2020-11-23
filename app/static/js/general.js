@@ -58,6 +58,7 @@
         });
     }
 
+    // show table head columns based on route param
     const getHeadColumns = (data) => {
         if(routeParams.includes('reports')) {
             if(routeParams.includes('today-sales')) {
@@ -79,6 +80,7 @@
         }
     }
 
+    // get table column values
     const columnHead = (value) => {
         if (value === 'sku') {
             return value.toUpperCase();
@@ -93,9 +95,10 @@
         }
     }
 
+    // display table headers
     const tableHeads = (data) => {
         return getKeys(data).map((column, index) => {
-            if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug') {
+            if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug' && column !== 'selling_price') {
                 return `
                     <th scope="col" class="table-head" key=${index}>
                         ${columnHead(column)}
@@ -105,16 +108,34 @@
         }).join('');
     }
 
-    function getKeys(response) {
-        if (response.results === undefined) return;
-        return Object.keys(response.results[0]);
+    // display link table headers
+    const linkTableHeads = (data) => {
+        return getKeys(data).map((column, index) => {
+            if (column !== 'date' && column !== 'id' && column !== 'slug') {
+                return `
+                    <th scope="col" class="table-head" key=${index}>
+                        ${columnHead(column)}
+                    </th>
+                `
+            }
+        }).join('');
     }
 
+    // get table keys from first item
+    function getKeys(response) {
+        if (response.results) {
+            return Object.keys(response.results[0]);
+        } else if(response) {
+            return Object.keys(response[0]);
+        }
+    }
+
+    // display table contents
     const showKey = (key, index, data) => {
         var peg;
         peg = key.split(' ').join('_').toLowerCase();
 
-        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug' && key !== 'link') {
+        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug' && key !== 'link' && key !== 'selling_price') {
             if (key === 'sku' || key === 'date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
@@ -129,19 +150,67 @@
         }
     };
 
+    // display content for the link table
+    const showLinkKey = (key, index, data) => {
+        var peg;
+        peg = key.split(' ').join('_').toLowerCase();
+
+        if (key !== 'id' && key !== '' && key !== 'slug' && key !== 'date') {  
+            return `<td data-label="${key}" key="${index}">
+                        ${data[peg]}
+                    </td>`
+        }
+    };
+
+    // create new table for data with link data
+    const getLinkTable = (data) => {
+        if(data === null) return;
+
+        if(data.length) {
+            return `
+                <td colspan="100" style="display: table-cell">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                ${linkTableHeads(data)}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${getLinkBody(data)}
+                        </tbody>
+                    </table>
+                </td>
+            `
+        }
+    }
+
+    // display all the items in the link table
+    const getLinkBody = (obj) => {
+        return obj.map((item, index) => {
+            return `
+                    <tr key=${index}>
+                        ${Object.keys(item).map((key, index) => showLinkKey(key, index, item)).join('')}
+                    </tr>
+                `
+        }).join('');
+    }
+
+    // display main table contents
     const dataList = (data) => {
         if (data === undefined) return;
-
+        
         if (data.results.length) {
             return data.results.map((data, index) => {
                 if(routeParams.includes('reports')) {
                     if(routeParams.includes('today-sales')) {
-                        return `<tr key=${index} id="row${data.id}">
+                        return `<tr key=${index}>
                                     ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
                                     <td data-label="">
-                                        <a id="sale${data.id}" href="" type="button">view more</a>
+                                        <a id="sale${data.id}" href="" type="button" data-toggle="collapse" data-target="#row_${data.id}" aria-expanded="false" aria-controls="row_${data.id}">view</a>
                                     </td>
-                                </tr>`
+                                </tr>
+                                <tr class="transaction_details collapse" id="row_${data.id}">${getLinkTable(data.link)}</tr>
+                                `
                     } else {
                         return `<tr key=${index} id="row${data.id}">
                                     ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}

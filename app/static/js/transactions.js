@@ -12,7 +12,7 @@
                 success: function (response) {
                     $("#products").empty(); //remove whatever is there and append whatever is returned
                     $('#products').empty().append("<option value='0'>Select Product</option>");
-                    $('#products').addClass("show");
+                    $('#products').addClass("on");
 
                     response.results.forEach((value)=>{
                         $('#products').append(
@@ -27,7 +27,7 @@
     // function to clear products dropdown list when user clicks any part of the page
     $(document).click(function(e) {
         $("#products").empty(); //remove whatever is there and append whatever is returned
-        $('#products').removeClass("show");
+        $('#products').removeClass("on");
     });
 
     // function select new sale item
@@ -51,7 +51,7 @@
                 }
             }
         )
-        $('#products').removeClass("show");
+        $('#products').removeClass("on");
     }
 
     // save uncompleted transactions for later
@@ -90,8 +90,7 @@
     // show all uncompleted transactions that have been saved
     showSavedLists = (e) => {
         e.preventDefault();
-
-        
+ 
         if($('div').hasClass('on')) {
             $('.savedLists').removeClass('on');
             $('.savedLists').empty();

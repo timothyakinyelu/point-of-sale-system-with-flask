@@ -64,8 +64,10 @@ class ProductTransaction(db.Model):
         return {
            'id': self.id,
            'date': dump_datetime(self.transaction.date_created),
+           'product_code': self.product.sku,
            'product': self.product.name,
            'qty_sold': self.product_qty,
            'stock': self.product.stock_qty,
+           'selling_price': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.product.price)),
            'cost': "{}{:,.2f}".format(current_app.config['CURRENCY_ICON'], float(self.product.cost_of_purchase)),
         }

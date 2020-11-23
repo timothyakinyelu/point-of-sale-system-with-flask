@@ -47,8 +47,8 @@
 
     // toggle if discount should be applied input box
     openDiscount = () => {
-        var checkBox = document.getElementById("apply");
-        var discount = document.getElementById("discount");
+        var checkBox = document.getElementById("apply_discount");
+        var discount = document.getElementById("show_discount");
         if (checkBox.checked == true){
             discount.classList.remove('discount');
         } else {
