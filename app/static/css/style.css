@@ -77,7 +77,7 @@ button:focus {
 .show {
     display: table-row !important;
 }
-.on {
+.on, .in {
     display: flex !important;
 }
 

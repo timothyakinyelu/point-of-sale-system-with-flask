@@ -60,10 +60,10 @@
         e.preventDefault();
 
         var prdID = $('input[id=prd]').map(function(){return $(this).val();}).get();
-        var itemCostPrice = $('input[id=cost]').map(function(){return $(this).val();}).get();
-        var itemName = $('span[id=item]').map(function(){return $(this).text();}).get();
+        var itemCostPrice = $('input[class=cost]').map(function(){return $(this).val();}).get();
+        var itemName = $('h5[id=item]').map(function(){return $(this).text();}).get();
         var itemStock = $('span[class=stock]').map(function(){return $(this).text();}).get();
-        var itemPrice = $('td[id=price]').map(function(){return $(this).text();}).get();
+        var itemPrice = $('span[id=price]').map(function(){return $(this).text();}).get();
         var itemDisc = $('.disc').map(function(){return $(this).text();}).get();
         var qty = $('input[class=quant]').map(function(){return $(this).val();}).get();
 
@@ -85,17 +85,20 @@
 
             count.innerText = items.length;
         });
+
+        $( ".items" ).remove();
+        clear_bag();
     }
 
     // show all uncompleted transactions that have been saved
     showSavedLists = (e) => {
         e.preventDefault();
  
-        if($('div').hasClass('on')) {
-            $('.savedLists').removeClass('on');
+        if($('div').hasClass('in')) {
+            $('.savedLists').removeClass('in');
             $('.savedLists').empty();
         } else {
-            $('.savedLists').addClass('on');
+            $('.savedLists').addClass('in');
             var items = JSON.parse(localStorage.getItem('items'));
             items.forEach(function(item, index) {
                 $('.savedLists').append(
@@ -105,7 +108,7 @@
                 
                 // select transaction to complete
                 $('#lists' + index).on('click', function() {
-                    $('#sale-body').empty();
+                    $('#bag-item').empty();
                     $('.refresh').change(function(){});
                     $('.refresh').prop('selectedIndex',0).trigger('change');
                     $(".reset").each(function(){
@@ -127,7 +130,7 @@
                         }
 
                         if(product.discount){
-                            product.discount = parseInt(product.discount.slice(1, -1)) / 100;
+                            product.discount = product.discount.substring(1);
                         } else {
                             product.disocunt = null
                         }
@@ -143,24 +146,26 @@
     // append transactions to table
     openLists = (product) => {
         $('.load-msg').removeClass('on');
+        var formatter = new Intl.NumberFormat('en-NG', {
+            style: 'currency',
+            currency: 'NGN'
+        });
+
+        var price = product.price.replace(/[^\d\.]/g,'')
+        var cost_price = product.cost_price.replace(/[^\d\.]/g,'')
+
         if(product.discount) {
             var discount = "-" + product.discount;
             var prdlen = product.discount.slice(0, -1);
             var discount_value = parseFloat(prdlen) / 100;
-            var subtotal = parseFloat(product.price.substring(1)) - (discount_value * product.price.substring(1));
+            var value = parseFloat(price) - (discount_value * price);
+            var subtotal = formatter.format(value)
         } else {
             var discount = '';
             var discount_value = 0.0;
-            var subtotal = parseFloat(product.price.substring(1));
+            var value = parseFloat(price);
+            var subtotal = formatter.format(value)
         }
-
-        // var text = [];
-        // $('thead tr th').each(function() {
-        //     var $this = $(this);
-
-        //     text.push($this.text())
-        // })
-
         
         $('#bag-item').append(
             `
@@ -170,10 +175,10 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5  grid-1">
                                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
-                                <input id="cost${product.id}" type="hidden" name="cost" value="${product.cost_price.substring(1)}" />
+                                <input id="cost${product.id}" class="cost" type="hidden" name="cost" value="${formatter.format(cost_price)}" />
                                 <h5 id="item" class="card-title">${product.product}</h5>
-                                <span id="price">₦${parseFloat(product.price.substring(1)).toFixed(2)}</span>
-                                <span id="stock">Stock: ${product.stock}</span>
+                                <span id="price">${formatter.format(price)}</span>
+                                <span id="stock" class="stock">Stock: ${product.stock}</span>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 grid-2">
                                 <div class="grid-2-inner">
@@ -191,7 +196,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 grid-3">
-                                <input id="sub${product.id}" class="sub" type="text" readonly value="₦${parseFloat(subtotal).toFixed(2)}" />
+                                <input id="sub${product.id}" class="sub" type="text" readonly value="${subtotal}" />
                                 <span class="disc" id="disc${product.id}">${discount}</span>
                             </div>
                             <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 grid-4">
@@ -234,13 +239,13 @@
             if ($button.hasClass('inc')) {
                 count = parseFloat(oldValue) + 1;
                 logic = "+";
-                changeQuantity(subtotal, count, logic, addSub, addDisc, addCost, product, discount_value, cost)
+                changeQuantity(subtotal, count, logic, addSub, addDisc, addCost, product.id, discount_value, cost, price, cost_price, formatter)
             } else {
                 // Don't allow decrementing below zero
                 if (oldValue > 1) {
                     count = parseFloat(oldValue) - 1;
                     logic = "-";
-                    changeQuantity(subtotal, count, logic, addSub, addDisc, addCost, product, discount_value, cost)
+                    changeQuantity(subtotal, count, logic, addSub, addDisc, addCost, product.id, discount_value, cost, price, cost_price, formatter)
                 } else {
                     count = 1;
                 }
@@ -251,22 +256,22 @@
 
         // on product selection add values to right sidebar
         var addSub = document.getElementById("subtotal").value;
-        var newSub = parseFloat(addSub.substring(1)) + parseFloat(product.price.substring(1));
+        var newSub = parseFloat(addSub.replace(/[^\d\.]/g,'')) + parseFloat(price);
 
-        document.getElementById("subtotal").value = "₦" + parseFloat(newSub).toFixed(2);
+        document.getElementById("subtotal").value = formatter.format(newSub);
 
         var addCost = document.getElementById("totalCost").value;
-        var newCost = parseFloat(addCost) + parseFloat(product.cost_price.substring(1));
+        var newCost = parseFloat(addCost) + parseFloat(cost_price);
 
         document.getElementById("totalCost").value = parseFloat(newCost);
 
         var addDisc = document.getElementById("discount").value;
-        var newDisc = parseFloat(addDisc.substring(2)) + (discount_value * parseFloat(product.price.substring(1)));
+        var newDisc = parseFloat(addDisc.replace(/[^\d\.]/g,'')) + (discount_value * parseFloat(price));
         
-        document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
+        document.getElementById("discount").value = "-" + formatter.format(newDisc);
 
         var total = parseFloat(newSub) - parseFloat(newDisc);
-        document.getElementById("total").value = "₦" + parseFloat(total).toFixed(2);
+        document.getElementById("total").value = formatter.format(total);
 
         // delete individual items from table
         $("#svg" + product.id).on("click", function() {
@@ -275,23 +280,23 @@
             var currentSubTotal = document.getElementById("subtotal").value;
             var removedQuant = document.getElementById("quant" + product.id).value;
 
-            var diff = parseFloat(currentSubTotal.substring(1)) - (parseFloat(product.price.substring(1)) * parseInt(removedQuant));
-            document.getElementById("subtotal").value = "₦" + parseFloat(diff).toFixed(2);
+            var diff = parseFloat(currentSubTotal.replace(/[^\d\.]/g,'')) - (parseFloat(price) * parseInt(removedQuant));
+            document.getElementById("subtotal").value = formatter.format(diff);
 
             var currentCost = document.getElementById('totalCost').value;
-            var diffCost = parseFloat(currentCost) - (parseFloat(product.cost_price.substring(1)) * parseInt(removedQuant));
+            var diffCost = parseFloat(currentCost) - (parseFloat(cost_price) * parseInt(removedQuant));
             document.getElementById("totalCost").value = parseFloat(diffCost);
 
             var currentDisc = document.getElementById("discount").value;
-            var removedDisc = parseFloat(discount_value * removedQuant * product.price.substring(1)).toFixed(2);
+            var removedDisc = parseFloat(discount_value * removedQuant * price).toFixed(2);
             
-            var newDisc = currentDisc.substring(2) - removedDisc;
-            document.getElementById("discount").value = "-" + "₦" + parseFloat(newDisc).toFixed(2);
+            var newDisc = currentDisc.replace(/[^\d\.]/g,'') - removedDisc;
+            document.getElementById("discount").value = "-" + formatter.format(newDisc);
 
             var sub = document.getElementById("subtotal").value;
             var disc = document.getElementById("discount").value;
-            var total = parseFloat(sub.substring(1)) - parseFloat(disc.substring(2));
-            document.getElementById("total").value = "₦" + parseFloat(total).toFixed(2);
+            var total = parseFloat(sub.replace(/[^\d\.]/g,'')) - parseFloat(disc.replace(/[^\d\.]/g,''));
+            document.getElementById("total").value = formatter.format(total);
 
             tr.remove();
 
@@ -308,23 +313,23 @@
     }
 
     // change quantity of items and increase or decrease amount
-    const changeQuantity = (subtotal, count, logic, addSub, addDisc, addCost, product, discount_value, cost) => {
-        sub = subtotal * count;
-        document.getElementById("sub" + product.id).value = "₦" + parseFloat(sub).toFixed(2);
+    const changeQuantity = (subtotal, count, logic, addSub, addDisc, addCost, id, discount_value, cost, price, cost_price, formatter) => {
+        sub = subtotal.replace(/[^\d\.]/g,'') * count;
+        document.getElementById("sub" + id).value = formatter.format(sub);
 
-        newS = eval(parseFloat(addSub.substring(1)) + logic + parseFloat(product.price.substring(1)));
-        document.getElementById("subtotal").value = "₦" + parseFloat(newS).toFixed(2);
+        newS = eval(parseFloat(addSub.replace(/[^\d\.]/g,'')) + logic + parseFloat(price));
+        document.getElementById("subtotal").value = formatter.format(newS);
 
-        newCost = eval(parseFloat(addCost) + logic + parseFloat(product.cost_price.substring(1)));
+        newCost = eval(parseFloat(addCost) + logic + parseFloat(cost_price));
         document.getElementById("totalCost").value = parseFloat(newCost);
 
-        newDisc = eval(parseFloat(addDisc.substring(2)) + logic + (discount_value * parseFloat(product.price.substring(1))));
-        document.getElementById("discount").value = "-" + "₦" +parseFloat(newDisc).toFixed(2);
+        newDisc = eval(parseFloat(addDisc.replace(/[^\d\.]/g,'')) + logic + (discount_value * parseFloat(price)));
+        document.getElementById("discount").value = "-" + formatter.format(newDisc);
 
         var total = parseFloat(newS) - parseFloat(newDisc);
-        document.getElementById("total").value = "₦" + parseFloat(total).toFixed(2);
+        document.getElementById("total").value = formatter.format(total);
 
-        document.getElementById('cost'+product.id).value = cost * count
+        document.getElementById('cost'+ id).value = cost * count
     }
 
     const clear_bag = () => {
