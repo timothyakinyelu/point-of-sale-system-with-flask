@@ -3,8 +3,9 @@ from .pivots import permission_user_table
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import current_app
+from app.perm_helpers import HasPermissionTrait
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin, HasPermissionTrait):
     __tablename__ = 'users'
     __table_args__ = {'extend_existing': True}
     
@@ -64,7 +65,7 @@ class User(db.Model, UserMixin):
            'id': self.id,
            'username': self.username,
            'role': self.role.title,
-           'status': self.active
+           'status': self.status
            # This is an example how to deal with Many2Many relations
         }
         
