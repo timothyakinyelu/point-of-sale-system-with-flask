@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% include "navbar.html" %}
+    <div>
+        <div class="flex-center position-r">
+            <div class="code">
+            401
+            </div>
+        
+            <div class="message" style="padding: 10px;">
+            YOU ARE NOT AUTHORIZED
+            </div>
+        </div>
+        <div class="go-back-wrapper">
+            <span onclick=history.back() class="go-back">GO BACK</span>
+        </div>
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script>
+        $('document').ready(function(){
+            var username = "{{current_user.username}}"
+            var firstLetter = username.charAt(0)
+            
+            document.getElementById("user").innerHTML = firstLetter;
+        });
+    </script>
+{{super()}}
+{% endblock scripts %}

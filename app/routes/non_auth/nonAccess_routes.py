@@ -7,3 +7,7 @@ from app.controllers import AuthController
 def login():
     return AuthController.authenticate()
 
+@nonAuth.route('/unauthorized')
+def unauthorized():
+    return render_template('unauthorized.html')
+
