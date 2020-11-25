@@ -298,6 +298,11 @@ button:focus {
     height: 20px;
     margin-right: 4px;
 }
+.button-print {
+    background: #cd63e6;
+    border: 1px solid #cd74da;
+    color: #ffffff;
+}
 .button svg {
     height: 20px;
     margin-right: 4px;
@@ -894,11 +899,11 @@ a.brand__sidebar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .grid-3 input {
     width: 100%;
-    text-align: center;
+    text-align: left;
     border: none;
 }
 .grid-3 span.disc.displayed {
@@ -908,6 +913,9 @@ a.brand__sidebar {
     padding: 3px;
     background: #e85ad5;
     color: var(--primary-color);
+}
+.grid-1, .grid-2, .grid-3 {
+    margin-bottom: 20px;
 }
 .grid-4 svg path {
     fill: red;
@@ -1271,6 +1279,17 @@ a.brand__sidebar {
         text-align: center;
         color: #383232;
         text-decoration: none;
+    }
+
+    /* new transaction */
+    .grid-1, .grid-2, .grid-3 {
+        margin-bottom: 0;
+    }
+    .grid-3 {
+        justify-content: center;
+    }
+    .grid-3 input {
+        text-align: center;
     }
 }
 
