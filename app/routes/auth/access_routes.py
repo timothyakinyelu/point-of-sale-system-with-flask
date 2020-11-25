@@ -10,6 +10,7 @@ from app.controllers import TransactionController
 from app.controllers import DashboardController
 from app.controllers import ReportsController
 from flask_login import login_required, logout_user
+from app.config_helper import required_permissions
 
 # @auth.route('/')
 # @login_required
@@ -18,6 +19,7 @@ from flask_login import login_required, logout_user
 
 @auth.route("/")
 @login_required
+@required_permissions('view-dashboard')
 def dashboard():
     return DashboardController.dashboard()
 
