@@ -36,31 +36,37 @@ class HasPermissionTrait:
             return self
     
     
-    def hasPermissionTo(perm):
+    def hasPermissionTo(self, perms):
         """Check if a user has permission to perform an action."""
         
-        return self.hasPermissionThroughRole(perm) or self.hasPermission(perm)
+        return self.hasPermissionThroughRole(perms) or self.hasPermission(perms)
         
         
-    def hasPermissionThroughRole(perm):
+    def hasPermissionThroughRole(self, perms):
         """hasPermission through role"""
         
-        if type(perm) == str:
-            permission = Permission.query.filter_by(name=perm.name).first()
-            role = Permission.roles.first()
-            roles = self.query.all()
-            
-            if roles.contains(role):
-                return True
-        else:
-            for role in perm.roles:
-                if roles.contains(role):
-                    return True
-        
+        if perms is not None:
+            for perm in perms:
+                if type(perm) == str:
+                    permission = Permission.query.filter_by(slug=perm).first()
+                    roles = permission.roles
+                    role = self.role_id
+                    
+                    access = []
+                    
+                    for el in roles:
+                        access.append(el.id)
+                    
+                    if role in access:
+                        return True
+                else:
+                    for role in perm.roles:
+                        if roles.contains(role):
+                            return True
         return False
     
     
-    def hasRole(*roles):
+    def hasRole(self, *roles):
         """check if user has required role"""
         
         user_roles = self.query.all()
@@ -75,11 +81,11 @@ class HasPermissionTrait:
     # def getAllPermissions(self,perms):
     #     return session.query(Permission).filter_by(Permission.slug.in_(perms)).all()
     
-    def hasPermission(perm):
+    def hasPermission(self, perm):
         """check if user has direct permissions"""
         
         permit = Permission.query.filter_by(slug = perm).first()
-        if permit is None:
+        if permit not in self.permissions:
             return False
             raise('User does not have permission')
         return True
