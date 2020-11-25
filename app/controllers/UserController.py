@@ -18,7 +18,7 @@ def create():
         if existing_user is None:
             user = User(
                 username = form.username.data,
-                active = form.active.data,
+                status = form.status.data,
                 role_id = form.role.data,
                 employee_id = None if form.employee.data == '' else form.employee.data,
                 shop_id = None if form.shop.data == 0 else form.shop.data

@@ -79,7 +79,7 @@ class UserAuthTests(BaseCase):
                 data = dict(
                     username = 'Kwaghbee',
                     password = 'secret',
-                    active = 'ACTIVE',
+                    status = 'ACTIVE',
                     role = role.id
                 )
             )

@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
         db.Integer,
         db.ForeignKey('shops.id')
     )
-    active = db.Column(
+    status = db.Column(
         db.String(100),
         server_default="PENDING"
     )

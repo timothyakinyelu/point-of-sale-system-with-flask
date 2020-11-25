@@ -13,7 +13,14 @@ def authenticate():
         
         if user not logged in sends a POST request to validate user
     """
+    
     if current_user.is_authenticated:
+        if current_user.status != 'ACTIVE':
+            flash('User not yet approved')
+            return redirect(url_for('nonAuth.login'))
+    
+        if current_user.role == 'Cashier':
+            return redirect(url_for('auth.addTransaction'))
         return redirect(url_for('auth.dashboard'))
     
     form = LoginForm()
@@ -21,9 +28,16 @@ def authenticate():
     if form.validate_on_submit():
         user = User.query.filter_by(username = form.username.data).first()
         
+        if user.status != 'ACTIVE':
+            flash('User not yet approved')
+            return redirect(url_for('nonAuth.login'))
+        
         if user and user.check_password(password = form.password.data):
             login_user(user)
             next_page = request.args.get('next')
+                
+            if user.role_id == 1:
+                return redirect(url_for('auth.addTransaction'))
             return redirect(next_page or url_for('auth.dashboard'))
         flash('Invalid Credentials!')
         return redirect(url_for('nonAuth.login'))

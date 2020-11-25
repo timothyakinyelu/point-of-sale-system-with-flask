@@ -33,7 +33,7 @@ class CreateUserForm(FlaskForm):
             Length(min=6, message='Password too short')
         ]
     )
-    active = RadioField(
+    status = RadioField(
         'Status',
         choices=[('ACTIVE', 'Active'),('PENDING', 'Pending')]
     )
