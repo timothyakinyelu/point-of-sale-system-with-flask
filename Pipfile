@@ -16,6 +16,7 @@ python-slugify = "*"
 flask-testing = "*"
 pip-autoremove = "*"
 flask = "*"
+is-safe-url = "*"
 
 [requires]
 python_version = "3.8"
