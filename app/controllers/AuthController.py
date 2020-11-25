@@ -1,5 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import logout_user, current_user, login_user
+from is_safe_url import is_safe_url
 from app.models import *
 from app.forms import *
 from app.db import session
@@ -35,6 +36,9 @@ def authenticate():
         if user and user.check_password(password = form.password.data):
             login_user(user)
             next_page = request.args.get('next')
+            
+            if not is_safe_url('/', next):
+                return flask.abort(400)
                 
             if user.role_id == 1:
                 return redirect(url_for('auth.addTransaction'))
