@@ -624,10 +624,10 @@ a.brand__sidebar {
 .sidebar__list--menu li {
     margin-bottom: 10px;
 }
-/* .sidebar__list--menu li a.active {
+.sidebar__list--menu li.active {
     background-color: #ffffff26;
     border-radius: 33px;
-} */
+}
 .sidebar__list--menu li a {
     padding: 15px 20px;
     color: white;

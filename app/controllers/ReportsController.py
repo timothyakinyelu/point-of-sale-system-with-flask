@@ -96,7 +96,7 @@ def allLowStocks():
     page = request.args.get('page', 1, type=int)
     
     if term:
-        products = Product.query.filter(Product.stock_qty == Product.min_stock_qty).\
+        products = Product.query.filter(Product.stock_qty <= Product.min_stock_qty).\
             filter(
                 or_(
                     Product.name.ilike('%' + term + '%'),
@@ -105,7 +105,7 @@ def allLowStocks():
             ).\
             paginate(page, 20, True)
     else:
-        products = Product.query.filter(Product.stock_qty == Product.min_stock_qty).\
+        products = Product.query.filter(Product.stock_qty <= Product.min_stock_qty).\
             paginate(page, 20, True)
         
     next_url = url_for('auth.fetchLowStocks', page = products.next_num) \

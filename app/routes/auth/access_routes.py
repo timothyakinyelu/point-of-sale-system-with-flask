@@ -28,7 +28,7 @@ def dashboard():
 def fetchChart():
     return DashboardController.chart()
 
-@auth.route('/system/users')
+@auth.route('/settings/users')
 @login_required
 @required_permissions('view-users')
 def getUsers(): 
@@ -39,12 +39,12 @@ def getUsers():
 def fetchUsers():
     return SystemController.ajaxFetchUsers()
 
-@auth.route('/system/users/create-new-user', methods=['GET', 'POST'])
+@auth.route('/settings/users/create-new-user', methods=['GET', 'POST'])
 @login_required
 def createUser():
     return UserController.create()
 
-@auth.route('/system/roles')
+@auth.route('/settings/roles')
 @login_required
 @required_permissions('view-roles')
 def getRoles():
@@ -55,43 +55,43 @@ def getRoles():
 def fetchRoles():
     return SystemController.ajaxFetchRoles()
 
-@auth.route('/system/roles/add-role', methods=['POST',])
+@auth.route('/settings/roles/add-role', methods=['POST',])
 @login_required
 def addRole():
     return SystemController.createRole()
 
-@auth.route('/system/roles/update-role/<int:id>', methods=['POST',])
+@auth.route('/settings/roles/update-role/<int:id>', methods=['POST',])
 @login_required
 def updateRole(id):
     return SystemController.updateRole(id)
 
-@auth.route('/system/roles/delete-role/<int:id>', methods=['POST',])
+@auth.route('/settings/roles/delete-role/<int:id>', methods=['POST',])
 @login_required
 def deleteRole(id):
     return SystemController.removeRole(id)
   
-@auth.route('/system/permissions')
+@auth.route('/settings/permissions')
 @login_required
 @required_permissions('view-permissions')
 def getPermissions():
     return SystemController.permissions()
 
-@auth.route('/system/permissions/add-permission', methods=['POST',])
+@auth.route('/settings/permissions/add-permission', methods=['POST',])
 @login_required
 def addPermission():
     return SystemController.createPermission()
 
-@auth.route('/system/permissions/update-permission/<int:id>', methods=['POST',])
+@auth.route('/settings/permissions/update-permission/<int:id>', methods=['POST',])
 @login_required
 def updatePermission(id):
     return SystemController.updatePermission(id)
 
-@auth.route('/system/permissions/delete-permission', methods=['POST',])
+@auth.route('/settings/permissions/delete-permission', methods=['POST',])
 @login_required
 def deletePermissions():
     return SystemController.removePermissions()
             
-@auth.route('/system/permissions/check-permission', methods=['POST',])
+@auth.route('/settings/permissions/check-permission', methods=['POST',])
 @login_required
 def checkPerm():
     return SystemController.checkPermissions()
@@ -104,7 +104,7 @@ def logout():
 
 
 # Main shop routes
-@auth.route('/system/shops')
+@auth.route('/settings/shops')
 @login_required
 @required_permissions('view-shops')
 def getShops():
@@ -115,17 +115,17 @@ def getShops():
 def fetchShops():
     return ShopController.ajaxFetchShops()
 
-@auth.route('/system/shops/add-shop', methods=['POST',])
+@auth.route('/settings/shops/add-shop', methods=['POST',])
 @login_required
 def addShop():
     return ShopController.createShop()
 
-@auth.route('/system/shops/update-shop/<int:id>', methods=['POST',])
+@auth.route('/settings/shops/update-shop/<int:id>', methods=['POST',])
 @login_required
 def updateShop(id):
     return ShopController.updateShop(id)
 
-@auth.route('/system/shops/delete-shop/<int:id>', methods=['POST',])
+@auth.route('/settings/shops/delete-shop/<int:id>', methods=['POST',])
 @login_required
 def deleteShop(id):
     return ShopController.removeShop(id)

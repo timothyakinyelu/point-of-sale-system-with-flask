@@ -6,8 +6,10 @@
         </nav>
 
         <ul class="accordion sidebar__list--menu mt-3" id="sidebarAccordion">
-            {% if(current_user.allowed_perms('view-dashboard')) %}
-                <li><a href="{{ url_for('auth.dashboard') }}">Dashboard</a></li>
+            {% if current_user.allowed_perms('view-dashboard') %}
+                <li {% if request.path.split('/')[-1] == '' %} class="active" {% endif %}>
+                    <a href="{{ url_for('auth.dashboard') }}">Dashboard</a>
+                </li>
             {% endif %}
             <li class="">
                 <a data-toggle="collapse" 
@@ -18,19 +20,19 @@
                 >
                     Inventory
                 </a>
-                <ul class="collapse" id="inventory" data-parent="#sidebarAccordion">
+                <ul class="collapse {% if request.path.split('/')[-2] == 'inventory' %} show {% endif %}" id="inventory" data-parent="#sidebarAccordion">
                     {% if(current_user.allowed_perms('view-brands')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'brands' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getBrands') }}">Brands</a>
                         </li>
                     {% endif %}
                     {% if(current_user.allowed_perms('view-categories')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'categories' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getCategories') }}">Categories</a>
                         </li>
                     {% endif %}
                     {% if(current_user.allowed_perms('view-products')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'products' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getProducts') }}">Products</a>
                         </li>
                     {% endif %}
@@ -49,8 +51,8 @@
                     >
                         Promotions
                     </a>
-                    <ul class="collapse" id="discount" data-parent="#sidebarAccordion">
-                        <li>
+                    <ul class="collapse {% if request.path.split('/')[-2] == 'promotions' %} show {% endif %}" id="discount" data-parent="#sidebarAccordion">
+                        <li {% if request.path.split('/')[-1] == 'discounts' %} class="active" {% endif %}>
                             <a href="">Discounts</a>
                         </li>
                     </ul>
@@ -65,29 +67,29 @@
                 >
                     Reports
                 </a>
-                <ul class="collapse" id="reports" data-parent="#sidebarAccordion">
+                <ul class="collapse {% if request.path.split('/')[-2] == 'reports' %} show {% endif %}" id="reports" data-parent="#sidebarAccordion">
                     {% if(current_user.allowed_perms('view-reports')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'sales-report' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.salesReport') }}">Sales Report</a>
                         </li>
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'products-report' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.productsReport') }}">Products Sold Report</a>
                         </li>
                     {% endif %}
                     {% if(current_user.allowed_perms('view-low-stock')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'low-stock' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.lowStockReport') }}">Low Stock</a>
                         </li>
                     {% endif %}
                     {% if(current_user.allowed_perms('view-day-report')) %}
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'today-sales' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.todaysReport') }}">Today Sales</a>
                         </li>
                     {% endif %}
                 </ul>
             </li>
             {% if(current_user.allowed_perms('view-users')) %}
-                <li class="">
+                <li>
                     <a data-toggle="collapse" 
                         href="#settings" 
                         role="button" 
@@ -96,17 +98,17 @@
                     >
                         Settings
                     </a>
-                    <ul class="collapse" id="settings" data-parent="#sidebarAccordion">
-                        <li>
+                    <ul class="collapse {% if request.path.split('/')[-2] == 'settings' %} show {% endif %}" id="settings" data-parent="#sidebarAccordion">
+                        <li {% if request.path.split('/')[-1] == 'shops' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getShops') }}">Shops</a>
                         </li>
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'users' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getUsers') }}">Users</a>
                         </li>
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'permissions' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getPermissions') }}">Access Control List</a>
                         </li>
-                        <li>
+                        <li {% if request.path.split('/')[-1] == 'roles' %} class="active" {% endif %}>
                             <a href="{{ url_for('auth.getRoles') }}">Roles</a>
                         </li>
                         <li>Reset Password</li>
