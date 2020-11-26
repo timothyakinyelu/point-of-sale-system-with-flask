@@ -15,15 +15,15 @@ class DevelopmentConfig(BaseConfig):
     """ Config for development purposes. """
     
     DEBUG = os.environ.get('DEBUG')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     TEMPLATES_AUTO_RELOAD = True
     
 class ProductionConfig(BaseConfig):
     """ Config for production ready app."""
     
-    SECRET_KEY = 'some_random_aplhanumeric_string'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql:///example'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     
 class TestConfig(BaseConfig):
     """ Config for testing purposes only."""
