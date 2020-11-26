@@ -6,7 +6,9 @@
         </nav>
 
         <ul class="accordion sidebar__list--menu mt-3" id="sidebarAccordion">
-            <li><a href="{{ url_for('auth.dashboard') }}">Dashboard</a></li>
+            {% if(current_user.allowed_perms('view-dashboard')) %}
+                <li><a href="{{ url_for('auth.dashboard') }}">Dashboard</a></li>
+            {% endif %}
             <li class="">
                 <a data-toggle="collapse" 
                     href="#inventory" 
@@ -17,32 +19,43 @@
                     Inventory
                 </a>
                 <ul class="collapse" id="inventory" data-parent="#sidebarAccordion">
-                    <li>
-                        <a href="{{ url_for('auth.getBrands') }}">Brands</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.getCategories') }}">Categories</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.getProducts') }}">Products</a>
-                    </li>
+                    {% if(current_user.allowed_perms('view-brands')) %}
+                        <li>
+                            <a href="{{ url_for('auth.getBrands') }}">Brands</a>
+                        </li>
+                    {% endif %}
+                    {% if(current_user.allowed_perms('view-categories')) %}
+                        <li>
+                            <a href="{{ url_for('auth.getCategories') }}">Categories</a>
+                        </li>
+                    {% endif %}
+                    {% if(current_user.allowed_perms('view-products')) %}
+                        <li>
+                            <a href="{{ url_for('auth.getProducts') }}">Products</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </li>
-            <li class="">
-                <a data-toggle="collapse" 
-                    href="#discount" 
-                    role="button" 
-                    aria-expanded="false" 
-                    aria-controls="collapseExample"
-                >
-                    Promotions
-                </a>
-                <ul class="collapse" id="discount" data-parent="#sidebarAccordion">
-                    <li>
-                        <a href="">Discounts</a>
-                    </li>
-                </ul>
-            </li>
+            {% if(current_user.allowed_perms('enter-sales')) %}
+                <li><a href="{{ url_for('auth.addTransaction') }}">New Sale</a></li>
+            {% endif %}
+            {% if(current_user.allowed_perms('view-promotions')) %}
+                <li class="">
+                    <a data-toggle="collapse" 
+                        href="#discount" 
+                        role="button" 
+                        aria-expanded="false" 
+                        aria-controls="collapseExample"
+                    >
+                        Promotions
+                    </a>
+                    <ul class="collapse" id="discount" data-parent="#sidebarAccordion">
+                        <li>
+                            <a href="">Discounts</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endif %}
             <li class="">
                 <a data-toggle="collapse" 
                     href="#reports" 
@@ -53,37 +66,53 @@
                     Reports
                 </a>
                 <ul class="collapse" id="reports" data-parent="#sidebarAccordion">
-                    <li>
-                        <a href="{{ url_for('auth.salesReport') }}">Sales Report</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.productsReport') }}">Products Sold Report</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.lowStockReport') }}">Low Stock</a>
-                    </li>
+                    {% if(current_user.allowed_perms('view-reports')) %}
+                        <li>
+                            <a href="{{ url_for('auth.salesReport') }}">Sales Report</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.productsReport') }}">Products Sold Report</a>
+                        </li>
+                    {% endif %}
+                    {% if(current_user.allowed_perms('view-low-stock')) %}
+                        <li>
+                            <a href="{{ url_for('auth.lowStockReport') }}">Low Stock</a>
+                        </li>
+                    {% endif %}
+                    {% if(current_user.allowed_perms('view-day-report')) %}
+                        <li>
+                            <a href="{{ url_for('auth.todaysReport') }}">Today Sales</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </li>
-            <li class="">
-                <a data-toggle="collapse" 
-                    href="#settings" 
-                    role="button" 
-                    aria-expanded="false" 
-                    aria-controls="collapseList3"
-                >
-                    Settings
-                </a>
-                <ul class="collapse" id="settings" data-parent="#sidebarAccordion">
-                    <li>
-                        <a href="{{ url_for('auth.getUsers') }}">Users</a>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('auth.getPermissions') }}">Access Control List</a>
-                    </li>
-                    <li><a href="{{ url_for('auth.getRoles') }}">Roles</a></li>
-                    <li>Reset Password</li>
-                </ul>
-            </li>
+            {% if(current_user.allowed_perms('view-users')) %}
+                <li class="">
+                    <a data-toggle="collapse" 
+                        href="#settings" 
+                        role="button" 
+                        aria-expanded="false" 
+                        aria-controls="collapseList3"
+                    >
+                        Settings
+                    </a>
+                    <ul class="collapse" id="settings" data-parent="#sidebarAccordion">
+                        <li>
+                            <a href="{{ url_for('auth.getShops') }}">Shops</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.getUsers') }}">Users</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.getPermissions') }}">Access Control List</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.getRoles') }}">Roles</a>
+                        </li>
+                        <li>Reset Password</li>
+                    </ul>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </div>

@@ -30,6 +30,7 @@ def fetchChart():
 
 @auth.route('/system/users')
 @login_required
+@required_permissions('view-users')
 def getUsers(): 
     return SystemController.users()
 
@@ -45,6 +46,7 @@ def createUser():
 
 @auth.route('/system/roles')
 @login_required
+@required_permissions('view-roles')
 def getRoles():
     return SystemController.roles()
 
@@ -70,6 +72,7 @@ def deleteRole(id):
   
 @auth.route('/system/permissions')
 @login_required
+@required_permissions('view-permissions')
 def getPermissions():
     return SystemController.permissions()
 
@@ -103,6 +106,7 @@ def logout():
 # Main shop routes
 @auth.route('/system/shops')
 @login_required
+@required_permissions('view-shops')
 def getShops():
     return ShopController.shops()
 
@@ -128,6 +132,7 @@ def deleteShop(id):
 
 @auth.route('/inventory/brands')
 @login_required
+@required_permissions('view-brands')
 def getBrands():
     return BrandController.brands()
 
@@ -153,6 +158,7 @@ def deleteBrand(id):
 
 @auth.route('/inventory/categories')
 @login_required
+@required_permissions('view-categories')
 def getCategories():
     return CategoryController.categories()
 
@@ -178,6 +184,7 @@ def deleteCategory(id):
 
 @auth.route('/inventory/products')
 @login_required
+@required_permissions('view-products')
 def getProducts():
     return ProductController.products()
 
@@ -203,6 +210,7 @@ def deleteProduct(id):
 
 @auth.route('/sales/new-transaction')
 @login_required
+@required_permissions('enter-sales')
 def addTransaction():
     return TransactionController.new_transaction()
 
@@ -228,6 +236,7 @@ def getProduct():
 
 @auth.route('/reports/sales-report')
 @login_required
+@required_permissions('view-reports')
 def salesReport():
     return ReportsController.salesReports()
 
@@ -238,6 +247,7 @@ def fetchSalesReport():
 
 @auth.route('/reports/products-report')
 @login_required
+@required_permissions('view-reports')
 def productsReport():
     return ReportsController.productsReports()
 
@@ -248,6 +258,7 @@ def fetchProductsReport():
 
 @auth.route('/reports/low-stock')
 @login_required
+@required_permissions('view-low-stock')
 def lowStockReport():
     return ReportsController.lowStocksReport()
 
@@ -258,6 +269,7 @@ def fetchLowStocks():
 
 @auth.route('/reports/today-sales')
 @login_required
+@required_permissions('view-day-report')
 def todaysReport():
     return ReportsController.salesByCurrentDate()
 

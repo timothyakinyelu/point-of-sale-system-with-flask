@@ -50,6 +50,11 @@ class User(db.Model, UserMixin, HasPermissionTrait):
         backref = 'user',
         lazy = 'joined'
     )
+    
+    def allowed_perms(self, *perms):
+        if self.hasPermissionTo(perms):
+            return True
+        return False
       
     def set_password(self, password):
         rounds = current_app.config.get('HASH_ROUNDS', 100000)

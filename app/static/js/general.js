@@ -4,6 +4,11 @@
 
     // call back to build table on load or search
     productCallBack = (response) => {
+        if(response.results.length === 0) {
+            var tbody = document.getElementById(routeName + '-body');
+            tbody.innerHTML = 'No data Available!';
+            return tbody;
+        }
         buildTable(response);
         pageList(response, response.current_page);
     }
@@ -97,6 +102,8 @@
 
     // display table headers
     const tableHeads = (data) => {
+        if(getKeys(data) === undefined) return;
+
         return getKeys(data).map((column, index) => {
             if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug' && column !== 'selling_price') {
                 return `

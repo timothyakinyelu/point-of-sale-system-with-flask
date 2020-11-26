@@ -111,7 +111,7 @@ button:focus {
     outline: none;
 }
 .show {
-    display: table-row !important;
+    display: revert;
 }
 .on, .in {
     display: flex !important;
