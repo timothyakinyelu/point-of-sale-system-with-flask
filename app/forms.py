@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField, BooleanField, SelectMultipleField, IntegerField, DecimalField, HiddenField
-from wtforms.validators import DataRequired, InputRequired, Length
+from wtforms.validators import DataRequired, InputRequired, Length, EqualTo
 from app.models.role import Role
 from app.models.shop import Shop
 from app.models.category import Category
@@ -27,12 +27,14 @@ class CreateUserForm(FlaskForm):
         validators=[DataRequired()]
     )
     password = PasswordField(
-        'Password',
+        'Password', 
         validators=[
             DataRequired(),
-            Length(min=6, message='Password too short')
+            Length(min=6, message='Password too short'),
+            EqualTo('confirm_password', message='Password must be the same')
         ]
     )
+    confirm_password = PasswordField('Confirm Password')
     status = RadioField(
         'Status',
         choices=[('ACTIVE', 'Active'),('PENDING', 'Pending')]

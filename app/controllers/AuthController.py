@@ -40,9 +40,12 @@ def authenticate():
             if not is_safe_url('/', next):
                 return flask.abort(400)
                 
-            if user.role_id == 1:
+            if user.allowed_perms('enter-sales'):
                 return redirect(url_for('auth.addTransaction'))
-            return redirect(next_page or url_for('auth.dashboard'))
+            
+            if user.allowed_perms('view-dashboard'):
+                return redirect(next_page or url_for('auth.dashboard'))
+
         flash('Invalid Credentials!')
         return redirect(url_for('nonAuth.login'))
 

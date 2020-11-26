@@ -57,45 +57,55 @@
                 </nav>
             </div>
         </div>
-        <div class="modal fade" id="newCategory" tabindex="1" role="dialog" aria-labelledby="catName" aria-hidden="true">
+        <div class="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="catName" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <h4 class="modal-title" id="catName">{{ title }}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="catName">{{ title }}</h4>
                     </div>
                     <div class="modal-body">
                         <form id="saveCategory" method="POST" action="{{ url_for('auth.addCategory') }}">
                             {{ form.csrf_token }}
-                
-                            <fieldset class="name">
-                                {{ form.name.label }}
-                                {{ form.name(placeholder='Nike') }}
-                                {% if form.name.errors %}
-                                    <ul class="errors">
-                                        {% for error in form.name.errors %}
-                                        <li>{{ error }}</li>{% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </fieldset>
-                            <fieldset class="description">
-                                {{ form.description.label }}
-                                {{ form.description(placeholder='Nike') }}
-                                {% if form.description.errors %}
-                                    <ul class="errors">
-                                        {% for error in form.description.errors %}
-                                        <li>{{ error }}</li>{% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </fieldset>
-                            <fieldset class="parent">
-                                {{ form.parent.label }}
-                                {{ form.parent }}
-                            </fieldset>
-                            <div class="submit-button">
-                                {{ form.submit }}
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                    <fieldset class="form-group row">
+                                        {{ form.name.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                        <div class="col-sm-12 col-lg-12">
+                                            {{ form.name(placeholder='Nike', class="form-control") }}
+                                        </div>
+                                        {% if form.name.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.name.errors %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                    <fieldset class="form-group row">
+                                        {{ form.description.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                        <div class="col-sm-12 col-lg-12">
+                                            {{ form.description(placeholder='Nike', class="form-control") }}
+                                        </div>
+                                        {% if form.description.errors %}
+                                            <ul class="errors">
+                                                {% for error in form.description.errors %}
+                                                <li>{{ error }}</li>{% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </fieldset>
+                                    <fieldset class="form-group row">
+                                        {{ form.parent.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                        <div class="col-sm-12 col-lg-12">
+                                            {{ form.parent(class="form-control") }}
+                                        </div>
+                                    </fieldset>
+                                    <div class="submit-button">
+                                        {{ form.submit(class='button-later') }}
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>
