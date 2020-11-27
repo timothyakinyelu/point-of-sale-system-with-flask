@@ -30,6 +30,11 @@ body, a, ul, li, p {
 }
 
 /* base styles */
+.topic-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 body {
     overflow-x: hidden;
     background: var(--background);
