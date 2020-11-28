@@ -2,7 +2,14 @@ from flask import render_template, redirect, flash, url_for, request, make_respo
 from app.db import session
 from app.models.transaction import Transaction
 from app.models.productTransaction import ProductTransaction
+from flask_login import current_user
+import logging
+import logging.config
+from os import path
 
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 def transactions():
     transactions = Transaction.query.all()
@@ -40,8 +47,10 @@ def submit_transaction():
         
         session.commit()
         data = {'message': 'Transaction submitted Successfully', 'status': 201}
+        logger.info(user.username + ' ' + 'successful transaction')
         return make_response(jsonify(data), 201)
     
     data = {'message': 'Unable to submit transaction', 'status': 400}
+    logger.warn(user.username + ' ' + 'failed transaction')
     return make_response(jsonify(data), 400)
             

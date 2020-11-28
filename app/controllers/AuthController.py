@@ -9,11 +9,6 @@ import logging.config
 from os import path
 
 User = user.User
-# logging.basicConfig(
-#     filename='demo.log', 
-#     level=logging.DEBUG, 
-#     format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
-# )
 log_file_path = path.abspath('logging.conf')
 logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
