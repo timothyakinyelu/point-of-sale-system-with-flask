@@ -4,8 +4,19 @@ from is_safe_url import is_safe_url
 from app.models import *
 from app.forms import *
 from app.db import session
+import logging
+import logging.config
+from os import path
 
 User = user.User
+# logging.basicConfig(
+#     filename='demo.log', 
+#     level=logging.DEBUG, 
+#     format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
+# )
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 """ Controller handle user authentication. """
 def authenticate():
@@ -20,32 +31,40 @@ def authenticate():
             flash('User not yet approved')
             return redirect(url_for('nonAuth.login'))
     
-        if current_user.role == 'Cashier':
+        if current_user.allowed_perms('enter-sales'):
             return redirect(url_for('auth.addTransaction'))
-        return redirect(url_for('auth.dashboard'))
+        
+        if current_user.allowed_perms('view-dashboard'):
+            return redirect(url_for('auth.dashboard'))
     
     form = LoginForm()
 
     if form.validate_on_submit():
         user = User.query.filter_by(username = form.username.data).first()
         
-        if user.status != 'ACTIVE':
-            flash('User not yet approved')
-            return redirect(url_for('nonAuth.login'))
-        
-        if user and user.check_password(password = form.password.data):
-            login_user(user)
-            next_page = request.args.get('next')
+        if user is not None:
+            if user.status != 'ACTIVE':
+                flash('User not yet approved')
+                return redirect(url_for('nonAuth.login'))
             
-            if not is_safe_url('/', next):
-                return flask.abort(400)
+            if user and user.check_password(password = form.password.data):
+                login_user(user)
+                next_page = request.args.get('next')
                 
-            if user.allowed_perms('enter-sales'):
-                return redirect(url_for('auth.addTransaction'))
-            
-            if user.allowed_perms('view-dashboard'):
-                return redirect(next_page or url_for('auth.dashboard'))
+                if not is_safe_url('/', next):
+                    return flask.abort(400)
+                    
+                if user.allowed_perms('enter-sales'):
+                    logger.info(user.username + ' ' + 'successful Log In')
+                    return redirect(url_for('auth.addTransaction'))
+                
+                if user.allowed_perms('view-dashboard'):
+                    logger.info(user.username + ' ' + 'successful Log In')
+                    return redirect(next_page or url_for('auth.dashboard'))
 
+            logger.warn(user.username + ' ' + 'Failed login attempt')
+            
+        logger.warn(' Unknown user failed login attempt')
         flash('Invalid Credentials!')
         return redirect(url_for('nonAuth.login'))
 
