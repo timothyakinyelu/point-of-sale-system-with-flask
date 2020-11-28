@@ -52,15 +52,18 @@ class User(db.Model, UserMixin, HasPermissionTrait):
     )
     
     def allowed_perms(self, *perms):
+        """ check if user has permission to carry out action."""
         if self.hasPermissionTo(perms):
             return True
         return False
       
     def set_password(self, password):
+        """ generate a hashed password from input string."""
         rounds = current_app.config.get('HASH_ROUNDS', 100000)
         self.password = generate_password_hash(password, method='pbkdf2:sha256:{}'.format(rounds))
         
     def check_password(self, password):
+        """ check if hashed password corresponds to database entry."""
         return check_password_hash(self.password, password)
     
     @property
