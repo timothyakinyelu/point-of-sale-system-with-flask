@@ -43,7 +43,7 @@
                     {% endif %}
                     {% if(current_user.allowed_perms('view-products')) %}
                         <li {% if request.path.split('/')[-1] == 'receiving' %} class="active" {% endif %}>
-                            <a href="">Receiving</a>
+                            <a href="{{ url_for('auth.enterReceivedItems') }}">Receiving</a>
                         </li>
                     {% endif %}
                 </ul>

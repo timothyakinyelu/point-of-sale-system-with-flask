@@ -206,6 +206,12 @@ def updateSupplier(id):
 def deleteSupplier(id):
     return SuppliersController.removeSupplier(id)
 
+@auth.route('/inventory/receiving')
+@login_required
+@required_permissions('view-products')
+def enterReceivedItems():
+    return ProductController.receiving()
+
 @auth.route('/inventory/products')
 @login_required
 @required_permissions('view-products')

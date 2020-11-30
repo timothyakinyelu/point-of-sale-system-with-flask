@@ -140,3 +140,8 @@ def getProduct():
     product = Product.query.filter_by(id = id).first()
     
     return jsonify(result = product.serialize)
+
+def receiving():
+    """ Display receiving template."""
+    
+    return render_template('receiving.html')
