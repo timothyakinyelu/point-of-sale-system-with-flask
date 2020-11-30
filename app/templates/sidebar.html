@@ -36,6 +36,16 @@
                             <a href="{{ url_for('auth.getProducts') }}">Products</a>
                         </li>
                     {% endif %}
+                    {% if(current_user.allowed_perms('view-products')) %}
+                        <li {% if request.path.split('/')[-1] == 'suppliers' %} class="active" {% endif %}>
+                            <a href="{{ url_for('auth.getSuppliers') }}">Suppliers</a>
+                        </li>
+                    {% endif %}
+                    {% if(current_user.allowed_perms('view-products')) %}
+                        <li {% if request.path.split('/')[-1] == 'receiving' %} class="active" {% endif %}>
+                            <a href="">Receiving</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </li>
             {% if(current_user.allowed_perms('enter-sales')) %}
