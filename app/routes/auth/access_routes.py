@@ -9,6 +9,8 @@ from app.controllers import ProductController
 from app.controllers import TransactionController
 from app.controllers import DashboardController
 from app.controllers import ReportsController
+from app.controllers import ReportsController
+from app.controllers import SuppliersController
 from flask_login import login_required, logout_user
 from app.config_helper import required_permissions
 
@@ -181,6 +183,32 @@ def updateCategory(id):
 @login_required
 def deleteCategory(id):
     return CategoryController.removeCategory(id)
+
+@auth.route('/inventory/suppliers')
+@login_required
+@required_permissions('view-products')
+def getSuppliers():
+    return SuppliersController.suppliers()
+
+@auth.route('/suppliers')
+@login_required
+def fetchSuppliers():
+    return SuppliersController.ajaxFetchSuppliers()
+
+@auth.route('/inventory/suppliers/add-supplier', methods=['GET', 'POST'])
+@login_required
+def addSupplier():
+    return SuppliersController.createSupplier()
+
+@auth.route('/inventory/suppliers/update-supplier/<int:id>', methods=['GET', 'POST'])
+@login_required
+def updateSupplier(id):
+    return SuppliersController.updateSupplier(id)
+
+@auth.route('/inventory/suppliers/delete-supplier/<int:id>', methods=['POST',])
+@login_required
+def deleteSupplier(id):
+    return SuppliersController.removeSupplier(id)
 
 @auth.route('/inventory/products')
 @login_required
