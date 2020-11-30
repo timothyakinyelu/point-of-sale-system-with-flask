@@ -1,8 +1,8 @@
 from flask import render_template, redirect, flash, url_for, request, jsonify
-from app.models.suppler import Supplier
+from app.models.supplier import Supplier
 from app.db import session
 from sqlalchemy import or_
-# from app.forms import SupplierForm
+from app.forms import SupplierForm
 
 
 def suppliers():
@@ -46,11 +46,11 @@ def createSupplier():
         if existing_supplier is None:
             supplier = Supplier(
                 name = form.name.data,
-                phone_number = form.phone_number.data,
+                phone_number = form.phone.data,
                 email = form.email.data,
                 address = form.address.data,
                 state = form.state.data,
-                account_number = form.account_number.data,
+                account_number = form.account.data,
                 status = form.status.data
             )
             session.add(supplier)
@@ -62,7 +62,7 @@ def createSupplier():
         flash('Supplier already exists!')
         return redirect(url_for('auth.addSupplier'))
     
-    return render_template('suppliers.html', form = form, title = 'Add Supplier')
+    return render_template('create_supplier.html', form = form, title = 'Add Supplier')
 
 def updateSupplier(id):
     """ Update existing supplier in db"""
