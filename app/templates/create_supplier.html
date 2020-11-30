@@ -1,0 +1,83 @@
+{% extends 'admin-layout.html' %}
+{% block inner %}
+    <section class="h-auto newProduct">
+        <div class="page-wrapper">
+            {% include "back.html" %}
+            <div class="page-header">
+                <span class="header-text">New Supplier</span>
+                <div class="buttons-wrapper">
+                    <a id="saveUser" href="" class="button-save" type="button">
+                        Save
+                    </a>
+                </div>
+            </div>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="notification is-danger">
+                        {{ messages[0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            <div class="table-wrapper table-form">
+                <form id="create_supplier" method="POST" action="{{ url_for('auth.addSupplier') }}">
+                    {{ form.csrf_token }}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <fieldset class="form-group row">
+                                {{ form.name.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.name(placeholder='John Doe', class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.email.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.email(placeholder='doe.joe@example.com', class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.phone.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.phone(placeholder='01 2383833', class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.address.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.address(placeholder='1 John Street', class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.state.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.state(placeholder='Lagos', class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.account.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {{ form.account(class='form-control') }}
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.status.label(class="col-sm-2 col-lg-3 form-check-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    <div class="form-check form-check-inline">
+                                        {{ form.status(class="form-check-input") }}
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="submit-button">
+                                {{ form.submit(class='button-later') }}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock inner %}
+{% block inner_scripts %}
+    <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
+{{super()}}
+{% endblock inner_scripts %}
