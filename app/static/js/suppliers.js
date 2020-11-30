@@ -9,4 +9,10 @@
             }
         )
     });
+
+    // trigger submit button outside form
+    $('#saveSupplier').on('click', function(event) {
+        event.preventDefault();
+        $('#create_supplier').submit();
+    });
 })();

@@ -54,5 +54,5 @@
     $('#saveUser').on('click', function(event) {
         event.preventDefault();
         $('#create_user').submit();
-    })
+    });
 })();

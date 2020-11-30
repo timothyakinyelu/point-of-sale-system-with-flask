@@ -6,7 +6,7 @@
             <div class="page-header">
                 <span class="header-text">New Supplier</span>
                 <div class="buttons-wrapper">
-                    <a id="saveUser" href="" class="button-save" type="button">
+                    <a id="saveSupplier" href="" class="button-save" type="button">
                         Save
                     </a>
                 </div>
@@ -67,9 +67,6 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <div class="submit-button">
-                                {{ form.submit(class='button-later') }}
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -78,6 +75,6 @@
     </section>
 {% endblock inner %}
 {% block inner_scripts %}
-    <script src="{{ url_for('static', filename= 'js/employees.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/suppliers.js') }}"></script>
 {{super()}}
 {% endblock inner_scripts %}
