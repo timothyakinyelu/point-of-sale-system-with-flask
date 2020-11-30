@@ -193,3 +193,36 @@ class ProductForm(FlaskForm):
     )
     submit = SubmitField('Add Product')
     
+class SupplierForm(FlaskForm):
+    """ Supplier Creation Form"""
+    
+    name = StringField(
+        'Supplier Name',
+        validators=[InputRequired()]
+    )
+    phone = StringField(
+        'Phone',
+        validators=[InputRequired()]
+    )
+    email = StringField(
+        'Email',
+        validators=None
+    )
+    address = StringField(
+        'Address',
+        validators=[InputRequired()]
+    )
+    state = StringField(
+        'State',
+        validators=None
+    )
+    account = StringField(
+        'Account',
+        validators=None
+    )
+    status = RadioField(
+        'Status',
+        choices=[('ACTIVE', 'Active'),('PENDING', 'Pending')]
+    )
+    submit = SubmitField('Add Supplier')
+    

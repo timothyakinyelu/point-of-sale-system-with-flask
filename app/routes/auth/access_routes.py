@@ -14,10 +14,6 @@ from app.controllers import SuppliersController
 from flask_login import login_required, logout_user
 from app.config_helper import required_permissions
 
-# @auth.route('/')
-# @login_required
-# def index():
-#     return render_template('index.html')
 
 @auth.route("/")
 @login_required
