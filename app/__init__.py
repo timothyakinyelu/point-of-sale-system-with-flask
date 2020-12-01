@@ -21,7 +21,7 @@ def create_app():
     login_manager.init_app(app)
     
     
-    from app.models import employee, permission, role, user, brand, shop, discount, product, category, transaction, productTransaction, pivots
+    from app.models import employee, permission, role, user, brand, shop, discount, product, category, transaction, productTransaction, received, pivots
     @login_manager.user_loader
     def load_user(user_id):
         """Check if user is logged-in on every page load."""
