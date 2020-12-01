@@ -101,6 +101,11 @@ body, html {
     background: var(--background);
     font-family: 'Montserrat';
 }
+.errors {
+    margin-left: 15px;
+    font-size: .8em;
+    color: var(--secondary);
+}
 .button, .button-later, .button-save {
     color: var(--primary-color);
     border-radius: 5px; 

@@ -11,15 +11,14 @@
                     </a>
                 </div>
             </div>
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <div class="notification is-danger">
-                        {{ messages[0] }}
-                    </div>
-                {% endif %}
-            {% endwith %}
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
             <div class="table-wrapper table-form">
-                <form id="create_user" method="POST" action="{{ url_for('auth.addProduct') }}">
+                <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
                     {{ form.csrf_token }}
 
                     <div class="row">
@@ -28,11 +27,11 @@
                                 <label class="col-sm-2 col-lg-3 col-form-label">Search Employees</label>
                                 <div class="col-sm-10 col-lg-8">
                                     <input type='text' name='query' class="form-control" onkeyup="searchEmployees(event)"/>
-                                    <select id="employee" class="select-employee form-control" onchange=selectEmployee()></select>
+                                    <select multiple id="employee" class="select-employee form-control" onchange=selectEmployee()></select>
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
-                                {{ form.employee(id='employee', class="form-control") }}
+                                {{ form.employee(id='employeeID', class="form-control") }}
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.username.label(class="col-sm-2 col-lg-3 col-form-label") }}
@@ -57,6 +56,12 @@
                                     <li>{{ error }}</li>{% endfor %}
                                 </ul>
                                 {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.confirm_password.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                <div class="col-sm-10 col-lg-8">
+                                    {{ form.confirm_password(class="form-control") }}
+                                </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.status.label(class="col-sm-2 col-lg-3 form-check-label") }}

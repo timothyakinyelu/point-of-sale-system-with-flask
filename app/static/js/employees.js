@@ -7,12 +7,11 @@
         $.ajax(
             {
                 type: "GET",
-                url: "{{url_for('auth.searchEmployees')}}",
+                url: "/search-employees",
                 data: { "query": search_term },
                 success: function (response) {
                     $("#employee").empty(); //remove whatever is there and append whatever is returned
-                    $('#employee').empty().append("<option value='0'>Select</option>");
-                    $('#employee').addClass('show')
+                    $('#employee').addClass('on')
                     response.results.forEach((value)=>{
                         $('#employee').append(
                             `<option value="${value.id}">${value.first_name + ' ' + value.last_name}</option>`
@@ -34,10 +33,10 @@
 
         var username = rev_names.join(".").toLowerCase()
         document.getElementById("username").value = username;
-        document.getElementById("employee").value = id;
+        document.getElementById("employeeID").value = id;
 
         $("#employee").empty(); //remove whatever is there and append whatever is returned
-        $('#employee').removeClass('show')
+        $('#employee').removeClass('on')
     }
 
     $(document).ready(function() {
