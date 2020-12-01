@@ -4,6 +4,8 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import current_app
 from app.perm_helpers import HasPermissionTrait
+from sqlalchemy.orm import validates  
+import re
 
 class User(db.Model, UserMixin, HasPermissionTrait):
     __tablename__ = 'users'
@@ -51,6 +53,19 @@ class User(db.Model, UserMixin, HasPermissionTrait):
         lazy = 'joined'
     )
     
+    @validates('username')
+    def validate_username(self, key, username):
+        if not username:
+            raise AssertionError('No username provided!')
+        
+        if User.query.filter(User.username == username).first():
+            raise AssertionError('Username is already in use!')
+        
+        if len(username) < 5 or len(username) > 50:
+            raise AssertError('Username must be between 5 and 50 characters')
+
+        return username
+    
     def allowed_perms(self, *perms):
         """ check if user has permission to carry out action."""
         if self.hasPermissionTo(perms):
@@ -59,6 +74,15 @@ class User(db.Model, UserMixin, HasPermissionTrait):
       
     def set_password(self, password):
         """ generate a hashed password from input string."""
+        if not password:
+            raise AssertionError('Password not provided')
+        
+        if not re.match('\d.*[A-Z]|[A-Z].*\d', password):
+            raise AssertionError('Password must contain 1 capital letter and 1 number')
+        
+        if len(password) < 6 or len(password) > 20:
+            raise AssertionError('Password must be between 6 and 20 characters')
+        
         rounds = current_app.config.get('HASH_ROUNDS', 100000)
         self.password = generate_password_hash(password, method='pbkdf2:sha256:{}'.format(rounds))
         
@@ -74,14 +98,4 @@ class User(db.Model, UserMixin, HasPermissionTrait):
            'username': self.username,
            'role': self.role.title,
            'status': self.status
-           # This is an example how to deal with Many2Many relations
         }
-        
-    # @property
-    # def serialize_parent(self):
-    #     """
-    #     Return object's relations in easily serializable format.
-    #     NB! Calls many2many's serialize property.
-    #     """
-    #     if self.parent_id is not None:
-    #         return self.parent.serialize

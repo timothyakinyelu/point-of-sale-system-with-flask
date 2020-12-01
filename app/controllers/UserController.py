@@ -11,11 +11,8 @@ def create():
     """ Create a new user access to the system."""
     
     form = CreateUserForm()
-    
     if form.validate_on_submit():
-        existing_user = User.query.filter_by(username = form.username.data).first()
-        
-        if existing_user is None:
+        try:
             user = User(
                 username = form.username.data,
                 status = form.status.data,
@@ -23,12 +20,13 @@ def create():
                 employee_id = None if form.employee.data == '' else form.employee.data,
                 shop_id = None if form.shop.data == 0 else form.shop.data
             )
+            
             user.set_password(form.password.data)
             session.add(user)
             session.commit()
-            
             return redirect(url_for('auth.getUsers'))
-        flash('User already exists')
+        except AssertionError as exception_message:
+            flash('{}'.format(exception_message))
 
     return render_template(
         'create_user.html', 
