@@ -149,12 +149,17 @@ button:focus {
 
 /* footer */
 footer {
-    padding: 50px 0;
+    padding: 10px 0;
     background-color: #f8f8f8;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
 }
 
 p.copyright {
-    margin: 15px 0 0;
+    margin: 1px 0 0;
 }
 
 /* admin-table */
@@ -863,7 +868,7 @@ a.brand__sidebar {
     padding-right: 35px;
     margin-right: 20px;
 }
-.page-wrapper .page-header .select-product {
+.page-wrapper .page-header .select-product, .page-wrapper .page-header .select-supplier {
     display: none;
     position: absolute;
     width: 70%;
@@ -900,7 +905,7 @@ a.brand__sidebar {
     color: #383232;
     text-decoration: none;
 }
-.bag-item {
+.bag-item, .received-item {
     width: 100%;
 }
 #bag-item .load-msg {
@@ -1058,6 +1063,16 @@ a.brand__sidebar {
     padding-right: 20px;
 }
 
+/* receiving */
+.received-item .grid-1 span {
+    font-size: 0.87em;
+    color: #495057;
+    font-weight: 300;
+}
+.received-item .grid-1 span span {
+    border-bottom: dashed 1px #0088cc;
+}
+
 /* create-product */
 .table-form {
     padding: 1.5rem;
@@ -1175,6 +1190,20 @@ a.brand__sidebar {
     align-items: center;
 }
 
+/* receiving */
+.check-supplier .buttons-wrapper {
+    width: 7%;
+}
+.check-supplier .buttons-wrapper button {
+    margin-right: 0;
+}
+.check-supplier .buttons-wrapper .button-later svg {
+    margin-right: 0;
+}
+.check-supplier .buttons-wrapper .button-later svg path {
+    fill: var(--primary-color);
+}
+
 /* styles for specific screen ranges */
 @media(max-width: 1024px) {
     /* sidebar */
@@ -1223,6 +1252,17 @@ a.brand__sidebar {
     .sidebar__content .page-wrapper .page-header .buttons-wrapper {
         margin: 10px;
         display: table;
+    }
+    .sidebar__content .check-supplier .page-header .buttons-wrapper {
+        display: flex;
+        width: 7%;
+    }
+    .sidebar__content .check-supplier .page-header .buttons-wrapper button {
+       margin-right: 0;
+       line-height: 0;
+    }
+    .sidebar__content .check-supplier .page-header .buttons-wrapper .button svg {
+       margin-right: 0;
     }
     .sidebar__content .page-wrapper .page-header .buttons-wrapper a {
         margin-bottom: 10px;
