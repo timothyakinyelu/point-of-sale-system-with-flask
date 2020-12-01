@@ -1,13 +1,6 @@
 from flask import current_app
 from app.db import db
 from sqlalchemy import func
-
-# class MixinSearch:
-
-#     @classmethod
-#     def fulltext_search(cls, session, search_string, field, page):
-#         return session.query(cls). \
-#             filter(func.to_tsvector('english', getattr(cls, field)).match(search_string, postgresql_regconfig='english')).paginate(page, 1, True)
             
 class Product(db.Model):
     __tablename__ = 'products'
@@ -65,6 +58,11 @@ class Product(db.Model):
         db.DateTime,  
         default = db.func.current_timestamp(),
         onupdate = db.func.current_timestamp()
+    )
+    received = db.relationship(
+        'Received',
+        backref = 'product',
+        lazy = 'joined'
     )
     
     @property

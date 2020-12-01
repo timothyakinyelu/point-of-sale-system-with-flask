@@ -47,10 +47,10 @@ def submit_transaction():
         
         session.commit()
         data = {'message': 'Transaction submitted Successfully', 'status': 201}
-        logger.info(user.username + ' ' + 'successful transaction')
+        logger.info(current_user.username + ' ' + 'successful transaction')
         return make_response(jsonify(data), 201)
     
     data = {'message': 'Unable to submit transaction', 'status': 400}
-    logger.warn(user.username + ' ' + 'failed transaction')
+    logger.warn(current_user.username + ' ' + 'failed transaction')
     return make_response(jsonify(data), 400)
             

@@ -33,6 +33,11 @@ class Supplier(db.Model):
         db.String(100),
         server_default="PENDING"
     )
+    received = db.relationship(
+        'Received',
+        backref = 'supplier',
+        lazy = 'joined'
+    )
     
     @property
     def serialize(self):
