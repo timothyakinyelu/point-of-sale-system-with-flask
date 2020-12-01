@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField, PasswordField, RadioField, BooleanField, SelectMultipleField, IntegerField, DecimalField, HiddenField
-from wtforms.validators import DataRequired, InputRequired, Length, EqualTo
+from wtforms.validators import DataRequired, InputRequired, Length, EqualTo, Optional
 from wtforms.widgets import HiddenInput
 from app.models.role import Role
 from app.models.shop import Shop
@@ -21,7 +21,7 @@ class CreateUserForm(FlaskForm):
     
     employee = IntegerField(
         'Employee',
-        validators=None,
+        validators=[Optional()],
         widget=HiddenInput()
     )
     username = StringField(
