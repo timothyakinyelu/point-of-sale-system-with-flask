@@ -155,9 +155,10 @@ class ProductForm(FlaskForm):
         'Brand',
         validators=None
     )
-    brand = HiddenField(
+    brand = IntegerField(
         'Brand Id',
-        validators=None
+        validators=None,
+        widget=HiddenInput()
     )
     categories = SelectMultipleField(
         'Categories',
