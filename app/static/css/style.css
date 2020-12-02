@@ -101,6 +101,9 @@ body, html {
     background: var(--background);
     font-family: 'Montserrat';
 }
+body, .base {
+    min-height:100vh;
+}
 .errors {
     margin-left: 15px;
     font-size: .8em;
@@ -156,9 +159,6 @@ button:focus {
 footer {
     padding: 10px 0;
     background-color: #f8f8f8;
-    position: fixed;
-    bottom: 0;
-    left: 0;
     width: 100%;
     text-align: center;
 }
@@ -1058,7 +1058,7 @@ a.brand__sidebar {
     margin-right: 15px;
     display: flex;
     justify-content: flex-end;
-    margin-top: 35px;
+    margin-top: 20px;
     background: var(--primary-color);
     height: 50px;
     border-radius: 10px;

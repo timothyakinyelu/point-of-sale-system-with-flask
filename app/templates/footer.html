@@ -1,4 +1,4 @@
-<footer>
+<footer class="mt-auto">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
