@@ -1,12 +1,21 @@
-from flask import render_template, redirect, flash, url_for, request, jsonify
+from flask import render_template, redirect, flash, url_for, request, make_response, jsonify
+from flask_login import current_user
 from sqlalchemy import or_
 from app.models.product import Product
 from app.models.category import Category
 from app.models.brand import Brand
 from app.models.pivots import category_product_table
+from app.models.received import Received
 from app.db import session
 from app.forms import ProductForm
+import logging
+import logging.config
+from os import path
 
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 def products():
     """ show products template page"""
@@ -145,3 +154,34 @@ def receiving():
     """ Display receiving template."""
     
     return render_template('receiving.html')
+
+def submit_received():
+    if request.method == 'POST':
+        products = request.json['productID']
+        product_qtys = request.json['quantity']
+        cost_price = request.json['costPrice']
+        selling_price = request.json['newPrice']
+        supplier_id = request.json['supplierID']
+        invoice_number = request.json['invoiceNumber']
+        
+        for i, product in enumerate(products):
+            received = Received(
+                product_id = int(product),
+                supplier_id = int(supplier_id),
+                qty_received = int(product_qtys[i]),
+                cost_price = float(cost_price[i]),
+                selling_price = float(selling_price[i]),
+                invoice_number = invoice_number
+            )
+            
+            session.add(received)
+            session.flush()
+        
+        session.commit()
+        data = {'message': 'Item successfully added', 'status': 201}
+        logger.info(current_user.username + ' ' + 'successfully submitted item')
+        return make_response(jsonify(data), 201)
+    
+    data = {'message': 'Unable to submit item', 'status': 400}
+    logger.warn(current_user.username + ' ' + 'failed item entry')
+    return make_response(jsonify(data), 400)

@@ -212,6 +212,11 @@ def deleteSupplier(id):
 def enterReceivedItems():
     return ProductController.receiving()
 
+@auth.route('/inventory/submit-received', methods=['POST',])
+@login_required
+def submitReceived():
+    return ProductController.submit_received()
+
 @auth.route('/inventory/products')
 @login_required
 @required_permissions('view-products')
