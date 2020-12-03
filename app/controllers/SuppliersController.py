@@ -94,3 +94,9 @@ def removeSupplier(id):
     flash('Supplier deleted Successfully!')
     return redirect(url_for('auth.getSuppliers'))
 
+def getSupplier():
+    id = request.args.get('id')
+    supplier = Supplier.query.filter_by(id = id).first()
+    
+    return jsonify(result = supplier.serialize)
+

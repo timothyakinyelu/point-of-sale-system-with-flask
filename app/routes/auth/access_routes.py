@@ -264,6 +264,11 @@ def searchBrands():
 def getProduct():
     return ProductController.getProduct()
 
+@auth.route('/get-supplier')
+@login_required
+def getSupplier():
+    return SuppliersController.getSupplier()
+
 @auth.route('/reports/sales-report')
 @login_required
 @required_permissions('view-reports')
