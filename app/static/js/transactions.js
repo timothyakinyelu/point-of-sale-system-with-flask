@@ -224,7 +224,6 @@
             span.classList.add('displayed');
         }
 
-        var sub = document.getElementById("sub" + product.id).value;
         var cost = document.getElementById("cost" + product.id).value;
 
         // action to add or subtract quantity when button is clicked

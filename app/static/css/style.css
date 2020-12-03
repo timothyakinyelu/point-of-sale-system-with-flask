@@ -1242,9 +1242,6 @@ a.brand__sidebar {
 .check-supplier .page-header .buttons-wrapper {
     margin: 0 !important;
 }
-.check-supplier .page-header #searchBar {
-    width: 93%;
-}
 .check-supplier .page-header #searchBar .new-sale {
     margin: 0;
 }
@@ -1279,12 +1276,16 @@ a.brand__sidebar {
 }
 .check-supplier .buttons-wrapper button {
     margin-right: 0;
+    line-height: 9px;
 }
 .check-supplier .buttons-wrapper .button-later svg {
     margin-right: 0;
 }
 .check-supplier .buttons-wrapper .button-later svg path {
     fill: var(--primary-color);
+}
+#submit-received .ctrl-btns {
+    background: none;
 }
 
 /* styles for specific screen ranges */
@@ -1338,7 +1339,7 @@ a.brand__sidebar {
     }
     .sidebar__content .check-supplier .page-header .buttons-wrapper {
         display: flex;
-        width: 7%;
+        width: 100%;
     }
     .sidebar__content .check-supplier .page-header .buttons-wrapper button {
        margin-right: 0;

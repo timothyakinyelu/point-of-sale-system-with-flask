@@ -45,6 +45,9 @@
     $(document).click(function(e) {
         $("#products").empty(); //remove whatever is there and append whatever is returned
         $('#products').removeClass("on");
+
+        $("#suppliers").empty(); //remove whatever is there and append whatever is returned
+        $('#suppliers').removeClass("on");
     });
 
     // function select new sale item
@@ -97,8 +100,14 @@
                             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5  grid-1">
                                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
                                 <h5 id="item" class="card-title">${product.product}</h5>
-                                <span id="new-price">Selling Price: <a tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-value=${price} data-title="Selling Price"  data-html="true" id="${product.id}_price">${formatter.format(price)}</a></span>
-                                <span id="cost-price">Cost Price: <a tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-title="Cost Price" data-value=${cost_price} data-html="true" id="${product.id}_cost">${formatter.format(cost_price)}</a></span>
+                                <span id="new-price">Selling Price: 
+                                    <a class="new_selling_price" tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-value=${price} data-title="Selling Price"  data-html="true" id="${product.id}_price">${formatter.format(price)}
+                                    </a>
+                                </span>
+                                <span id="cost-price">Cost Price: 
+                                    <a class="new_cost_price" tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-title="Cost Price" data-value=${cost_price} data-html="true" id="${product.id}_cost">${formatter.format(cost_price)}
+                                    </a>
+                                </span>
                                 <span id="stock" class="stock">Stock: ${product.stock}</span>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 grid-2">

@@ -9,9 +9,11 @@
                         <div class="page-header">
                             <div class="search-bar">
                                 <input 
+                                    id="search"
                                     class="new-sale"
                                     type='text' 
                                     name='q' 
+                                    data-original-value=""
                                     onkeyup="searchProducts(event)" 
                                     placeholder="Scan or Search items...." 
                                 />
@@ -140,7 +142,7 @@
                             "shopID": shopID,
                             "productID": productID, 
                             "quantity": quantity,
-                            "amount": parseFloat(amount.substring(1)),
+                            "amount": amount.replace(/[^\d\.]/g,''),
                             "cost": parseFloat(cost),
                             "payMethod": payMethod,
                             "posRef": posRef
@@ -167,6 +169,9 @@
                                 });
                                 var posref = $("input#posRef");
                                 posref.val(posref.data("original-value"));
+
+                                var search = $("input#search");
+                                search.val(search.data("original-value"));
                             }
                     }
                 }
