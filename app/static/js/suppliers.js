@@ -41,31 +41,6 @@
         )
     }
 
-    // function to search suppliers for received items
-    searchSuppliers = (e) => {
-        e.preventDefault();
-        var search_term = $('input[name=q]').val();
-
-        $.ajax(
-            {
-                type: "GET",
-                url: '/suppliers',
-                data: { "query": search_term },
-                success: function (response) {
-                    $("#suppliers").empty(); //remove whatever is there and append whatever is returned
-                    $('#suppliers').empty().append("<option value='0'>Select Supplier</option>");
-                    $('#suppliers').addClass("on");
-
-                    response.results.forEach((value)=>{
-                        $('#suppliers').append(
-                            `<option value="${value.id}">${value.name}</option>`
-                        );
-                    });
-                }
-            }
-        )
-    }
-
     // function to clear products dropdown list when user clicks any part of the page
     $(document).click(function(e) {
         $("#products").empty(); //remove whatever is there and append whatever is returned
@@ -96,7 +71,7 @@
         $('#products').removeClass("on");
     }
 
-    // append transactions to table
+    // append items to table
     createLists = (product) => {
         $('.load-msg').removeClass('on');
         var formatter = new Intl.NumberFormat('en-NG', {
@@ -122,19 +97,8 @@
                             <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5  grid-1">
                                 <input id="prd" type="hidden" name="productID[]" value="${product.id}" />
                                 <h5 id="item" class="card-title">${product.product}</h5>
-                                <span id="new-price" class="trigger">Selling Price: <span>${formatter.format(price)}</span></span>
-                                <div class="popover-content d-none">
-                                    <div class="form-group">
-                                        <label for="adult"><i class="fas fa-male"></i> Adults <i>(Age: 18+)</i></label>
-                                        <div class="input-group number-spinner">
-                                        <a class="btn btn-primary" data-dir="dwn"><i class="fas fa-minus"></i></a>
-                                        <input type="text" name="adult" id="adult" class="form-control text-center" value="1" max="9" min="1" disabled>
-                                        <a class="btn btn-primary" data-dir="up"><i class="fas fa-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <a class="btn btn-primary btn-block dismiss">Save</a>
-                                </div>    
-                                <span id="cost-price">Cost Price: <span>${formatter.format(cost_price)}</span></span>
+                                <span id="new-price">Selling Price: <a tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-value=${price} data-title="Selling Price"  data-html="true" id="${product.id}_price">${formatter.format(price)}</a></span>
+                                <span id="cost-price">Cost Price: <a tabindex="0" data-toggle="popover" data-container="body" data-placement="right" type="button" data-title="Cost Price" data-value=${cost_price} data-html="true" id="${product.id}_cost">${formatter.format(cost_price)}</a></span>
                                 <span id="stock" class="stock">Stock: ${product.stock}</span>
                             </div>
                             <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 grid-2">
@@ -144,7 +108,8 @@
                                             <path d="M19.1929 0.000616206C19.1976 0.000205402 19.2026 0 19.2075 0C19.3143 0 19.4167 0.0135565 19.5104 0.0381021C19.5127 0.0386156 19.5145 0.0392318 19.5164 0.039848C19.6115 0.0653179 19.6966 0.101777 19.7676 0.146554C19.911 0.236931 20 0.362021 20 0.499949C20 0.567115 19.9784 0.631714 19.9396 0.69087C19.8993 0.75249 19.8405 0.807641 19.7676 0.853446C19.6952 0.899148 19.6081 0.936223 19.5104 0.961795V0.961898C19.4167 0.986341 19.3143 0.999897 19.2075 0.999897C19.2028 0.999897 19.1976 0.999692 19.1929 0.999281C13.0643 0.999281 6.93565 0.999384 0.80696 0.999384C0.80224 0.999795 0.797357 1 0.792311 1C0.685867 1 0.583491 0.986443 0.489742 0.961898C0.392087 0.936428 0.304685 0.899353 0.232094 0.853446C0.159667 0.807744 0.101073 0.752799 0.0605464 0.691178H0.0603836C0.0214842 0.632022 0 0.567423 0 0.500051C0 0.432885 0.0214842 0.368286 0.0603836 0.30913C0.100911 0.247509 0.159667 0.192359 0.232257 0.146554C0.375648 0.0560748 0.573726 0.000102701 0.792474 0.000102701C0.79752 0.000102701 0.802402 0.000308103 0.807122 0.000718907C6.93565 0.000616206 13.0643 0.000616206 19.1929 0.000616206Z" fill="black"/>
                                         </svg>                 
                                     </span>
-                                    <input id="quant${product.id}" class="quant" type="text" value="1" name="quantity[]" />
+                                    
+                                    <a tabindex="0" id="quant_${product.id}" class="quant" data-type="text" data-toggle="popover" data-validate-number="true" data-value=1 data-placement="bottom" data-pk="1" data-name="quantity" data-title="Qty." data-original-title="" title="">1</a>
                                     <span id="inc" class="inc button${product.id}">
                                         <svg width="13" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M9.20777 0.792318C9.20777 0.68571 9.22925 0.583496 9.26799 0.489746C9.30852 0.39209 9.36727 0.304688 9.43986 0.232096C9.58309 0.0887044 9.78133 0 9.99992 0C10.107 0 10.2094 0.0214844 10.3031 0.0603841C10.3051 0.0611979 10.3069 0.0621745 10.3092 0.063151C10.4042 0.103516 10.4893 0.161296 10.5603 0.232259C10.7037 0.375488 10.7924 0.57373 10.7924 0.79248C10.7924 0.797363 10.7921 0.802246 10.7914 0.806966V9.20866H19.1929C19.1976 9.20817 19.2028 9.20768 19.2075 9.20768C19.3143 9.20768 19.4167 9.22917 19.5104 9.26807C19.5127 9.26888 19.5145 9.26986 19.5164 9.27083C19.6115 9.3112 19.6966 9.36898 19.7676 9.43994C19.911 9.58317 20 9.78141 20 10C20 10.1064 19.9784 10.2088 19.9396 10.3026C19.8993 10.4002 19.8405 10.4876 19.7676 10.5602C19.6952 10.6327 19.6081 10.6914 19.5104 10.7319V10.7321C19.4167 10.7708 19.3143 10.7923 19.2075 10.7923C19.2028 10.7923 19.1976 10.792 19.1929 10.7913L10.7914 10.7915V19.193C10.7921 19.1978 10.7924 19.2028 10.7924 19.2077C10.7924 19.3145 10.7707 19.417 10.732 19.5106C10.731 19.5129 10.7301 19.5146 10.7291 19.5166C10.6887 19.6117 10.6311 19.6968 10.5603 19.7677C10.4166 19.9113 10.2185 20 9.99992 20C9.89347 20 9.7911 19.9785 9.69735 19.9396C9.59969 19.8993 9.51229 19.8405 9.4397 19.7677C9.36727 19.6955 9.30852 19.6082 9.26799 19.5106H9.26783C9.22893 19.417 9.20744 19.3145 9.20744 19.2077C9.20744 19.2028 9.20777 19.1978 9.20842 19.193V10.7915H0.80696C0.80224 10.7922 0.797357 10.7925 0.792311 10.7925C0.685867 10.7925 0.583491 10.771 0.489742 10.7321C0.392087 10.6917 0.304685 10.633 0.232094 10.5602C0.159667 10.4878 0.100911 10.4007 0.0603836 10.3031V10.3031C0.0214842 10.2093 0 10.1069 0 10C0 9.89339 0.0214842 9.79118 0.0603836 9.69743C0.100911 9.59977 0.159667 9.51237 0.232257 9.43978C0.375648 9.29639 0.573726 9.20768 0.792474 9.20768C0.79752 9.20768 0.802402 9.20801 0.807122 9.20866H9.20875V0.806966C9.2081 0.802083 9.20777 0.797201 9.20777 0.792318Z" fill="black"/>
@@ -173,6 +138,70 @@
             </div>
             `
         );
+
+        // open popover for clicked element
+        $("[data-toggle=popover]").each(function() {
+            var id = $(this).attr('id')
+            var value = $(this).attr('data-value')
+
+            $(this).popover({
+                html: true,
+                sanitize: false,
+                content: function() {
+                    return $(`<div class="popover-content"> 
+                                <div>
+                                    <div class="editableform-loading" style="display: none;"></div>
+                                        <form class="form-inline editableform" style="">
+                                            <div class="control-group form-group">
+                                                <div class="d-flex">
+                                                    <div class="editable-input" style="position: relative;width: 68%;">
+                                                        <input id="${id}-input" type="text" value=${value} class="form-control input-sm" style="padding-right: 24px;width: 90%;" />
+                                                        <span class="editable-clear-x"></span>
+                                                    </div>
+                                                    <div class="editable-buttons d-flex">
+                                                        <button id="${id}replace" type="button" class="button-later" style="
+                                                            margin-right: 3px;
+                                                            padding-left: 10px;
+                                                            padding-right: 10px
+                                                        ">
+                                                            <i class="icon ti-check replace"></i>
+                                                        </button>
+                                                        <button id="${id}cancel" type="button" class="button" style="
+                                                            margin-right: 3px;
+                                                            padding-left: 10px;
+                                                            padding-right: 10px
+                                                        ">
+                                                            <i class="icon ti-close"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="editable-error-block help-block" style="display: none;"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>`
+                        );
+                }
+            });
+
+            // enter new value
+            $(document).on("click", "#" + id + "replace", function() {
+                var val = document.getElementById(id + "-input").value;
+                var sp = id.split('_')
+                if (sp.includes('cost') || sp.includes('price')) {
+                    document.getElementById(id).innerText = formatter.format(val);
+                } else {
+                    document.getElementById(id).innerText = val;
+                }
+                $("#" + id).popover('hide');
+            });
+
+            // cancel popover
+            $(document).on("click", "#" + id + "cancel", function() {
+                $("#" + id).popover('hide');
+            });
+        });
 
         // check if product discount is empty
         if(product.discount) {
@@ -218,6 +247,30 @@
         });
     }
 
+    // function to search suppliers for received items
+    searchSuppliers = (e) => {
+        e.preventDefault();
+        var search_term = $('input[name=search]').val();
+
+        $.ajax(
+            {
+                type: "GET",
+                url: '/suppliers',
+                data: { "query": search_term },
+                success: function (response) {
+                    $("#suppliers").empty(); //remove whatever is there and append whatever is returned
+                    $('#suppliers').addClass("on");
+
+                    response.results.forEach((value)=>{
+                        $('#suppliers').append(
+                            `<option value="${value.id}">${value.name}</option>`
+                        );
+                    });
+                }
+            }
+        )
+    }
+
     // function select supplier
     selectSupplier = (e) => {
         e.preventDefault();
@@ -231,7 +284,19 @@
                 url: '/get-supplier',
                 data: { "id": id },
                 success: function (response) { 
-                    openLists(product);
+                    var supplier = response.result;
+                        $(`<div class="supplier-info">
+                            <div class="details">
+                                <span class="name">
+                                    Supplier: <p>${supplier.name}</p>
+                                </span>
+                                <span class="number">
+                                    Phone Number: <p>${supplier.phone_number}</p>
+                                </span>
+                            </div>
+                        </div>`).insertAfter('#searchBar');
+
+                    document.getElementById('supplier_id').value = supplier.id;
                 }
             }
         )

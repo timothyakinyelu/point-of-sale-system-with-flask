@@ -14,22 +14,15 @@
                                     onkeyup="searchProducts(event)" 
                                     placeholder="Scan or Search items...." 
                                 />
-                                <svg width="37" height="37" viewBox="0 -10 35 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0)">
-                                    <path d="M15.4895 0.942474C19.4982 0.942474 23.1268 2.48284 25.7537 4.9734C28.3807 7.46396 30.0054 10.9044 30.0054 14.7049C30.0054 18.3533 28.5081 21.6693 26.0647 24.1323C26.1091 24.1633 26.1521 24.1978 26.1927 24.2359L36.6431 34.1301C37.0809 34.5428 37.0833 35.2144 36.6474 35.6297C36.212 36.045 35.5036 36.0467 35.0659 35.634L24.6154 25.7398C24.549 25.6772 24.4928 25.6088 24.4463 25.5362C21.9788 27.3725 18.8691 28.4677 15.4892 28.4677C11.4806 28.4677 7.85138 26.9273 5.22442 24.4367C2.59775 21.9462 0.973022 18.5054 0.973022 14.7049C0.973022 10.9044 2.59775 7.46396 5.22472 4.9734C7.85168 2.48312 11.4809 0.942474 15.4895 0.942474ZM24.1308 6.51234C21.9193 4.4157 18.8643 3.11887 15.4895 3.11887C12.1148 3.11887 9.05941 4.4157 6.84794 6.51234C4.63647 8.60898 3.26861 11.5054 3.26861 14.7049C3.26861 17.9044 4.63647 20.8012 6.84794 22.8978C9.05911 24.9944 12.1145 26.2913 15.4895 26.2913C18.8643 26.2913 21.9193 24.9944 24.1308 22.8978C26.3423 20.8014 27.7101 17.9047 27.7101 14.7049C27.7101 11.5054 26.3423 8.60898 24.1308 6.51234Z" fill="#383232"/>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0">
-                                    <rect width="36" height="35" fill="white" transform="translate(0.973022 0.942474)"/>
-                                    </clipPath>
-                                    </defs>
-                                </svg>
                             </div>
                             <select id="products" class="select-product" onchange=selectProduct(event) multiple></select>
                             <div class="buttons-wrapper">
-                                <button id="cancel" class="button" type="button">
+                                <a id="cancel" class="button" type="button">
                                     Cancel Received
-                                </button>
+                                </a>
+                                <a href="{{ url_for('auth.addProduct') }}" id="cancel" class="button-later" type="button">
+                                    New Item
+                                </a>
                             </div>
                         </div>
                         {% for message in get_flashed_messages() %}
@@ -51,7 +44,6 @@
                                             <h4>There are no items in the cart</h4>
                                         </div>
                                     </div>
-                                    
                                 </div>
                             </div>
                     </div>
@@ -64,18 +56,17 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div class="search-bar">
+                            <div id="searchBar" class="search-bar">
                                 <input 
                                     class="new-sale"
                                     type='text' 
-                                    name='q' 
+                                    name='search' 
                                     onkeyup="searchSuppliers(event)" 
                                     placeholder="Search for supplier... or click button to add new" 
                                 />
                             </div>
                             <select id="suppliers" class="select-supplier" onchange=selectSupplier(event) multiple></select>
-                            <input id="supplier_name" type="text" value="" />
-                            <input id="supplier_id" type="text" value="" />
+                            <input id="supplier_id" type="hidden" value="" />
                         </div>
                     </div>
                     <div class="ctrl-btns">
@@ -89,14 +80,6 @@
     </section>
 {% endblock inner %}
 {% block scripts %}
-    <script>
-        $('document').ready(function(){
-            var username = "{{current_user.username}}"
-            var firstLetter = username.charAt(0)
-            
-            document.getElementById("user").innerHTML = firstLetter;
-        });
-    </script>
     <script src="{{ url_for('static', filename= 'js/suppliers.js') }}"></script>
     <script>
         $("#save").on("click", function() {
