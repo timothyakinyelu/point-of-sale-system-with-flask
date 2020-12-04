@@ -56,6 +56,8 @@
         }
     }
 
+    openDiscount();
+
     // trigger submit button outside form
     $('#saveProduct').on('click', function(event) {
         event.preventDefault();

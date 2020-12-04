@@ -1,6 +1,8 @@
 (function() {
-    var routeParams = window.location.pathname.split('/');
+    var path = window.location.pathname
+    var routeParams = path.split('/');
     var routeName = routeParams[routeParams.length - 1];
+    var model = routeName.slice(0, -1);
 
     // call back to build table on load or search
     productCallBack = (response) => {
@@ -234,7 +236,7 @@
                                 </td>
                                 ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
                                 <td data-label="">
-                                    <a href="" type="button">edit</a>
+                                    <a href="${path}/update-${model}/${data.id}" type="button">edit</a>
                                 </td>
                             </tr>`
                 }
