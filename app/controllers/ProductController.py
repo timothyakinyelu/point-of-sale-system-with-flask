@@ -52,10 +52,11 @@ def createProduct():
     form = ProductForm()
     
     if form.validate_on_submit():
+        values = [int(s) for s in form.categories.data.split(',')]
         existing_product = Product.query.filter_by(name = form.name.data).first()
         
         if existing_product is None:
-            category = Category.query.filter(Category.id.in_(form.categories.data)).all()
+            category = Category.query.filter(Category.id.in_(values)).all()
             
             product = Product(
                 name = form.name.data,
@@ -84,7 +85,7 @@ def createProduct():
         'create_product.html', 
         form = form, 
         data_type='New Product', 
-        form_action="url_for('auth.updateProduct')", 
+        form_action=url_for('auth.addProduct'), 
         action = 'Add',
         categoryNames = [i.name for i in records],
         categoryIDs = [i.id for i in records]
@@ -94,15 +95,25 @@ def updateProduct(product_id):
     """ Update existing product in db"""
     
     product = Product.query.filter_by(id = product_id).first()
+    idList = []
+    nameList = []
+    for cat in product.categories:
+        idList.append(str(cat.id)) 
+        nameList.append(cat.name) 
+        
+    catID = ",".join(idList)
+    catName = ",".join(nameList)
+    
     records = Category.query.all()
     form = ProductForm()
     
     if request.method == 'POST':
         if form.validate_on_submit():
+            values = [int(s) for s in form.categories.data.split(',')]
             selected = []
             unselected = []
             
-            categories = Category.query.filter(Category.id.in_(form.categories.data)).all()
+            categories = Category.query.filter(Category.id.in_(values)).all()
             
             prod = session.query(Product).filter(Product.id == product_id).update({
                 Product.name: form.name.data,
@@ -144,8 +155,10 @@ def updateProduct(product_id):
         form = form, 
         data_type = product.name, 
         product = product,
-        form_action="/inventory/products/update-product/{}".format(product.id),
+        form_action=url_for('auth.updateProduct', product_id = product.id),
         action = 'Edit',
+        selCategoryIDs = catID,
+        selCategoryNames = catName,
         categoryNames = [i.name for i in records],
         categoryIDs = [i.id for i in records]
     )

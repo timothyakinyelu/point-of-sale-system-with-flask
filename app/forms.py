@@ -134,11 +134,6 @@ class CategoryForm(FlaskForm):
 class ProductForm(FlaskForm):
     """ Product Creation Form"""
     
-    def __init__(self):
-        super().__init__()
-        categories = Category.query.all()
-        self.categories.choices = [(category.id, category.name) for category in categories]
-    
     name = StringField(
         'Product Name',
         validators=[InputRequired()]

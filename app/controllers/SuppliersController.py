@@ -38,7 +38,7 @@ def ajaxFetchSuppliers():
 def createSupplier():
     """ Add new supplier to the db"""
     
-    form = SupplierForm()
+    form = SupplierForm(status = 'PENDING')
     
     if form.validate_on_submit():
         existing_supplier = Supplier.query.filter_by(name = form.name.data).first()
@@ -62,29 +62,45 @@ def createSupplier():
         flash('Supplier already exists!')
         return redirect(url_for('auth.addSupplier'))
     
-    return render_template('create_supplier.html', form = form, title = 'Add Supplier')
+    return render_template(
+        'create_supplier.html', 
+        form = form, 
+        data_type='New Supplier', 
+        form_action=url_for('auth.addSupplier'), 
+        action = 'Add',
+    )
 
-def updateSupplier(id):
+def updateSupplier(supplier_id):
     """ Update existing supplier in db"""
+    supplier = Supplier.query.filter_by(id = supplier_id).first()
+    form = SupplierForm(status = supplier.status)
     
-    form = SupplierForm()
-    
-    if form.validate_on_submit():
-        prod = session.query(Supplier).filter(Supplier.id == id).update({
-            Supplier.name: form.name.data,
-            Supplier.phone_number: form.phone_number.data,
-            Supplier.email: form.email.data,
-            Supplier.address: form.address.data,
-            Supplier.state: form.state.data,
-            Supplier.account_number: form.account_number.data,
-            Supplier.status: form.status.data
-        })
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            updatedSupplier = session.query(Supplier).filter(Supplier.id == supplier_id).update({
+                Supplier.name: form.name.data,
+                Supplier.phone_number: form.phone.data,
+                Supplier.email: form.email.data,
+                Supplier.address: form.address.data,
+                Supplier.state: form.state.data,
+                Supplier.account_number: form.account.data,
+                Supplier.status: form.status.data
+            })
+            
+            session.commit()
+            
+            flash('Supplier updated Successfully!')
+            return redirect(url_for('auth.getSuppliers'))
         
-        flash('Supplier updated Successfully!')
-        return redirect(url_for('auth.getSuppliers'))
-    
-    flash('Unable to update supplier!')
-    return render_template('suppliers.html', form = form, title = 'Update Supplier')
+        flash('Unable to update supplier!')
+    return render_template(
+        'create_supplier.html',
+        form = form, 
+        data_type = supplier.name, 
+        supplier = supplier,
+        form_action=url_for('auth.updateSupplier', supplier_id = supplier.id),
+        action = 'Edit',
+    )
 
 def removeSupplier(id):
     """ Delete existing supplier"""
