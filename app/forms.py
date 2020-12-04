@@ -160,10 +160,13 @@ class ProductForm(FlaskForm):
         validators=[Optional()],
         widget=HiddenInput()
     )
-    categories = SelectMultipleField(
+    categoryName = StringField(
         'Categories',
-        validators=[DataRequired()],
-        coerce = int
+        validators=[InputRequired()]
+    )
+    categories = HiddenField(
+        'Category Id',
+        validators=[Optional()],
     )
     price = DecimalField(
         'Price',

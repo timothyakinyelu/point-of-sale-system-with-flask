@@ -48,6 +48,7 @@ def ajaxFetchProducts():
 def createProduct():
     """ Add new product to the db"""
     
+    records = Category.query.all()
     form = ProductForm()
     
     if form.validate_on_submit():
@@ -79,53 +80,75 @@ def createProduct():
         flash('Product already exists!')
         return redirect(url_for('auth.addProduct'))
     
-    return render_template('create_product.html', form = form, title = 'Add Product')
+    return render_template(
+        'create_product.html', 
+        form = form, 
+        data_type='New Product', 
+        form_action="url_for('auth.updateProduct')", 
+        action = 'Add',
+        categoryNames = [i.name for i in records],
+        categoryIDs = [i.id for i in records]
+    )
 
-def updateProduct(id):
+def updateProduct(product_id):
     """ Update existing product in db"""
     
+    product = Product.query.filter_by(id = product_id).first()
+    records = Category.query.all()
     form = ProductForm()
     
-    if form.validate_on_submit():
-        selected = []
-        unselected = []
-        
-        categories = Category.query.filter(Category.id.in_(form.categories.data)).all()
-        
-        prod = session.query(Product).filter(Product.id == id).update({
-            Product.name: form.name.data,
-            Product.sku: form.sku.data,
-            Product.brand_id: form.brand.data,
-            Product.price: form.price.data,
-            Product.cost_of_purchase: form.cost_of_purchase.data,
-            Product.stock_qty: form.stock_qty.data,
-            Product.min_stock_qty: form.min_stock_qty.data
-        })
-        
-        link = session.query(Category).filter(Category.products.any(Product.id == prod)).all()
-        
-        for x in categories:
-            if x not in link:
-                selected.append(x)
-        
-        
-        for x in link:
-            if x not in categories:
-                unselected.append(x)
-        
-        product = Product.query.filter_by(id = prod).first() 
-        
-        if unselected is not None:
-            for item in unselected:
-                product.categories.remove(item)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            selected = []
+            unselected = []
+            
+            categories = Category.query.filter(Category.id.in_(form.categories.data)).all()
+            
+            prod = session.query(Product).filter(Product.id == product_id).update({
+                Product.name: form.name.data,
+                Product.sku: form.sku.data,
+                Product.brand_id: form.brand.data,
+                Product.price: form.price.data,
+                Product.cost_of_purchase: form.cost_of_purchase.data,
+                Product.stock_qty: form.stock_qty.data,
+                Product.min_stock_qty: form.min_stock_qty.data
+            })
+            
+            link = session.query(Category).filter(Category.products.any(Product.id == product_id)).all()
+            
+            for x in categories:
+                if x not in link:
+                    selected.append(x)
+            
+            
+            for x in link:
+                if x not in categories:
+                    unselected.append(x)
+            
+            product = Product.query.filter_by(id = product_id).first() 
+            
+            if unselected is not None:
+                for item in unselected:
+                    product.categories.remove(item)
 
-        product.categories.extend(selected)
+            product.categories.extend(selected)
+            session.add(product)
+            session.commit()
+            
+            flash('Product updated Successfully!')
+            return redirect(url_for('auth.getProducts'))
         
-        flash('Product updated Successfully!')
-        return redirect(url_for('auth.getProducts'))
-    
-    flash('Unable to update product!')
-    return render_template('create_product.html', form = form, title = 'Update Product')
+        flash('Unable to update product!')
+    return render_template(
+        'create_product.html', 
+        form = form, 
+        data_type = product.name, 
+        product = product,
+        form_action="/inventory/products/update-product/{}".format(product.id),
+        action = 'Edit',
+        categoryNames = [i.name for i in records],
+        categoryIDs = [i.id for i in records]
+    )
 
 def removeProduct(id):
     """ Delete existing product"""

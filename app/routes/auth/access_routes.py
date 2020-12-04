@@ -58,12 +58,12 @@ def fetchRoles():
 def addRole():
     return SystemController.createRole()
 
-@auth.route('/settings/roles/update-role/<int:id>', methods=['POST',])
+@auth.route('/settings/roles/update-role/<int:role_id>', methods=['POST',])
 @login_required
 def updateRole(id):
     return SystemController.updateRole(id)
 
-@auth.route('/settings/roles/delete-role/<int:id>', methods=['POST',])
+@auth.route('/settings/roles/delete-role/<int:role_id>', methods=['POST',])
 @login_required
 def deleteRole(id):
     return SystemController.removeRole(id)
@@ -79,7 +79,7 @@ def getPermissions():
 def addPermission():
     return SystemController.createPermission()
 
-@auth.route('/settings/permissions/update-permission/<int:id>', methods=['POST',])
+@auth.route('/settings/permissions/update-permission/<int:permission_id>', methods=['POST',])
 @login_required
 def updatePermission(id):
     return SystemController.updatePermission(id)
@@ -118,12 +118,12 @@ def fetchShops():
 def addShop():
     return ShopController.createShop()
 
-@auth.route('/settings/shops/update-shop/<int:id>', methods=['POST',])
+@auth.route('/settings/shops/update-shop/<int:shop_id>', methods=['POST',])
 @login_required
 def updateShop(id):
     return ShopController.updateShop(id)
 
-@auth.route('/settings/shops/delete-shop/<int:id>', methods=['POST',])
+@auth.route('/settings/shops/delete-shop/<int:shop_id>', methods=['POST',])
 @login_required
 def deleteShop(id):
     return ShopController.removeShop(id)
@@ -144,12 +144,12 @@ def fetchBrands():
 def addBrand():
     return BrandController.createBrand()
 
-@auth.route('/inventory/brands/update-brand/<int:id>', methods=['POST',])
+@auth.route('/inventory/brands/update-brand/<int:brand_id>', methods=['POST',])
 @login_required
 def updateBrand(id):
     return BrandController.updateBrand(id)
 
-@auth.route('/inventory/brands/delete-brand/<int:id>', methods=['POST',])
+@auth.route('/inventory/brands/delete-brand/<int:brand_id>', methods=['POST',])
 @login_required
 def deleteBrand(id):
     return BrandController.removeBrand(id)
@@ -170,12 +170,12 @@ def fetchCategories():
 def addCategory():
     return CategoryController.createCategory()
 
-@auth.route('/inventory/categories/update-category/<int:id>', methods=['POST',])
+@auth.route('/inventory/categories/update-category/<int:category_id>', methods=['POST',])
 @login_required
 def updateCategory(id):
     return CategoryController.updateCategory(id)
 
-@auth.route('/inventory/categories/delete-category/<int:id>', methods=['POST',])
+@auth.route('/inventory/categories/delete-category/<int:category_id>', methods=['POST',])
 @login_required
 def deleteCategory(id):
     return CategoryController.removeCategory(id)
@@ -196,12 +196,12 @@ def fetchSuppliers():
 def addSupplier():
     return SuppliersController.createSupplier()
 
-@auth.route('/inventory/suppliers/update-supplier/<int:id>', methods=['GET', 'POST'])
+@auth.route('/inventory/suppliers/update-supplier/<int:supplier_id>', methods=['GET', 'POST'])
 @login_required
 def updateSupplier(id):
     return SuppliersController.updateSupplier(id)
 
-@auth.route('/inventory/suppliers/delete-supplier/<int:id>', methods=['POST',])
+@auth.route('/inventory/suppliers/delete-supplier/<int:supplier_id>', methods=['POST',])
 @login_required
 def deleteSupplier(id):
     return SuppliersController.removeSupplier(id)
@@ -233,12 +233,12 @@ def fetchProducts():
 def addProduct():
     return ProductController.createProduct()
 
-@auth.route('/inventory/products/update-product/<int:id>', methods=['GET', 'POST'])
+@auth.route('/inventory/products/update-product/<int:product_id>', methods=['GET', 'POST'])
 @login_required
-def updateProduct(id):
-    return ProductController.updateProduct(id)
+def updateProduct(product_id):
+    return ProductController.updateProduct(product_id)
 
-@auth.route('/inventory/products/delete-product/<int:id>', methods=['POST',])
+@auth.route('/inventory/products/delete-product/<int:product_id>', methods=['POST',])
 @login_required
 def deleteProduct(id):
     return ProductController.removeProduct(id)
