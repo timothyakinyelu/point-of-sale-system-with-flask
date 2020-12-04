@@ -4,7 +4,7 @@
         <div class="page-wrapper">
             {% include "back.html" %}
             <div class="page-header">
-                <span class="header-text">New Product</span>
+                <span class="header-text">{{ action }} {{ data_type }}</span>
                 <div class="buttons-wrapper">
                     <a id="saveProduct" href="" class="button-save" type="button">
                         Save
@@ -18,14 +18,18 @@
                 </div>
             {% endfor %}
             <div class="table-wrapper table-form">
-                <form id="create_product" method="POST" action="{{ url_for('auth.addProduct') }}">
+                <form id="create_product" method="POST" action="{{ form_action }}">
                     {{ form.csrf_token }}
                     <div class="row">
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             <fieldset class="form-group row">
                                 {{ form.name.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
-                                    {{ form.name(placeholder='Apple juice', class="form-control") }}
+                                    {% if product %} 
+                                        {{ form.name(placeholder='Apple juice', class="form-control", value=product.name) }}
+                                    {% else %}
+                                        {{ form.name(placeholder='Apple juice', class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.name.errors %}
                                     <ul class="errors">
@@ -37,7 +41,11 @@
                             <fieldset class="form-group row">
                                 {{ form.sku.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
-                                    {{ form.sku(class="form-control") }}
+                                    {% if product %} 
+                                        {{ form.sku(class="form-control", value=product.sku) }}
+                                    {% else %}
+                                        {{ form.sku(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.sku.errors %}
                                     <ul class="errors">
@@ -49,23 +57,41 @@
                             <fieldset class="form-group row">
                                 {{ form.gtin.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
-                                    {{ form.gtin(class="form-control") }}
+                                    {% if product %} 
+                                        {{ form.gtin(class="form-control", value=product.gtin) }}
+                                    {% else %}
+                                        {{ form.gtin(class="form-control") }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.brandName.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
-                                    {{ form.brandName(class="form-control", onkeyup="searchBrands(event)", id="brandName") }}
+                                    {% if product %} 
+                                        {{ form.brandName(class="form-control", onkeyup="searchBrands(event)", id="brandName", value=product.brand.name) }}
+                                    {% else %}
+                                        {{ form.brandName(class="form-control", onkeyup="searchBrands(event)", id="brandName") }}
+                                    {% endif %}
                                     <select id="brands" class="select-brand" onchange=selectBrand() multiple></select>
                                 </div>
                             </fieldset>
                             <fieldset class="">
-                                {{ form.brand(id='brandID') }}
+                                {% if product %} 
+                                    {{ form.brand(id='brandID', value=product.brand_id) }}
+                                {% else %}
+                                    {{ form.brand(id='brandID') }}
+                                {% endif %}
                             </fieldset>
                             <fieldset class="form-group row">
-                                {{ form.categories.label(class="col-sm-2 col-lg-3 col-form-label") }}
+                                {{ form.categoryName.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
-                                    {{ form.categories(class="form-control") }}
+                                    {% if product %} 
+                                        {% for cat in product.categories %}
+                                            {{ form.categoryName(class="form-control", value=cat.name) }}
+                                        {% endfor %}
+                                    {% else %}
+                                        {{ form.categoryName(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.categories.errors %}
                                     <ul class="errors">
@@ -75,10 +101,25 @@
                                 {% endif %}
                             </fieldset>
                             <fieldset class="form-group row">
+                                {% if product %} 
+                                    {% for cat in product.categories %}
+                                        {{ form.categories(id="category_id", class="form-control", value=cat.id) }}
+                                    {% endfor %}
+                                {% else %}
+                                    {{ form.categories(id="category_id", class="form-control") }}
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
                                 {{ form.apply_discount.label(class="col-sm-2 col-lg-3 form-check-label") }}
                                 <div class="col-sm-10 col-lg-8">
                                     <div class="form-check">
-                                        {{ form.apply_discount(class="form-check-input", id="apply_discount", onclick="openDiscount()") }}
+                                        {% if product %}
+                                            {% if product.discount_id %}
+                                                {{ form.apply_discount(class="form-check-input", id="apply_discount", onclick="openDiscount()", checked=true) }}
+                                            {% endif %}
+                                            {% else %}
+                                            {{ form.apply_discount(class="form-check-input", id="apply_discount", onclick="openDiscount()") }}
+                                        {% endif %}
                                     </div>
                                 </div>
                             </fieldset>
@@ -87,7 +128,11 @@
                             <fieldset class="form-group row">
                                 {{ form.price.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.price(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.price(class="form-control", value=product.price) }}
+                                    {% else %}
+                                        {{ form.price(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.price.errors %}
                                     <ul class="errors">
@@ -99,13 +144,21 @@
                             <fieldset class="form-group row">
                                 {{ form.old_price.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.old_price(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.old_price(class="form-control", value=product.old_price) }}
+                                    {% else %}
+                                        {{ form.old_price(class="form-control") }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.cost_of_purchase.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.cost_of_purchase(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.cost_of_purchase(class="form-control", value=product.cost_of_purchase) }}
+                                    {% else %}
+                                        {{ form.cost_of_purchase(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.cost_of_purchase.errors %}
                                     <ul class="errors">
@@ -117,7 +170,11 @@
                             <fieldset class="form-group row">
                                 {{ form.stock_qty.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.stock_qty(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.stock_qty(class="form-control", value=product.stock_qty) }}
+                                    {% else %}
+                                        {{ form.stock_qty(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.stock_qty.errors %}
                                     <ul class="errors">
@@ -129,7 +186,11 @@
                             <fieldset class="form-group row">
                                 {{ form.min_stock_qty.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.min_stock_qty(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.min_stock_qty(class="form-control", value=product.min_stock_qty) }}
+                                    {% else %}
+                                        {{ form.min_stock_qty(class="form-control") }}
+                                    {% endif %}
                                 </div>
                                 {% if form.min_stock_qty.errors %}
                                     <ul class="errors">
@@ -141,7 +202,11 @@
                             <fieldset id="show_discount" class="discount form-group row">
                                 {{ form.discount.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-7">
-                                    {{ form.discount(class="form-control") }}
+                                    {% if product %}
+                                        {{ form.discount(class="form-control", value=product.discount.amount) }}
+                                    {% else %}
+                                        {{ form.discount(class="form-control") }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                         </div>
@@ -153,5 +218,87 @@
 {% endblock inner %}
 {% block inner_scripts %}
     <script src="{{ url_for('static', filename= 'js/products.js') }}"></script>
+    <script src="{{ url_for('static', filename= 'js/tagify.min.js') }}"></script>
+    <script>
+        // The DOM element you wish to replace with Tagify
+        var inputElm = document.querySelector('input[name=categoryName]'),
+        whitelist = {{ categoryNames | safe }};
+
+        var ids = {{ categoryIDs | safe }};
+        var selectedIDs = [];
+
+        
+        // initialize Tagify on the above input node reference
+        var tagify = new Tagify(inputElm, {
+            enforceWhitelist: true,
+            whitelist: inputElm.value.trim().split(/\s*,\s*/) // Array of values. stackoverflow.com/a/43375571/104380
+        });
+
+        // Chainable event listeners
+        tagify.on('remove', onRemoveTag)
+                .on('input', onInput)
+                .on('dropdown:select', onDropdownSelect)
+
+        // tag remvoed callback
+        function onRemoveTag(e){
+            var inputVal = document.getElementById('category_id').value;
+            var splitVal = inputVal.split(',')
+
+            var uncheckedValue = e.detail.data.value;
+            var selectedIndex = whitelist.indexOf(uncheckedValue);
+            var uncheckedIndex = splitVal.indexOf((ids[selectedIndex]).toString());
+
+            selectedIDs.splice(uncheckedIndex, 1);
+            document.getElementById('category_id').value = selectedIDs;
+        }
+
+        // on select
+        var inputVal = document.getElementById('category_id').value;
+        function onDropdownSelect(e){
+            if(inputVal !== null) {
+                var splitVal = inputVal.split(',')
+                for(var i = 0; i < splitVal.length; i++) {
+                    selectedIDs.push(splitVal[i]);
+                    console.log(selectedIDs)
+                }
+            }
+            var selectedValue = e.detail.data.value;
+            var selectedIndex = whitelist.indexOf(selectedValue);
+
+            selectedIDs.push(ids[selectedIndex]);
+            document.getElementById('category_id').value = selectedIDs;
+        }
+
+        var mockAjax = (function mockAjax(){
+            var timeout;
+            return function(duration){
+                clearTimeout(timeout); // abort last request
+                return new Promise(function(resolve, reject){
+                    timeout = setTimeout(resolve, duration || 700, whitelist)
+                })
+            }
+        })()
+
+        // on character(s) added/removed (user is typing/deleting)
+        function onInput(e){
+            console.log("onInput: ", e.detail.value);
+            tagify.settings.whitelist.length = 0; // reset current whitelist
+            tagify.loading(true) // show the loader animation
+
+            // get new whitelist from a delayed mocked request (Promise)
+            mockAjax()
+                .then(function(result){
+                    // replace tagify "whitelist" array values with new values
+                    // and add back the ones already chosen as Tags
+                    tagify.settings.whitelist.push(...result, ...tagify.value)
+
+                    tagify
+                    .loading(false)
+                    // render the suggestions dropdown.
+                    .dropdown.show.call(tagify, e.detail.value);
+                })
+                .catch(err => tagify.dropdown.hide.call(tagify))
+        }
+    </script>
 {{super()}}
 {% endblock inner_scripts %}
