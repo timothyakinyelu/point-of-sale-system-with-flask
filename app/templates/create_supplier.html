@@ -4,7 +4,7 @@
         <div class="page-wrapper">
             {% include "back.html" %}
             <div class="page-header">
-                <span class="header-text">New Supplier</span>
+                <span class="header-text">{{ action }} {{ data_type }}</span>
                 <div class="buttons-wrapper">
                     <a id="saveSupplier" href="" class="button-save" type="button">
                         Save
@@ -18,51 +18,75 @@
                 </div>
             {% endfor %}
             <div class="table-wrapper table-form">
-                <form id="create_supplier" method="POST" action="{{ url_for('auth.addSupplier') }}">
+                <form id="create_supplier" method="POST" action="{{ form_action }}">
                     {{ form.csrf_token }}
                     <div class="row">
                         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
                             <fieldset class="form-group row">
                                 {{ form.name.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.name(placeholder='John Doe', class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.name(placeholder='John Doe', class='form-control', value=supplier.name) }}
+                                    {% else %}
+                                        {{ form.name(placeholder='John Doe', class='form-control') }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.email.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.email(placeholder='doe.joe@example.com', class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.email(placeholder='doe.joe@example.com', class='form-control', value=supplier.email) }}
+                                    {% else %}
+                                        {{ form.email(placeholder='doe.joe@example.com', class='form-control') }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.phone.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.phone(placeholder='01 2383833', class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.phone(placeholder='01 2383833', class='form-control', value=supplier.phone_number) }}
+                                    {% else %}
+                                        {{ form.phone(placeholder='01 2383833', class='form-control') }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.address.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.address(placeholder='1 John Street', class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.address(placeholder='1 John Street', class='form-control', value=supplier.address) }}
+                                    {% else %}
+                                        {{ form.address(placeholder='1 John Street', class='form-control') }}
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.state.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.state(placeholder='Lagos', class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.state(placeholder='Lagos', class='form-control', value=supplier.state) }}
+                                    {% else %}
+                                        {{ form.state(placeholder='Lagos', class='form-control') }} 
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.account.label(class="col-sm-12 col-lg-12 col-form-label") }}
                                 <div class="col-sm-12 col-lg-12">
-                                    {{ form.account(class='form-control') }}
+                                    {% if supplier %}
+                                        {{ form.account(class='form-control', value=supplier.account_number) }}
+                                    {% else %}
+                                        {{ form.account(class='form-control') }} 
+                                    {% endif %}
                                 </div>
                             </fieldset>
                             <fieldset class="form-group row">
                                 {{ form.status.label(class="col-sm-2 col-lg-3 form-check-label") }}
                                 <div class="col-sm-10 col-lg-8">
                                     <div class="form-check form-check-inline">
-                                        {{ form.status(class="form-check-input") }}
+                                        {{ form.status(class="form-check-input") }} 
                                     </div>
                                 </div>
                             </fieldset>

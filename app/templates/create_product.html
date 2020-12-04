@@ -86,9 +86,9 @@
                                 {{ form.categoryName.label(class="col-sm-2 col-lg-3 col-form-label") }}
                                 <div class="col-sm-10 col-lg-8">
                                     {% if product %} 
-                                        {% for cat in product.categories %}
-                                            {{ form.categoryName(class="form-control", value=cat.name) }}
-                                        {% endfor %}
+                                        {% if product.categories %}
+                                            {{ form.categoryName(class="form-control", value=selCategoryNames) }}
+                                        {% endif %}
                                     {% else %}
                                         {{ form.categoryName(class="form-control") }}
                                     {% endif %}
@@ -102,9 +102,9 @@
                             </fieldset>
                             <fieldset class="form-group row">
                                 {% if product %} 
-                                    {% for cat in product.categories %}
-                                        {{ form.categories(id="category_id", class="form-control", value=cat.id) }}
-                                    {% endfor %}
+                                    {% if product.categories %}
+                                        {{ form.categories(id="category_id", class="form-control", value=selCategoryIDs) }}
+                                    {% endif %}
                                 {% else %}
                                     {{ form.categories(id="category_id", class="form-control") }}
                                 {% endif %}
@@ -254,18 +254,22 @@
 
         // on select
         var inputVal = document.getElementById('category_id').value;
-        function onDropdownSelect(e){
-            if(inputVal !== null) {
-                var splitVal = inputVal.split(',')
-                for(var i = 0; i < splitVal.length; i++) {
-                    selectedIDs.push(splitVal[i]);
-                    console.log(selectedIDs)
-                }
+        
+        if(inputVal.includes(',')) {
+            var splitVal = inputVal.split(',')
+            for(var i = 0; i<splitVal.length; i++) {
+                var selectedValue = parseInt(splitVal[i]);
+                selectedIDs.push(selectedValue)
             }
-            var selectedValue = e.detail.data.value;
-            var selectedIndex = whitelist.indexOf(selectedValue);
+        } else {
+            selectedValue = inputVal;
+        }
 
+        function onDropdownSelect(e){
+            selectedValue = e.detail.data.value;
+            var selectedIndex = whitelist.indexOf(selectedValue);
             selectedIDs.push(ids[selectedIndex]);
+
             document.getElementById('category_id').value = selectedIDs;
         }
 
@@ -281,7 +285,6 @@
 
         // on character(s) added/removed (user is typing/deleting)
         function onInput(e){
-            console.log("onInput: ", e.detail.value);
             tagify.settings.whitelist.length = 0; // reset current whitelist
             tagify.loading(true) // show the loader animation
 
