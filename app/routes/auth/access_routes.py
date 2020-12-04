@@ -198,8 +198,8 @@ def addSupplier():
 
 @auth.route('/inventory/suppliers/update-supplier/<int:supplier_id>', methods=['GET', 'POST'])
 @login_required
-def updateSupplier(id):
-    return SuppliersController.updateSupplier(id)
+def updateSupplier(supplier_id):
+    return SuppliersController.updateSupplier(supplier_id)
 
 @auth.route('/inventory/suppliers/delete-supplier/<int:supplier_id>', methods=['POST',])
 @login_required
