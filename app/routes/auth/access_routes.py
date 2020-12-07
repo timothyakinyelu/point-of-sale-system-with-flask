@@ -165,15 +165,15 @@ def getCategories():
 def fetchCategories():
     return CategoryController.ajaxFetchCategories()
 
-@auth.route('/inventory/categories/add-category', methods=['POST',])
+@auth.route('/inventory/categories/add-category', methods=['GET', 'POST'])
 @login_required
 def addCategory():
     return CategoryController.createCategory()
 
-@auth.route('/inventory/categories/update-category/<int:category_id>', methods=['POST',])
+@auth.route('/inventory/categories/update-categories/<int:category_id>', methods=['GET', 'POST'])
 @login_required
-def updateCategory(id):
-    return CategoryController.updateCategory(id)
+def updateCategory(category_id):
+    return CategoryController.updateCategory(category_id)
 
 @auth.route('/inventory/categories/delete-category/<int:category_id>', methods=['POST',])
 @login_required
