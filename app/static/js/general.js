@@ -107,7 +107,7 @@
         if(getKeys(data) === undefined) return;
 
         return getKeys(data).map((column, index) => {
-            if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug' && column !== 'selling_price') {
+            if (column !== 'link' && column !== 'id' && column !== 'discount_id' && column !== 'parent_id' && column !== 'slug' && column !== 'selling_price' && column !== 'permissions') {
                 return `
                     <th scope="col" class="table-head" key=${index}>
                         ${columnHead(column)}
@@ -144,7 +144,7 @@
         var peg;
         peg = key.split(' ').join('_').toLowerCase();
 
-        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug' && key !== 'link' && key !== 'selling_price') {
+        if (key !== 'id' && key !== '' && key !== 'discount_id' && key !== 'parent_id' && key !== 'slug' && key !== 'link' && key !== 'selling_price' && key !== 'permissions') {
             if (key === 'sku' || key === 'date') {
                 return `<th data-label="${key}" scope="row" key="${index}">
                             ${data[peg]}
@@ -225,6 +225,20 @@
                                     ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
                                 </tr>`
                     }
+                } else if(routeParams.includes('categories')) {
+                    return `<tr key=${index} id="row${data.id}">
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        key="${index}"
+                                    />
+                                </td>
+                                ${Object.keys(data).map((key, index) => showKey(key, index, data)).join('')}
+                                <td data-label="">
+                                    <a href="${path}/update-${routeName}/${data.id}" class="edit-item" type="button">edit</a>
+                                </td>
+                            </tr>`
                 } else {
                     return `<tr key=${index} id="row${data.id}">
                                 <td>
@@ -288,14 +302,6 @@
                         Showing ${changedFirstItem} - ${changedDataCount} of ${changedTotal}
                 </i>`
     };
-
-    // get url param to fetch next table content
-    const getUrlParam = (name, url) => {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(url);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    }
 
     // get new page items
     const getPageItems = (page) => {
