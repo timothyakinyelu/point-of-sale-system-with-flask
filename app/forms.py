@@ -126,8 +126,7 @@ class CategoryForm(FlaskForm):
     parent = SelectField(
         'Parent Category',
         validate_choice=None,
-        coerce=int,
-        default=0
+        coerce=int
     )
     submit = SubmitField('Add Category')
     
