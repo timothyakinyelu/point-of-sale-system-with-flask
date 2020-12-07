@@ -5,10 +5,9 @@ from app.forms import CategoryForm
 
 """ Controller for all category functions"""
 def categories():
-    form = CategoryForm()
-    # categories = Category.query.all()
+    """ show categories template page"""
     
-    return render_template('categories.html', form = form, title = 'Add a Category')
+    return render_template('categories.html')
 
 def ajaxFetchCategories():
     """ Fetch all brands from db"""
@@ -33,41 +32,64 @@ def ajaxFetchCategories():
 def createCategory():
     form = CategoryForm()
     
-    if form.validate_on_submit():
-        existing_cat = Category.query.filter_by(name = form.name.data).first()
-        
-        if existing_cat is None:
-            category = Category(
-                name = form.name.data,
-                description = form.description.data,
-                parent_id = None if form.parent.data == 0 else form.parent.data
-            )
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            existing_cat = Category.query.filter_by(name = form.name.data).first()
             
-            session.add(category)
+            if existing_cat is None:
+                category = Category(
+                    name = form.name.data,
+                    description = form.description.data,
+                    parent_id = None if form.parent.data == 0 else form.parent.data
+                )
+                
+                session.add(category)
+                session.commit()
+                
+                flash('Category created Successfully!')
+                return redirect(url_for('auth.getCategories'))
+            
+            flash('Category already exists!')
+        flash('Unable to create Category!')
+    return render_template(
+        'create_category.html', 
+        form = form, 
+        data_type='New Category', 
+        form_action=url_for('auth.addCategory'), 
+        action = 'Add',
+    )
+
+def updateCategory(category_id):
+    """Update existing category in database."""
+    
+    form = CategoryForm()
+    if request.method == 'GET':
+        category = Category.query.filter_by(id = category_id).first()
+        form.description.data = category.description
+        form.parent.data = category.parent_id
+    
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            session.query(Category).filter(Category.id == category_id).update({
+                Category.name: form.name.data,
+                Category.description: form.description.data,
+                Category.parent_id: None if form.parent.data == 0 else form.parent.data
+            })
+            
             session.commit()
             
-            flash('Category created Successfully!')
+            flash('Category updated Successfully!')
             return redirect(url_for('auth.getCategories'))
         
-        flash('Category already exists!')
-    flash('Unable to create Category!')
-    return redirect(url_for('auth.getCategories'))
-
-def updateCategory(id):
-    form = CategoryForm()
-    
-    if form.validate_on_submit():
-        session.query(Category).filter(Category.id == id).update({
-            Category.name: form.name.data,
-            Category.description: form.description.data,
-            Category.parent_id: None if form.parent.data == 0 else form.parent.data
-        })
-        
-        flash('Category updated Successfully!')
-        return redirect(url_for('auth.getCategories'))
-    
-    flash('Unable to update category!')
-    return redirect(url_for('auth.getCategories'))
+        flash('Unable to update category!')
+    return render_template(
+        'create_category.html', 
+        form = form, 
+        data_type = category.name, 
+        category = category,
+        form_action=url_for('auth.updateCategory', category_id = category.id),
+        action = 'Edit',
+    )
 
 def removeCategory(id):
     """ delete category from db"""
