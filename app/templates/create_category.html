@@ -1,0 +1,84 @@
+{% extends 'admin-layout.html' %}
+{% block inner %}
+    <section class="h-auto newProduct">
+        <div class="page-wrapper">
+            {% include "back.html" %}
+            <div class="page-header">
+                <span class="header-text">{{ action }} {{ data_type }}</span>
+                <div class="buttons-wrapper">
+                    <a id="saveCategory" href="" class="button-save" type="button">
+                        Save
+                    </a>
+                </div>
+            </div>
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="table-wrapper table-form">
+                <form id="create_category" method="POST" action="{{ form_action }}">
+                    {{ form.csrf_token }}
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                            <fieldset class="form-group row">
+                                {{ form.name.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {% if category %}
+                                        {{ form.name(placeholder='Nike', class="form-control", value=category.name) }}
+                                    {% else %}
+                                        {{ form.name(placeholder='Nike', class="form-control") }}
+                                    {% endif %}
+                                </div>
+                                {% if form.name.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.description.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {% if category %}
+                                        {{ form.description(placeholder='Nike', class="form-control") }}
+                                    {% else %}
+                                        {{ form.description(placeholder='Nike', class="form-control") }}
+                                    {% endif %}
+                                </div>
+                                {% if form.description.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.description.errors %}
+                                        <li>{{ error }}</li>{% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </fieldset>
+                            <fieldset class="form-group row">
+                                {{ form.parent.label(class="col-sm-12 col-lg-12 col-form-label") }}
+                                <div class="col-sm-12 col-lg-12">
+                                    {% if category %}
+                                        {{ form.parent(class="form-control") }}
+                                    {% else %}
+                                        {{ form.parent(class="form-control") }}
+                                    {% endif %}
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock inner %}
+{% block inner_scripts %}
+    <script>
+        // trigger submit button outside form
+        $('#saveCategory').on('click', function(event) {
+            event.preventDefault();
+            $('#create_category').submit();
+        });
+    </script>
+{{super()}}
+{% endblock inner_scripts %}
