@@ -6,7 +6,7 @@
             <div class="page-header">
                 <span class="header-text">Categories</span>
                 <div class="buttons-wrapper">
-                    <a href="#" data-toggle="modal" data-target="#newCategory" class="button-save" type="button">
+                    <a href="{{ url_for('auth.addCategory') }}" class="button-save" type="button">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g clip-path="url(#clip0)">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.506514 5.5132H5.39235V1.14546C5.39235 0.89702 5.62096 0.692657 5.89887 0.692657H7.87001C8.14904 0.692657 8.37653 0.89702 8.37653 1.14546V5.5132H13.2624C13.5414 5.5132 13.7689 5.71756 13.7689 5.966V7.72812C13.7689 7.97656 13.5403 8.18092 13.2624 8.18092H8.37653V12.5487C8.37653 12.7981 8.14792 13.0015 7.87001 13.0015H5.89999C5.62208 13.0015 5.39348 12.7971 5.39348 12.5487V8.18092H0.506514C0.228604 8.18192 0 7.97756 0 7.72812V5.967C0 5.71756 0.228604 5.5132 0.506514 5.5132Z" fill="white"/>
@@ -55,61 +55,6 @@
                     <span class="pagination-range"></span>
                     <ul class="pagination"></ul>
                 </nav>
-            </div>
-        </div>
-        <div class="modal fade" id="newCategory" tabindex="-1" role="dialog" aria-labelledby="catName" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="catName">{{ title }}</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="saveCategory" method="POST" action="{{ url_for('auth.addCategory') }}">
-                            {{ form.csrf_token }}
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                    <fieldset class="form-group row">
-                                        {{ form.name.label(class="col-sm-12 col-lg-12 col-form-label") }}
-                                        <div class="col-sm-12 col-lg-12">
-                                            {{ form.name(placeholder='Nike', class="form-control") }}
-                                        </div>
-                                        {% if form.name.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.name.errors %}
-                                                    <li>{{ error }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                    <fieldset class="form-group row">
-                                        {{ form.description.label(class="col-sm-12 col-lg-12 col-form-label") }}
-                                        <div class="col-sm-12 col-lg-12">
-                                            {{ form.description(placeholder='Nike', class="form-control") }}
-                                        </div>
-                                        {% if form.description.errors %}
-                                            <ul class="errors">
-                                                {% for error in form.description.errors %}
-                                                <li>{{ error }}</li>{% endfor %}
-                                            </ul>
-                                        {% endif %}
-                                    </fieldset>
-                                    <fieldset class="form-group row">
-                                        {{ form.parent.label(class="col-sm-12 col-lg-12 col-form-label") }}
-                                        <div class="col-sm-12 col-lg-12">
-                                            {{ form.parent(class="form-control") }}
-                                        </div>
-                                    </fieldset>
-                                    <div class="submit-button">
-                                        {{ form.submit(class='button-later') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
