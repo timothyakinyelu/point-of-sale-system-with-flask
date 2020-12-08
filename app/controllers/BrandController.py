@@ -6,9 +6,8 @@ from app.forms import BrandForm
 """ Controller for all brand functions"""
 def brands():
     """ get all brands from db"""
-    form = BrandForm()
     
-    return render_template('brands.html',form = form, title = 'Add a Brand')
+    return render_template('brands.html')
 
 def ajaxFetchBrands():
     """ Fetch all brands from db"""
@@ -35,41 +34,59 @@ def createBrand():
     """ create a new brand"""
     form = BrandForm()
     
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            exising_brand = Brand.query.filter_by(name = form.name.data).first()
-            
-            if exising_brand is None:
-                brand = Brand(
-                    name = form.name.data
-                )
-                session.add(brand)
-                session.commit()
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                exising_brand = Brand.query.filter_by(name = form.name.data).first()
                 
-                flash('Brand created Successfully!')
-                return redirect(url_for('auth.getBrands'))
+                if exising_brand is None:
+                    brand = Brand(
+                        name = form.name.data
+                    )
+                    session.add(brand)
+                    session.commit()
+                    
+                    flash('Brand created Successfully!')
+                    return redirect(url_for('auth.getBrands'))
 
-            flash('Brand name already exists!')
-    flash('Brand name must start with a letter')
-    
-    return redirect(url_for('auth.getBrands'))
+                flash('Brand name already exists!')
+        flash('Brand name must start with a letter')
+
+    return render_template(
+        'create_brand.html', 
+        form = form, 
+        data_type='New Brand', 
+        form_action=url_for('auth.addBrand'), 
+        action = 'Add',
+    )
                 
 
-def updateBrand(id):
+def updateBrand(brand_id):
     """ update existing brand in db"""
     form = BrandForm()
-    
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            session.query(Brand).filter(Brand.id == id).update({Brand.name: form.name.data})
-            
-            flash('Brand name updated Successfully!')
-            return redirect(url_for('auth.getBrands'))
+    if request.method == 'GET':
+        brand = Brand.query.filter_by(id = brand_id).first()
+        form.name.data = brand.name
+        
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                session.query(Brand).filter(Brand.id == brand_id).update({Brand.name: form.name.data})
+                
+                session.commit()
+                flash('Brand name updated Successfully!')
+                return redirect(url_for('auth.getBrands'))
 
-        flash('Unable to update brand name!')
-    flash('Value entered must start with an alphabet!')
+            flash('Unable to update brand name!')
+        flash('Value entered must start with an alphabet!')
     
-    return redirect(url_for('auth.getBrands'))
+    return render_template(
+        'create_brand.html',
+        form = form, 
+        data_type = brand.name,
+        form_action=url_for('auth.updateBrand', brand_id = brand.id),
+        action = 'Edit',
+    )
 
 
 def removeBrand(id):
