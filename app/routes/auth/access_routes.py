@@ -113,15 +113,15 @@ def getShops():
 def fetchShops():
     return ShopController.ajaxFetchShops()
 
-@auth.route('/settings/shops/add-shop', methods=['POST',])
+@auth.route('/settings/shops/add-shop', methods=['GET', 'POST'])
 @login_required
 def addShop():
     return ShopController.createShop()
 
-@auth.route('/settings/shops/update-shop/<int:shop_id>', methods=['POST',])
+@auth.route('/settings/shops/update-shop/<int:shop_id>', methods=['GET', 'POST'])
 @login_required
-def updateShop(id):
-    return ShopController.updateShop(id)
+def updateShop(shop_id):
+    return ShopController.updateShop(shop_id)
 
 @auth.route('/settings/shops/delete-shop/<int:shop_id>', methods=['POST',])
 @login_required
