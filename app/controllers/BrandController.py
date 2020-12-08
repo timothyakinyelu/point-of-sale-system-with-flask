@@ -63,6 +63,7 @@ def createBrand():
 
 def updateBrand(brand_id):
     """ update existing brand in db"""
+    
     form = BrandForm()
     if request.method == 'GET':
         brand = Brand.query.filter_by(id = brand_id).first()
