@@ -2,6 +2,7 @@ from flask import url_for
 from app.tests.base import BaseCase
 from app.db import db
 from app.models.brand import Brand
+from app.models.permission import Permission
 from app.forms import BrandForm
 
 
@@ -15,6 +16,11 @@ class BrandTests(BaseCase):
     
     def test_brand_can_be_created(self):
         user = self.createUser()
+        
+        permission = Permission(name = 'View Brands')
+        session.add(permission)
+        session.commit()
+        
         login = self.loginUser()
         
         brandForm = BrandForm(name = 'Apple')
@@ -24,6 +30,7 @@ class BrandTests(BaseCase):
             response = self.client.post(url_for('auth.addBrand'), data = brandForm.data, follow_redirects=True)
             
             brands = Brand.query.all()
+            print(brand)
 
             self.assertEqual(brands[0].name, 'Apple')
             self.assertEqual(brands[0].slug, 'apple')

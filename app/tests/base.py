@@ -26,8 +26,8 @@ class BaseCase(TestCase):
         db.drop_all()
         
     def createUser(self):
-        user = User(username = 'Juniper', password = 'password')
-        user.set_password('password')
+        user = User(username = 'Juniper', password = 'Password1', status = 'ACTIVE')
+        user.set_password('Password1')
         db.session.add(user)
         db.session.commit()
         
@@ -35,13 +35,13 @@ class BaseCase(TestCase):
     
     def loginUser(self):
         login = LoginForm(username = 'Juniper',
-            password = 'password'
+            password = 'Password1'
         )
         
         return login
     
     def createUserRole(self):
-        role = Role(title = 'Cashier')
+        role = Role(title = 'Manager')
         db.session.add(role)
         db.session.commit()
         
@@ -49,6 +49,7 @@ class BaseCase(TestCase):
 
     def createUserPermission(self):
         permission = Permission(name = 'Create User')
+        
         db.session.add(permission)
         db.session.commit()
         

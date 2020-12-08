@@ -1,6 +1,7 @@
 from flask import url_for
 from app.db import session
 from app.models.role import Role
+from app.models.permission import Permission
 from app.tests.base import BaseCase
 from app.forms import *
 from app.controllers import SystemController
@@ -8,6 +9,21 @@ from app.controllers import SystemController
 class UserRoleTests(BaseCase):
     def test_role_can_be_created(self):
         user = self.createUser()
+        
+        permission1 = Permission(name = 'View Roles')
+        permission2 = Permission(name = 'View Dashboard')
+        permission3 = Permission(name = 'Enter Sales')
+        session.add(permission1)
+        session.add(permission2)
+        session.add(permission3)
+        session.commit()
+        
+        perms = Permission.query.all()
+        
+        role = self.createUserRole()
+        role.givePermissionsTo(perms)
+        user.role_id = 1
+        
         login = self.loginUser()
         
         role_form = RoleForm(title = 'Cashier')
@@ -24,6 +40,12 @@ class UserRoleTests(BaseCase):
 
     def test_role_already_exists(self):
         user = self.createUser()
+        
+        permission = Permission(name = 'View Roles')
+        session.add(permission)
+        session.commit()
+        
+        user.givePermissionsTo(permission)
         login = self.loginUser()
         existing_role = self.createUserRole()
         
