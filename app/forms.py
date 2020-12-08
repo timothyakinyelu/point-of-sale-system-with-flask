@@ -76,7 +76,7 @@ class RoleForm(FlaskForm):
 
     title = StringField(
         'Role',
-        validators = [InputRequired()]
+        validators = [Optional()]
     )
     submit = SubmitField('Add Role')
     
