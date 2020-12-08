@@ -44,7 +44,7 @@ class HasPermissionTrait:
         
     def hasPermissionThroughRole(self, perms):
         """hasPermission through role"""
-        
+
         if perms is not None:
             for perm in perms:
                 if type(perm) == str:
@@ -66,7 +66,7 @@ class HasPermissionTrait:
         return False
     
     
-    def hasRole(self, *roles):
+    def hasRole(self, roles):
         """check if user has required role"""
         
         user_roles = self.query.all()
@@ -81,11 +81,12 @@ class HasPermissionTrait:
     # def getAllPermissions(self,perms):
     #     return session.query(Permission).filter_by(Permission.slug.in_(perms)).all()
     
-    def hasPermission(self, perm):
+    def hasPermission(self, perms):
         """check if user has direct permissions"""
         
-        permit = Permission.query.filter_by(slug = perm).first()
-        if permit not in self.permissions:
-            return False
-            raise('User does not have permission')
-        return True
+        for perm in perms:
+            permit = Permission.query.filter_by(slug = perm).first()
+            if permit not in self.permissions:
+                return False
+                raise('User does not have permission')
+            return True
