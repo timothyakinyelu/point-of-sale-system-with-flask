@@ -6,9 +6,8 @@ from app.forms import ShopForm
 """ Controller for all shop functions"""
 def shops():
     """ get all shops from db"""
-    form = ShopForm()
     
-    return render_template('shops.html', shops = shops, form = form, title = 'Add a Shop')
+    return render_template('shops.html')
 
 def ajaxFetchShops():
     """ Fetch all users from db"""
@@ -34,41 +33,60 @@ def createShop():
     """ create a new shop"""
     form = ShopForm()
     
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            exising_shop = Shop.query.filter_by(name = form.name.data).first()
-            
-            if exising_shop is None:
-                shop = Shop(
-                    name = form.name.data
-                )
-                session.add(shop)
-                session.commit()
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                exising_shop = Shop.query.filter_by(name = form.name.data).first()
                 
-                flash('Shop created Successfully!')
+                if exising_shop is None:
+                    shop = Shop(
+                        name = form.name.data
+                    )
+                    session.add(shop)
+                    session.commit()
+                    
+                    flash('Shop created Successfully!')
+                    return redirect(url_for('auth.getShops'))
+
+                flash('Shop name already exists!')
+        flash('Shop name must start with a letter')
+    
+    return render_template(
+        'create_role.html', 
+        form = form, 
+        data_type='New Shop', 
+        form_action=url_for('auth.addShop'), 
+        action = 'Add',
+    )
+                
+
+def updateShop(shop_id):
+    """ update existing shop in db"""
+    
+    form = ShopForm()
+    if request.method == 'GET':
+        shop = Shop.query.filter_by(id = shop_id).first()
+        form.name.data = shop.name
+        
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                session.query(Shop).filter(Shop.id == shop_id).update({Shop.name: form.name.data})
+                
+                session.commit()
+                flash('Shop name updated Successfully!')
                 return redirect(url_for('auth.getShops'))
 
-            flash('Shop name already exists!')
-    flash('Shop name must start with a letter')
+            flash('Unable to update shop name!')
+        flash('Value entered must start with an alphabet!')
     
-    return redirect(url_for('auth.getShops'))
-                
-
-def updateShop(id):
-    """ update existing shop in db"""
-    form = ShopForm()
-    
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            session.query(Shop).filter(Shop.id == id).update({Shop.name: form.name.data})
-            
-            flash('Shop name updated Successfully!')
-            return redirect(url_for('auth.getShops'))
-
-        flash('Unable to update shop name!')
-    flash('Value entered must start with an alphabet!')
-    
-    return redirect(url_for('auth.getShops'))
+    return render_template(
+        'create_shop.html',
+        form = form, 
+        data_type = shop.name,
+        form_action=url_for('auth.updateShop', shop_id = shop.id),
+        action = 'Edit',
+    )
 
 
 def removeShop(id):
