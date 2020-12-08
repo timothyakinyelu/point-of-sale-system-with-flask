@@ -53,15 +53,15 @@ def getRoles():
 def fetchRoles():
     return SystemController.ajaxFetchRoles()
 
-@auth.route('/settings/roles/add-role', methods=['POST',])
+@auth.route('/settings/roles/add-role', methods=['GET', 'POST'])
 @login_required
 def addRole():
     return SystemController.createRole()
 
-@auth.route('/settings/roles/update-role/<int:role_id>', methods=['POST',])
+@auth.route('/settings/roles/update-role/<int:role_id>', methods=['GET', 'POST'])
 @login_required
-def updateRole(id):
-    return SystemController.updateRole(id)
+def updateRole(role_id):
+    return SystemController.updateRole(role_id)
 
 @auth.route('/settings/roles/delete-role/<int:role_id>', methods=['POST',])
 @login_required
