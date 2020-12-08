@@ -139,15 +139,15 @@ def getBrands():
 def fetchBrands():
     return BrandController.ajaxFetchBrands()
 
-@auth.route('/inventory/brands/add-brand', methods=['POST',])
+@auth.route('/inventory/brands/add-brand', methods=['GET', 'POST'])
 @login_required
 def addBrand():
     return BrandController.createBrand()
 
-@auth.route('/inventory/brands/update-brand/<int:brand_id>', methods=['POST',])
+@auth.route('/inventory/brands/update-brand/<int:brand_id>', methods=['GET', 'POST'])
 @login_required
-def updateBrand(id):
-    return BrandController.updateBrand(id)
+def updateBrand(brand_id):
+    return BrandController.updateBrand(brand_id)
 
 @auth.route('/inventory/brands/delete-brand/<int:brand_id>', methods=['POST',])
 @login_required
