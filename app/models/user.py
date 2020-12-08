@@ -66,8 +66,9 @@ class User(db.Model, UserMixin, HasPermissionTrait):
 
         return username
     
-    def allowed_perms(self, *perms):
+    def allowed_perms(self, perms):
         """ check if user has permission to carry out action."""
+
         if self.hasPermissionTo(perms):
             return True
         return False

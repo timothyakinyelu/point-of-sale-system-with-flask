@@ -17,7 +17,7 @@ from app.config_helper import required_permissions
 
 @auth.route("/")
 @login_required
-@required_permissions('view-dashboard')
+@required_permissions(['view-dashboard', 'view-products', 'view-sales'])
 def dashboard():
     return DashboardController.dashboard()
 
@@ -28,7 +28,7 @@ def fetchChart():
 
 @auth.route('/settings/users')
 @login_required
-@required_permissions('view-users')
+@required_permissions(['view-users'])
 def getUsers(): 
     return SystemController.users()
 
@@ -44,7 +44,7 @@ def createUser():
 
 @auth.route('/settings/roles')
 @login_required
-@required_permissions('view-roles')
+@required_permissions(['view-roles'])
 def getRoles():
     return SystemController.roles()
 
@@ -70,7 +70,7 @@ def deleteRole(id):
   
 @auth.route('/settings/permissions')
 @login_required
-@required_permissions('view-permissions')
+@required_permissions(['view-permissions'])
 def getPermissions():
     return SystemController.permissions()
 
@@ -104,7 +104,7 @@ def logout():
 # Main shop routes
 @auth.route('/settings/shops')
 @login_required
-@required_permissions('view-shops')
+@required_permissions(['view-shops'])
 def getShops():
     return ShopController.shops()
 
@@ -130,7 +130,7 @@ def deleteShop(id):
 
 @auth.route('/inventory/brands')
 @login_required
-@required_permissions('view-brands')
+@required_permissions(['view-brands'])
 def getBrands():
     return BrandController.brands()
 
@@ -156,7 +156,7 @@ def deleteBrand(id):
 
 @auth.route('/inventory/categories')
 @login_required
-@required_permissions('view-categories')
+@required_permissions(['view-categories'])
 def getCategories():
     return CategoryController.categories()
 
@@ -182,7 +182,7 @@ def deleteCategory(id):
 
 @auth.route('/inventory/suppliers')
 @login_required
-@required_permissions('view-products')
+@required_permissions(['view-products'])
 def getSuppliers():
     return SuppliersController.suppliers()
 
@@ -208,7 +208,7 @@ def deleteSupplier(id):
 
 @auth.route('/inventory/receiving')
 @login_required
-@required_permissions('view-products')
+@required_permissions(['view-products'])
 def enterReceivedItems():
     return ProductController.receiving()
 
@@ -245,7 +245,7 @@ def deleteProduct(id):
 
 @auth.route('/sales/new-transaction')
 @login_required
-@required_permissions('enter-sales')
+@required_permissions(['enter-sales'])
 def addTransaction():
     return TransactionController.new_transaction()
 
@@ -276,7 +276,7 @@ def getSupplier():
 
 @auth.route('/reports/sales-report')
 @login_required
-@required_permissions('view-reports')
+@required_permissions(['view-reports'])
 def salesReport():
     return ReportsController.salesReports()
 
@@ -287,7 +287,7 @@ def fetchSalesReport():
 
 @auth.route('/reports/products-report')
 @login_required
-@required_permissions('view-reports')
+@required_permissions(['view-reports', 'view-dashboard'])
 def productsReport():
     return ReportsController.productsReports()
 
@@ -298,7 +298,7 @@ def fetchProductsReport():
 
 @auth.route('/reports/low-stock')
 @login_required
-@required_permissions('view-low-stock')
+@required_permissions(['view-low-stock'])
 def lowStockReport():
     return ReportsController.lowStocksReport()
 
@@ -309,7 +309,7 @@ def fetchLowStocks():
 
 @auth.route('/reports/today-sales')
 @login_required
-@required_permissions('view-day-report')
+@required_permissions(['view-day-report'])
 def todaysReport():
     return ReportsController.salesByCurrentDate()
 
