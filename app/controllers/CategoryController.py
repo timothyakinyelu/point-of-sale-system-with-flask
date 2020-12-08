@@ -82,6 +82,7 @@ def updateCategory(category_id):
             return redirect(url_for('auth.getCategories'))
         
         flash('Unable to update category!')
+
     return render_template(
         'create_category.html', 
         form = form, 
