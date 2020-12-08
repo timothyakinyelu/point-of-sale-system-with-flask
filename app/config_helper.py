@@ -17,7 +17,7 @@ def load_config(MODE):
         return BaseConfig
     
     
-def required_permissions(*perms):
+def required_permissions(perms):
     def wrapper(f):
         @wraps(f)
         def wrapped(*args, **kwargs):
