@@ -46,9 +46,7 @@ def ajaxFetchUsers():
 def roles():
     """ Fetch all system roles from database."""
     
-    form = RoleForm()
-    
-    return render_template('roles.html', form=form, title='Create a User Role')
+    return render_template('roles.html')
 
 def ajaxFetchRoles():
     """ Fetch all roles from db"""
@@ -72,44 +70,64 @@ def ajaxFetchRoles():
 
 def createRole():
     """ Create new system roles."""
-    roles = getAllRoles()
     
     form = RoleForm()
 
-    if not form.title.data[0].isdigit():
-        if form.validate_on_submit():
-            # do something here
-            existing_role = User_Role.query.filter_by(title = form.title.data).first()
+    if request.method == 'POST':
+        if not form.title.data[0].isdigit():
+            if form.validate_on_submit():
+                # do something here
+                existing_role = User_Role.query.filter_by(title = form.title.data).first()
 
-            if existing_role is None:
-                new_role = User_Role(
-                    title = form.title.data
-                )
-                session.add(new_role)
+                if existing_role is None:
+                    new_role = User_Role(
+                        title = form.title.data
+                    )
+                    session.add(new_role)
+                    session.commit()
+                    
+                    flash('Role created Successfully!')
+                    return redirect(url_for('auth.getRoles'))
+                
+                flash('Role already exists!')
+        flash('Value entered must start with an alphabet!')
+
+    return render_template(
+        'create_role.html', 
+        form = form, 
+        data_type='New Role', 
+        form_action=url_for('auth.addRole'), 
+        action = 'Add',
+    )
+
+def updateRole(role_id):
+    """ update existing role in db"""
+     
+    form = RoleForm()
+    if request.method == 'GET':
+        role = Role.query.filter_by(id = role_id).first()
+        form.title.data = role.title
+        
+    if request.method == 'POST':
+        if not form.title.data[0].isdigit():
+            if form.validate_on_submit():
+                session.query(User_Role).filter(User_Role.id == role_id).update({User_Role.title: form.title.data})
+                
                 session.commit()
                 
-                flash('Role created Successfully!')
+                flash('Role updated Successfully!')
                 return redirect(url_for('auth.getRoles'))
             
-            flash('Role already exists!')
-    flash('Value entered must start with an alphabet!')
+            flash('Unable to update role!')
+        flash('Value entered must start with an alphabet!')
 
-    return redirect(url_for('auth.getRoles'))
-
-def updateRole(id):
-    form = RoleForm()
-    
-    if not form.title.data[0].isdigit():
-        if form.validate_on_submit():
-            session.query(User_Role).filter(User_Role.id == id).update({User_Role.title: form.title.data})
-            
-            flash('Role updated Successfully!')
-            return redirect(url_for('auth.getRoles'))
-        
-        flash('Unable to update role!')
-    flash('Value entered must start with an alphabet!')
-
-    return redirect(url_for('auth.getRoles'))
+    return render_template(
+        'create_role.html',
+        form = form, 
+        data_type = role.title,
+        form_action=url_for('auth.updateRole', role_id = role.id),
+        action = 'Edit',
+    )
 
 def removeRole(id):
     Role.query.filter_by(id = id).delete()
