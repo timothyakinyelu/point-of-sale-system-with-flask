@@ -42,6 +42,11 @@ def fetchUsers():
 def createUser():
     return UserController.create()
 
+@auth.route('/settings/users/delete-users', methods=['POST',])
+@login_required
+def deleteUser():
+    return UserController.removeUser()
+
 @auth.route('/settings/roles')
 @login_required
 @required_permissions(['view-roles'])
@@ -123,10 +128,10 @@ def addShop():
 def updateShop(shop_id):
     return ShopController.updateShop(shop_id)
 
-@auth.route('/settings/shops/delete-shop/<int:shop_id>', methods=['POST',])
+@auth.route('/settings/shops/delete-shops', methods=['POST',])
 @login_required
-def deleteShop(id):
-    return ShopController.removeShop(id)
+def deleteShop():
+    return ShopController.removeShop()
 
 @auth.route('/inventory/brands')
 @login_required
@@ -149,10 +154,10 @@ def addBrand():
 def updateBrand(brand_id):
     return BrandController.updateBrand(brand_id)
 
-@auth.route('/inventory/brands/delete-brand/<int:brand_id>', methods=['POST',])
+@auth.route('/inventory/brands/delete-brands', methods=['POST',])
 @login_required
-def deleteBrand(id):
-    return BrandController.removeBrand(id)
+def deleteBrand():
+    return BrandController.removeBrand()
 
 @auth.route('/inventory/categories')
 @login_required
@@ -175,10 +180,10 @@ def addCategory():
 def updateCategory(category_id):
     return CategoryController.updateCategory(category_id)
 
-@auth.route('/inventory/categories/delete-category/<int:category_id>', methods=['POST',])
+@auth.route('/inventory/categories/delete-categories', methods=['POST',])
 @login_required
-def deleteCategory(id):
-    return CategoryController.removeCategory(id)
+def deleteCategory():
+    return CategoryController.removeCategory()
 
 @auth.route('/inventory/suppliers')
 @login_required
@@ -201,10 +206,10 @@ def addSupplier():
 def updateSupplier(supplier_id):
     return SuppliersController.updateSupplier(supplier_id)
 
-@auth.route('/inventory/suppliers/delete-supplier/<int:supplier_id>', methods=['POST',])
+@auth.route('/inventory/suppliers/delete-suppliers', methods=['POST',])
 @login_required
-def deleteSupplier(id):
-    return SuppliersController.removeSupplier(id)
+def deleteSupplier():
+    return SuppliersController.removeSupplier()
 
 @auth.route('/inventory/receiving')
 @login_required
@@ -238,10 +243,10 @@ def addProduct():
 def updateProduct(product_id):
     return ProductController.updateProduct(product_id)
 
-@auth.route('/inventory/products/delete-product/<int:product_id>', methods=['POST',])
+@auth.route('/inventory/products/delete-products', methods=['POST',])
 @login_required
-def deleteProduct(id):
-    return ProductController.removeProduct(id)
+def deleteProduct():
+    return ProductController.removeProduct()
 
 @auth.route('/sales/new-transaction')
 @login_required
