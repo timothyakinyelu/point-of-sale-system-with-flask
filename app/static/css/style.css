@@ -152,11 +152,19 @@ body, .base {
 .button:hover {
     background: var(--secondary-hover);
 }
+.button:hover, .button-save:hover, .button-later:hover {
+    color: var(--primary-color);
+}
 input[type=submit],
 a[type=button], a,
 button {
     text-decoration: none;
     border: none;
+    color: var(--primary-color);
+}
+input[type=submit]:hover,
+a[type=button]:hover, a:hover,
+button:hover {
     color: var(--primary-color);
 }
 input[type=submit]:focus,
