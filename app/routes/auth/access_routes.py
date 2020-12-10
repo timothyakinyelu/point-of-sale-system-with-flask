@@ -63,10 +63,10 @@ def addRole():
 def updateRole(role_id):
     return SystemController.updateRole(role_id)
 
-@auth.route('/settings/roles/delete-role/<int:role_id>', methods=['POST',])
+@auth.route('/settings/roles/delete-roles', methods=['POST',])
 @login_required
-def deleteRole(id):
-    return SystemController.removeRole(id)
+def deleteRole():
+    return SystemController.removeRole()
   
 @auth.route('/settings/permissions')
 @login_required
