@@ -1,8 +1,17 @@
-from flask import render_template, redirect, url_for, flash, request, jsonify
+from flask import render_template, redirect, url_for, flash, request, jsonify, make_response
+from flask_login import current_user
 from app.models import *
 from app.forms import *
 from app.db import session
 from app.routes.auth import auth
+import logging
+import logging.config
+from os import path
+
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 User = user.User
 User_Role = role.Role
@@ -129,11 +138,16 @@ def updateRole(role_id):
         action = 'Edit',
     )
 
-def removeRole(id):
-    Role.query.filter_by(id = id).delete()
-    flash('Role deleted Successfully!')
-    
-    return redirect(url_for('auth.getRoles'))
+def removeRole():
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(User_Role).filter(User_Role.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Role(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted role(s)')
+        return make_response(jsonify(data), 200)
 
 def permissions():
     """ Fetch all system permissions from database."""
