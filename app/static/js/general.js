@@ -35,13 +35,6 @@
         var tbody = document.getElementById(routeName + '-body');
 
         var head = getHeadColumns(data);
-            
-        var text = [];
-        $('thead tr th').each(function() {
-            var $this = $(this);
-
-            text.push($this.text())
-        })
 
         thead.innerHTML = head;
         tbody.innerHTML = dataList(data);
@@ -79,7 +72,7 @@
             }
         } else {
             var row = `
-                    <th scope="col"><input type="checkbox" name="" id=""></th>
+                    <th scope="col"><input type="checkbox" name="" id="allChecked"></th>
                     ${tableHeads(data)}
                     <th scope="col"></th>
                 `
@@ -229,7 +222,9 @@
                     return `<tr key=${index} id="row${data.id}">
                                 <td>
                                     <input
+                                        id="check-${data.id}"
                                         type="checkbox"
+                                        data-id="${data.id}"
                                         name=""
                                         key="${index}"
                                     />
@@ -243,6 +238,9 @@
                     return `<tr key=${index} id="row${data.id}">
                                 <td>
                                     <input
+                                        id="check-${data.id}"
+                                        data-id="${data.id}"
+                                        class="checkbox"
                                         type="checkbox"
                                         name=""
                                         key="${index}"
@@ -373,4 +371,71 @@
         }
         return true;
     }
+
+    // delete all rows
+    var checkedIDs = [];
+    $(document).on('click', '#allChecked', function(e) {
+        if($(this).is(':checked', true)) {
+            $('.checkbox').prop('checked', true);
+            $('input[class=checkbox]').map(function() {
+                if(checkedIDs.indexOf($(this).data('id')) === -1) {
+                    return checkedIDs.push($(this).data('id'));
+                }
+            }).get();
+
+            // deleteSelected(checkedIDs);
+        } else {
+            $('.checkbox').prop('checked', false);
+            checkedIDs = [];
+        }
+    });
+
+    // delete multiple selected rows
+    $(document).on('click', '.checkbox', function() {
+        if($(this).is(':checked', true)) {
+            var id = $(this).data('id');
+            checkedIDs.push(id);
+        } else {
+            $('#allChecked').prop('checked', false)
+            var id = $(this).data('id');
+            if(checkedIDs.includes(id)) {
+                var i = checkedIDs.indexOf(id);
+                checkedIDs.splice(i, 1);
+            }
+        }
+    })
+    
+    $(document).on('click', '#deleteButton', function() {
+        var token =  $('input[name="csrf_token"]').attr('value');
+    
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRFToken', token);
+            }
+        });
+        $.ajax(
+            {
+                type: "POST",
+                url: path + "/delete-" + routeName,
+                data: JSON.stringify(
+                    {
+                        "selectedIDs": checkedIDs
+                    }
+                ),
+                contentType: 'application/json;charset=UTF-8',
+                success: function (response) { 
+                    $('.page-wrapper').prepend(`
+                        <div class="alert alert-warning">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            ${response.message}
+                        </div>
+                    `);
+
+                    if(response.status === 200) {
+                        window.location.reload()
+                    }
+                }
+            }
+        )
+    });
 })();
