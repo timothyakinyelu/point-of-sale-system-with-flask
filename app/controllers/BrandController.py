@@ -2,6 +2,14 @@ from flask import render_template, redirect, url_for, flash, request, jsonify
 from app.models.brand import Brand
 from app.db import session
 from app.forms import BrandForm
+import logging
+import logging.config
+from os import path
+
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 """ Controller for all brand functions"""
 def brands():
@@ -90,9 +98,13 @@ def updateBrand(brand_id):
     )
 
 
-def removeBrand(id):
-    """ delete brand from db"""
-    Brand.query.filter_by(id = id).delete()
-    flash('Brand deleted Successfully!')
-    
-    return redirect(url_for('auth.getBrands'))
+def removeBrand():
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(Brand).filter(Brand.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Brand(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted brand(s)')
+        return make_response(jsonify(data), 200)

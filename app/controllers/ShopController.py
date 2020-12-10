@@ -2,6 +2,14 @@ from flask import render_template, redirect, url_for, flash, request, jsonify
 from app.models.shop import Shop
 from app.db import session
 from app.forms import ShopForm
+import logging
+import logging.config
+from os import path
+
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 """ Controller for all shop functions"""
 def shops():
@@ -89,9 +97,15 @@ def updateShop(shop_id):
     )
 
 
-def removeShop(id):
-    """ delete shop from db"""
-    Shop.query.filter_by(id = id).delete()
-    flash('Shop deleted Successfully!')
+def removeShop():
+    """ delete shops form db"""
     
-    return redirect(url_for('auth.getShops'))
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(Shop).filter(Shop.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Shop(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted shop(s)')
+        return make_response(jsonify(data), 200)

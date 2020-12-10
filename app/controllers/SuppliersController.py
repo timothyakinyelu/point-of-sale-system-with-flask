@@ -3,7 +3,14 @@ from app.models.supplier import Supplier
 from app.db import session
 from sqlalchemy import or_
 from app.forms import SupplierForm
+import logging
+import logging.config
+from os import path
 
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 def suppliers():
     """ show suppliers template page"""
@@ -102,13 +109,18 @@ def updateSupplier(supplier_id):
         action = 'Edit',
     )
 
-def removeSupplier(id):
-    """ Delete existing supplier"""
+def removeSupplier():
+    """ delete suppliers form db"""
     
-    Supplier.query.filter_by(id = id).delete()
-    
-    flash('Supplier deleted Successfully!')
-    return redirect(url_for('auth.getSuppliers'))
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(Supplier).filter(Supplier.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Supplier(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted supplier(s)')
+        return make_response(jsonify(data), 200)
 
 def getSupplier():
     id = request.args.get('id')

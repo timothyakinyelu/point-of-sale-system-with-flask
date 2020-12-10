@@ -163,13 +163,18 @@ def updateProduct(product_id):
         categoryIDs = [i.id for i in records]
     )
 
-def removeProduct(id):
-    """ Delete existing product"""
+def removeProduct():
+    """ delete products form db"""
     
-    Product.query.filter_by(id = id).delete()
-    
-    flash('Product deleted Successfully!')
-    return redirect(url_for('auth.getProducts'))
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(Product).filter(Product.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Product(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted product(s)')
+        return make_response(jsonify(data), 200)
 
 
 def searchBrands():

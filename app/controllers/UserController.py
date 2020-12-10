@@ -3,6 +3,14 @@ from app.models import *
 from app.forms import *
 from app.db import session
 from sqlalchemy import func
+import logging
+import logging.config
+from os import path
+
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 User = user.User
 Employee = employee.Employee
@@ -39,4 +47,17 @@ def searchEmployees():
     records = Employee.query.filter(Employee.first_name.ilike('%' + term + '%')).all()
     
     return jsonify(results = [i.serialize for i in records])
+
+def removeUser():
+    """ delete users form db"""
+    
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(User).filter(User.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'User(s) deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted user(s)')
+        return make_response(jsonify(data), 200)
         

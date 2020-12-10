@@ -2,6 +2,14 @@ from flask import render_template, redirect, flash, url_for, request, jsonify
 from app.db import session
 from app.models.category import Category
 from app.forms import CategoryForm
+import logging
+import logging.config
+from os import path
+
+
+log_file_path = path.abspath('logging.conf')
+logging.config.fileConfig(log_file_path, disable_existing_loggers=False)
+logger = logging.getLogger(__name__)
 
 """ Controller for all category functions"""
 def categories():
@@ -92,10 +100,13 @@ def updateCategory(category_id):
         action = 'Edit',
     )
 
-def removeCategory(id):
-    """ delete category from db"""
-    
-    Category.query.filter_by(id = id).delete()
-    flash('Category deleted Successfully!')
-    
-    return redirect(url_for('auth.getCategories'))
+def removeCategory():
+    if request.method == 'POST':
+        ids = request.json['selectedIDs']
+        
+        session.query(Category).filter(Category.id.in_(ids)).delete(synchronize_session=False)
+        session.commit()
+        
+        data = {'message': 'Categories deleted Successfully!', 'status': 200}
+        logger.warn(current_user.username + ' ' + 'deleted categories')
+        return make_response(jsonify(data), 200)
