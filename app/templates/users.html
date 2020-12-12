@@ -44,6 +44,7 @@
                 <input id="searchable" type="text" placeholder="Search Username"/>
             </div>
             <div class="table-responsive table-wrapper">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
                 <table class="table table-hover admin-table">
                     <caption class="sr-only">List of users</caption>
                     <thead>
