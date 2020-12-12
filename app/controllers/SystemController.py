@@ -114,7 +114,7 @@ def updateRole(role_id):
      
     form = RoleForm()
     if request.method == 'GET':
-        role = Role.query.filter_by(id = role_id).first()
+        role = User_Role.query.filter_by(id = role_id).first()
         form.title.data = role.title
         
     if request.method == 'POST':
@@ -152,7 +152,6 @@ def removeRole():
 def permissions():
     """ Fetch all system permissions from database."""
     
-    form = PermissionForm()
     roles = getAllRoles()
     permissions = getAllPermissions()
     
@@ -169,7 +168,6 @@ def permissions():
         
     return render_template(
         'permissions.html', 
-        form=form, 
         title='Create a Permission.', 
         permissions = permissions, 
         roles = roles, 
@@ -179,44 +177,64 @@ def permissions():
 
 def createPermission():
     """ Create new system permissions."""
-    permissions = getAllPermissions()
     
     form = PermissionForm()
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            # do something here
-            existing_perm = Perm.query.filter_by(name = form.name.data).first()
+    
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                # do something here
+                existing_perm = Perm.query.filter_by(name = form.name.data).first()
 
-            if existing_perm is None:
-                new_perm = Perm(
-                    name = form.name.data
-                )
-                session.add(new_perm)
-                session.commit()
+                if existing_perm is None:
+                    new_perm = Perm(
+                        name = form.name.data
+                    )
+                    session.add(new_perm)
+                    session.commit()
+                    
+                    flash('Permission created Successfully!')
+                    return redirect(url_for('auth.getPermissions'))
                 
-                flash('Permission created Successfully!')
+                flash('Permission already exists!')
+        flash('Value entered must start with an alphabet!')
+        
+    return render_template(
+        'create_permission.html', 
+        form = form, 
+        data_type='New Role', 
+        form_action=url_for('auth.addPermission'), 
+        action = 'Add',
+    )
+
+
+def updatePermission(permission_id):
+    """ update app permissions"""
+    
+    form = PermissionForm()
+    if request.method == 'GET':
+        permission = Perm.query.filter_by(id = permission_id).first()
+        form.name.data = permission.name
+    
+    if request.method == 'POST':
+        if not form.name.data[0].isdigit():
+            if form.validate_on_submit():
+                Perm.query.filter_by(id = permission_id).update({Perm.name: form.name.data})
+                session.commit()
+
+                flash('Permission updated Successfully!')
                 return redirect(url_for('auth.getPermissions'))
             
-            flash('Permission already exists!')
-    flash('Value entered must start with an alphabet!')
-        
-    return redirect(url_for('auth.getPermissions'))
+            flash('Unable to update permission!')
+        flash('Value entered must start with an alphabet!')
 
-
-def updatePermission(id):
-    form = PermissionForm()
-    
-    if not form.name.data[0].isdigit():
-        if form.validate_on_submit():
-            Perm.query.filter_by(id = id).update({Perm.name: form.name.data})
-
-            flash('Permission updated Successfully!')
-            return redirect(url_for('auth.getPermissions'))
-        
-        flash('Unable to update permission!')
-    flash('Value entered must start with an alphabet!')
-
-    return redirect(url_for('auth.Permissions'))
+    return render_template(
+        'create_permission.html',
+        form = form,
+        data_type = permission.name,
+        form_action=url_for('auth.updatePermission', permission_id = permission.id),
+        action = 'Edit',
+    )
 
 
 def removePermissions():
