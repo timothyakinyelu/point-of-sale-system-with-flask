@@ -1,4 +1,5 @@
 from flask import render_template, redirect, flash, url_for, request, jsonify
+from flask_login import current_user
 from app.models.supplier import Supplier
 from app.db import session
 from sqlalchemy import or_

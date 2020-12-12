@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request, jsonify
+from flask_login import current_user
 from app.models.shop import Shop
 from app.db import session
 from app.forms import ShopForm
