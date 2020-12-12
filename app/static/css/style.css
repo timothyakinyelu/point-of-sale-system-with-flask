@@ -1303,6 +1303,11 @@ a.brand__sidebar {
     background: none;
 }
 
+/* permission */
+.page-wrapper.permissions .table-wrapper {
+    max-height: unset;
+}
+
 /* styles for specific screen ranges */
 @media(max-width: 1024px) {
     /* sidebar */
