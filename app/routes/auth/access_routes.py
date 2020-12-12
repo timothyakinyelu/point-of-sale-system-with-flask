@@ -42,6 +42,11 @@ def fetchUsers():
 def createUser():
     return UserController.create()
 
+@auth.route('/settings/users/update-user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def updateUser(user_id):
+    return UserController.updateUser(user_id)
+
 @auth.route('/settings/users/delete-users', methods=['POST',])
 @login_required
 def deleteUser():
