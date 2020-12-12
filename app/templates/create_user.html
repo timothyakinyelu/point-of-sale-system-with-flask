@@ -4,7 +4,7 @@
         <div class="page-wrapper">
             {% include "back.html" %}
             <div class="page-header">
-                <span class="header-text">New User</span>
+                <span class="header-text">{{ action }} {{ data_type }}</span>
                 <div class="buttons-wrapper">
                     <a id="saveUser" href="" class="button-save" type="button">
                         Save
@@ -18,7 +18,7 @@
                 </div>
             {% endfor %}
             <div class="table-wrapper table-form">
-                <form id="create_user" method="POST" action="{{ url_for('auth.createUser') }}">
+                <form id="create_user" method="POST" action="{{ form_action }}">
                     {{ form.csrf_token }}
 
                     <div class="row">
