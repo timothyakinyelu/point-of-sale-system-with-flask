@@ -79,15 +79,15 @@ def deleteRole():
 def getPermissions():
     return SystemController.permissions()
 
-@auth.route('/settings/permissions/add-permission', methods=['POST',])
+@auth.route('/settings/permissions/add-permission', methods=['GET', 'POST'])
 @login_required
 def addPermission():
     return SystemController.createPermission()
 
-@auth.route('/settings/permissions/update-permission/<int:permission_id>', methods=['POST',])
+@auth.route('/settings/permissions/update-permission/<int:permission_id>', methods=['GET', 'POST'])
 @login_required
-def updatePermission(id):
-    return SystemController.updatePermission(id)
+def updatePermission(permission_id):
+    return SystemController.updatePermission(permission_id)
 
 @auth.route('/settings/permissions/delete-permission', methods=['POST',])
 @login_required
