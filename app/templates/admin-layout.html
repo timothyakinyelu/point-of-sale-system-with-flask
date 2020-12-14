@@ -17,7 +17,7 @@
     <script>
         $('document').ready(function(){
             var username = "{{current_user.username}}"
-            var firstLetter = username.charAt(0);
+            var firstLetter = username.charAt(0).toUpperCase();
             
             document.getElementById("user").innerHTML = firstLetter;
         });
