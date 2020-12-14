@@ -31,32 +31,33 @@ def authenticate():
     
     form = LoginForm()
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username = form.username.data).first()
-        
-        if user is not None:
-            if user.status != 'ACTIVE':
-                flash('User not yet approved')
-                return redirect(url_for('nonAuth.login'))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User.query.filter_by(username = form.username.data).first()
             
-            if user and user.check_password(password = form.password.data):
-                login_user(user)
-                next_page = request.args.get('next')
+            if user is not None:
+                if user.status != 'ACTIVE':
+                    flash('User not yet approved')
+                    return redirect(url_for('nonAuth.login'))
                 
-                if not is_safe_url('/', next):
-                    return flask.abort(400)
+                if user and user.check_password(password = form.password.data):
+                    login_user(user)
+                    next_page = request.args.get('next')
                     
-                if user.allowed_perms(['view-dashboard']):
-                    logger.info(user.username + ' ' + 'successful Log In')
-                    return redirect(next_page or url_for('auth.dashboard'))
-                else:
-                    logger.warn(user.username + ' ' + 'has no permissions')
+                    if not is_safe_url('/', next):
+                        return flask.abort(400)
+                        
+                    if user.allowed_perms(['view-dashboard']):
+                        logger.info(user.username + ' ' + 'successful Log In')
+                        return redirect(next_page or url_for('auth.dashboard'))
+                    else:
+                        logger.warn(user.username + ' ' + 'has no permissions')
 
-            logger.warn(user.username + ' ' + 'Failed login attempt')
-            
-        logger.warn(' Unknown user failed login attempt')
-        flash('Invalid Credentials!')
-        return redirect(url_for('nonAuth.login'))
+                logger.warn(user.username + ' ' + 'Failed login attempt')
+                
+            logger.warn(' Unknown user failed login attempt')
+            flash('Invalid Credentials!')
+            return redirect(url_for('nonAuth.login'))
 
    
     return render_template('login.html', form = form, title = 'Log In')
