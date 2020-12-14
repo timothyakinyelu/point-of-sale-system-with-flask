@@ -25,9 +25,6 @@ def authenticate():
         if current_user.status != 'ACTIVE':
             flash('User not yet approved')
             return redirect(url_for('nonAuth.login'))
-    
-        if current_user.allowed_perms(['enter-sales']):
-            return redirect(url_for('auth.addTransaction'))
         
         if current_user.allowed_perms(['view-dashboard']):
             return redirect(url_for('auth.dashboard'))
@@ -49,10 +46,7 @@ def authenticate():
                 if not is_safe_url('/', next):
                     return flask.abort(400)
                     
-                if user.allowed_perms(['enter-sales']):
-                    logger.info(user.username + ' ' + 'successful Log In')
-                    return redirect(url_for('auth.addTransaction'))
-                elif user.allowed_perms(['view-dashboard']):
+                if user.allowed_perms(['view-dashboard']):
                     logger.info(user.username + ' ' + 'successful Log In')
                     return redirect(next_page or url_for('auth.dashboard'))
                 else:
