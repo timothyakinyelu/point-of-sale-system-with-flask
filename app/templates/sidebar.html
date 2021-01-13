@@ -54,14 +54,14 @@
             {% if(current_user.allowed_perms(['view-promotions'])) %}
                 <li class="">
                     <a data-toggle="collapse" 
-                        href="#discount" 
+                        href="#discounts" 
                         role="button" 
                         aria-expanded="false" 
                         aria-controls="collapseExample"
                     >
                         Promotions
                     </a>
-                    <ul class="collapse {% if request.path.split('/')[-2] == 'promotions' %} show {% endif %}" id="discount" data-parent="#sidebarAccordion">
+                    <ul class="collapse {% if request.path.split('/')[-2] == 'promotions' %} show {% endif %}" id="discounts" data-parent="#sidebarAccordion">
                         <li {% if request.path.split('/')[-1] == 'discounts' %} class="active" {% endif %}>
                             <a href="">Discounts</a>
                         </li>
