@@ -117,14 +117,4 @@
             }
         });
     }
-
-    // function getLabels(data) {
-    //     var labels = [];
-
-    //     for(var i = 0; i < data.length; i++) {
-    //         labels.push(data[i])
-    //     }
-
-    //     return labels;
-    // }
 })();
