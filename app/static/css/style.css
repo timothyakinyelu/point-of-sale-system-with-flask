@@ -110,6 +110,9 @@ body, a, ul, li, p {
 .submit-button input.button-later {
     padding: 10px;
 }
+.hide {
+    display: none;
+}
 
 /* base styles */
 .topic-block {
@@ -931,6 +934,7 @@ a.brand__sidebar {
 .page-wrapper .page-header .search-bar {
     display: flex;
     width: 100%;
+    align-items: center;
 }
 .page-wrapper .page-header .search-bar svg {
     position: absolute;
@@ -1352,6 +1356,9 @@ a.brand__sidebar {
         padding: 0;
         align-items: normal;
         background: none;
+    }
+    .sidebar__content .page-wrapper #submit-transaction .page-header {
+        flex-wrap: unset;
     }
     .sidebar__content .page-wrapper .page-header .header-text {
         margin: 10px;
