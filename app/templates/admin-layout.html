@@ -34,8 +34,14 @@
 
             if (contentWidth < 600) {
                 $('.admin-table').addClass('mobile-table');
+                $('.notifications').addClass('hide');
+                $('.url').addClass('hide');
+                // $('#mobileNavbarSupportedContent').addClass('on');
             } else {
                 $('.admin-table').removeClass('mobile-table');
+                $('.notifications').removeClass('hide');
+                $('.url').removeClass('hide');
+                // $('#mobileNavbarSupportedContent').removeClass('on');
             }
         }
         
