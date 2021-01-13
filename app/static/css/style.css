@@ -1096,7 +1096,7 @@ a.brand__sidebar {
     margin-right: 15px;
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 0px;
     background: var(--primary-color);
     height: 50px;
     border-radius: 10px;
